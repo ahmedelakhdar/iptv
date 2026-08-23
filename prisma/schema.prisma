@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model GlobalSettings {
+  id             String   @id @default(cuid())
+  whatsappNumber String   @default("33600000000")
+  supportNumber  String   @default("33600000000")
+  siteName       String   @default("IPTV Netherlands")
+  logoUrl        String   @default("/logo.jpeg")
+  supportEmail   String?  @default("contact@iptv-netherlands.com")
+  adminPassword  String?
+  updatedAt      DateTime @updatedAt
+}
+
+model PricingPlan {
+  id             String   @id @default(cuid())
+  name           String
+  price          String
+  liveChannels   String
+  quality        String
+  isPopular      Boolean  @default(false)
+  hasVod         Boolean  @default(false)
+  hasEpg         Boolean  @default(false)
+  hasReplay      Boolean  @default(false)
+  hasAdults      Boolean  @default(false)
+  hasIboPlayer   Boolean  @default(false)
+  hasConnections Boolean  @default(false)
+  hasGuarantee   Boolean  @default(false)
+  hasRefund      Boolean  @default(false)
+  hasSupport     Boolean  @default(false)
+
+  currency       String   @default("€")
+  duration       String   @default("/ 12 mois")
+  subtitle       String?  @default("")
+  orderIndex     Int      @default(0)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
