@@ -22,6 +22,7 @@ import {
   ShieldCheck,
   Headphones,
   Sparkles,
+  AlertCircle,
 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
@@ -35,6 +36,8 @@ export default function AdminForfaitsPage() {
 
   // Toast Feedback State
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+  // Modal Error State inside Modal UI
+  const [modalError, setModalError] = useState<string | null>(null);
 
   const showToast = (message: string, type: "success" | "error" = "success") => {
     setToast({ message, type });
@@ -47,10 +50,10 @@ export default function AdminForfaitsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<PlanData | null>(null);
 
-  // Form State
+  // Form State initialized with valid default starting values
   const [formData, setFormData] = useState({
     name: "Lite",
-    price: "",
+    price: "27 €",
     duration: "12 mois",
     liveChannels: "8 000",
     quality: "HD",
@@ -79,6 +82,7 @@ export default function AdminForfaitsPage() {
 
   const handleOpenCreateModal = () => {
     setEditingPlan(null);
+    setModalError(null);
     setFormData({
       name: "Lite",
       price: "27 €",
@@ -101,9 +105,10 @@ export default function AdminForfaitsPage() {
 
   const handleOpenEditModal = (plan: PlanData) => {
     setEditingPlan(plan);
+    setModalError(null);
     setFormData({
-      name: plan.name,
-      price: plan.price,
+      name: plan.name || "Lite",
+      price: plan.price || "27 €",
       duration: (plan.duration || plan.period || "12 mois").replace(/^\/\s*/, ""),
       liveChannels: plan.liveChannels || "8 000",
       quality: plan.quality || "HD",
@@ -124,6 +129,7 @@ export default function AdminForfaitsPage() {
   const handleSavePlan = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
+    setModalError(null);
 
     const payload = {
       name: formData.name,
@@ -155,10 +161,13 @@ export default function AdminForfaitsPage() {
     if (res.success) {
       showToast(editingPlan ? "Forfait modifié avec succès !" : "Forfait ajouté avec succès !", "success");
       setIsModalOpen(false);
+      setModalError(null);
       router.refresh();
       await loadData();
     } else {
-      showToast(res.error || "Erreur lors de l'enregistrement du forfait.", "error");
+      const errMsg = res.error || "Erreur lors de l'enregistrement du forfait.";
+      setModalError(errMsg);
+      showToast(errMsg, "error");
     }
   };
 
@@ -331,6 +340,14 @@ export default function AdminForfaitsPage() {
                 <X className="h-4 w-4" />
               </button>
             </div>
+
+            {/* Modal Error Alert Banner */}
+            {modalError && (
+              <div className="mt-4 p-3.5 rounded-2xl border border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-semibold flex items-center gap-2.5 shadow-sm">
+                <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
+                <span>{modalError}</span>
+              </div>
+            )}
 
             {/* Scrollable Form Body */}
             <form onSubmit={handleSavePlan} className="overflow-y-auto py-5 space-y-6 pr-1 flex-1 custom-scrollbar">
@@ -551,9 +568,10 @@ export default function AdminForfaitsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="rounded-full violet-cyan-gradient px-6 py-2.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition-all"
+                  disabled={saving}
+                  className="rounded-full violet-cyan-gradient px-6 py-2.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Enregistrer le forfait
+                  {saving ? "Enregistrement..." : "Enregistrer le forfait"}
                 </button>
               </div>
 

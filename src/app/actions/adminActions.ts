@@ -318,7 +318,17 @@ export async function getPlans(): Promise<PlanData[]> {
 
 export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success: boolean; plan?: PlanData; error?: string }> {
   try {
+    if (!data.name || String(data.name).trim() === "") {
+      return { success: false, error: "Le nom du forfait est requis." };
+    }
+
     const formattedPrice = formatEuroPrice(data.price || "27");
+    const nameStr = String(data.name).trim();
+    const durationStr = String(data.duration || "12 mois");
+    const liveChannelsStr = String(data.liveChannels || "8 000");
+    const qualityStr = String(data.quality || "HD");
+    const subtitleStr = String(data.subtitle || "");
+    const orderIndexInt = typeof data.orderIndex === "number" && !isNaN(data.orderIndex) ? Math.floor(data.orderIndex) : 0;
 
     const isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
     const hasVod = Boolean(data.hasVod && String(data.hasVod) !== "false");
@@ -331,14 +341,9 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
     const hasRefund = Boolean(data.hasRefund && String(data.hasRefund) !== "false");
     const hasSupport = Boolean(data.hasSupport && String(data.hasSupport) !== "false");
 
-    const durationStr = String(data.duration || "12 mois");
-    const liveChannelsStr = String(data.liveChannels || "8 000");
-    const qualityStr = String(data.quality || "HD");
-    const subtitleStr = String(data.subtitle || "");
-
     const dbPlan = await prisma.pricingPlan.create({
       data: {
-        name: String(data.name || "Lite"),
+        name: nameStr,
         price: formattedPrice,
         liveChannels: liveChannelsStr,
         quality: qualityStr,
@@ -355,7 +360,7 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
         currency: "€",
         duration: durationStr,
         subtitle: subtitleStr,
-        orderIndex: data.orderIndex ?? 0,
+        orderIndex: orderIndexInt,
       },
     });
 
@@ -393,9 +398,9 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
     revalidatePath("/anaAhmedAdmin/forfaits", "page");
 
     return { success: true, plan: newPlan };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PRISMA ERROR in createPlan:", error);
-    return { success: false, error: error.message || "Erreur lors de la création du forfait" };
+    return { success: false, error: error instanceof Error ? error.message : "Erreur inconnue" };
   }
 }
 
@@ -436,7 +441,7 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
     if (data.currency !== undefined) updateData.currency = String(data.currency);
     if (data.duration !== undefined) updateData.duration = String(data.duration);
     if (data.subtitle !== undefined) updateData.subtitle = String(data.subtitle);
-    if (data.orderIndex !== undefined) updateData.orderIndex = Number(data.orderIndex);
+    if (data.orderIndex !== undefined) updateData.orderIndex = Math.floor(Number(data.orderIndex)) || 0;
 
     if (!id.startsWith("plan-")) {
       await prisma.pricingPlan.update({
@@ -454,9 +459,9 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
     revalidatePath("/anaAhmedAdmin/forfaits", "page");
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PRISMA ERROR in updatePlan:", error);
-    return { success: false, error: error.message || "Erreur lors de la modification du forfait" };
+    return { success: false, error: error instanceof Error ? error.message : "Erreur inconnue" };
   }
 }
 
@@ -479,9 +484,9 @@ export async function deletePlan(id: string): Promise<{ success: boolean; error?
     revalidatePath("/anaAhmedAdmin/forfaits", "page");
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PRISMA ERROR in deletePlan:", error);
-    return { success: false, error: error.message || "Erreur lors de la suppression du forfait" };
+    return { success: false, error: error instanceof Error ? error.message : "Erreur inconnue" };
   }
 }
 
