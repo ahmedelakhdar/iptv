@@ -144,7 +144,7 @@ let memorySiteName = DEFAULT_SITE_NAME;
 let memoryLogoUrl = DEFAULT_LOGO_URL;
 let memorySupportEmail = DEFAULT_SUPPORT_EMAIL;
 let memoryAdminPassword: string | null = null;
-let memoryPlans = [...DEFAULT_PLANS];
+let memoryPlans: PlanData[] = [];
 
 export async function getWhatsappNumber(): Promise<string> {
   try {
@@ -288,34 +288,32 @@ export async function getPlans(): Promise<PlanData[]> {
       orderBy: { orderIndex: "asc" },
     });
 
-    if (dbPlans && dbPlans.length > 0) {
-      return dbPlans.map((p) => ({
-        id: p.id,
-        name: p.name,
-        price: formatEuroPrice(p.price),
-        liveChannels: p.liveChannels,
-        quality: p.quality,
-        isPopular: p.isPopular,
-        hasVod: p.hasVod,
-        hasEpg: p.hasEpg,
-        hasReplay: p.hasReplay,
-        hasAdults: p.hasAdults,
-        hasIboPlayer: p.hasIboPlayer,
-        hasConnections: p.hasConnections,
-        hasGuarantee: p.hasGuarantee,
-        hasRefund: p.hasRefund,
-        hasSupport: p.hasSupport,
-        currency: "€",
-        duration: p.duration,
-        period: p.duration,
-        subtitle: p.subtitle || "",
-        orderIndex: p.orderIndex,
-      }));
-    }
-  } catch (_error) {
-    // Fallback silently to memory plans on build or missing column error
+    return dbPlans.map((p) => ({
+      id: p.id,
+      name: p.name,
+      price: formatEuroPrice(p.price),
+      liveChannels: p.liveChannels,
+      quality: p.quality,
+      isPopular: p.isPopular,
+      hasVod: p.hasVod,
+      hasEpg: p.hasEpg,
+      hasReplay: p.hasReplay,
+      hasAdults: p.hasAdults,
+      hasIboPlayer: p.hasIboPlayer,
+      hasConnections: p.hasConnections,
+      hasGuarantee: p.hasGuarantee,
+      hasRefund: p.hasRefund,
+      hasSupport: p.hasSupport,
+      currency: "€",
+      duration: p.duration,
+      period: p.duration,
+      subtitle: p.subtitle || "",
+      orderIndex: p.orderIndex,
+    }));
+  } catch (error) {
+    console.error("PRISMA ERROR in getPlans:", error);
+    return [];
   }
-  return memoryPlans.map((p) => ({ ...p, price: formatEuroPrice(p.price), currency: "€" }));
 }
 
 export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success: boolean; plan?: PlanData; error?: string }> {
@@ -338,67 +336,65 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
     const qualityStr = String(data.quality || "HD");
     const subtitleStr = String(data.subtitle || "");
 
-    const newId = `plan-${Date.now()}`;
+    const dbPlan = await prisma.pricingPlan.create({
+      data: {
+        name: String(data.name || "Lite"),
+        price: formattedPrice,
+        liveChannels: liveChannelsStr,
+        quality: qualityStr,
+        isPopular,
+        hasVod,
+        hasEpg,
+        hasReplay,
+        hasAdults,
+        hasIboPlayer,
+        hasConnections,
+        hasGuarantee,
+        hasRefund,
+        hasSupport,
+        currency: "€",
+        duration: durationStr,
+        subtitle: subtitleStr,
+        orderIndex: data.orderIndex ?? 0,
+      },
+    });
+
     const newPlan: PlanData = {
-      id: newId,
-      name: String(data.name || "Lite"),
-      price: formattedPrice,
-      liveChannels: liveChannelsStr,
-      quality: qualityStr,
-      isPopular,
-      hasVod,
-      hasEpg,
-      hasReplay,
-      hasAdults,
-      hasIboPlayer,
-      hasConnections,
-      hasGuarantee,
-      hasRefund,
-      hasSupport,
+      id: dbPlan.id,
+      name: dbPlan.name,
+      price: dbPlan.price,
+      liveChannels: dbPlan.liveChannels,
+      quality: dbPlan.quality,
+      isPopular: dbPlan.isPopular,
+      hasVod: dbPlan.hasVod,
+      hasEpg: dbPlan.hasEpg,
+      hasReplay: dbPlan.hasReplay,
+      hasAdults: dbPlan.hasAdults,
+      hasIboPlayer: dbPlan.hasIboPlayer,
+      hasConnections: dbPlan.hasConnections,
+      hasGuarantee: dbPlan.hasGuarantee,
+      hasRefund: dbPlan.hasRefund,
+      hasSupport: dbPlan.hasSupport,
       currency: "€",
-      duration: durationStr,
-      period: durationStr,
-      subtitle: subtitleStr,
-      orderIndex: data.orderIndex ?? memoryPlans.length,
+      duration: dbPlan.duration,
+      period: dbPlan.duration,
+      subtitle: dbPlan.subtitle || "",
+      orderIndex: dbPlan.orderIndex,
     };
 
     memoryPlans.push(newPlan);
 
-    try {
-      const dbPlan = await prisma.pricingPlan.create({
-        data: {
-          name: newPlan.name,
-          price: newPlan.price,
-          liveChannels: newPlan.liveChannels,
-          quality: newPlan.quality,
-          isPopular: newPlan.isPopular,
-          hasVod: newPlan.hasVod,
-          hasEpg: newPlan.hasEpg,
-          hasReplay: newPlan.hasReplay,
-          hasAdults: newPlan.hasAdults,
-          hasIboPlayer: newPlan.hasIboPlayer,
-          hasConnections: newPlan.hasConnections,
-          hasGuarantee: newPlan.hasGuarantee,
-          hasRefund: newPlan.hasRefund,
-          hasSupport: newPlan.hasSupport,
-          currency: "€",
-          duration: newPlan.duration || "12 mois",
-          subtitle: newPlan.subtitle || "",
-          orderIndex: newPlan.orderIndex || 0,
-        },
-      });
-      newPlan.id = dbPlan.id;
-    } catch (dbError) {
-      console.error("PRISMA ERROR:", dbError);
-    }
-
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     revalidatePath("/tarifs");
-    revalidatePath("/admin");
-    revalidatePath("/admin/forfaits");
+    revalidatePath("/tarifs", "page");
+    revalidatePath("/anaAhmedAdmin");
+    revalidatePath("/anaAhmedAdmin", "layout");
+    revalidatePath("/anaAhmedAdmin/forfaits");
+    revalidatePath("/anaAhmedAdmin/forfaits", "page");
+
     return { success: true, plan: newPlan };
   } catch (error: any) {
-    console.error("PRISMA ERROR:", error);
+    console.error("PRISMA ERROR in createPlan:", error);
     return { success: false, error: error.message || "Erreur lors de la création du forfait" };
   }
 }
@@ -419,47 +415,47 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
       };
     }
 
-    try {
-      const updateData: any = {};
-      if (data.name !== undefined) updateData.name = String(data.name);
-      if (data.price !== undefined) {
-        updateData.price = formatEuroPrice(data.price);
-        updateData.currency = "€";
-      }
-      if (data.liveChannels !== undefined) updateData.liveChannels = String(data.liveChannels);
-      if (data.quality !== undefined) updateData.quality = String(data.quality);
-      if (data.isPopular !== undefined) updateData.isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
-      if (data.hasVod !== undefined) updateData.hasVod = Boolean(data.hasVod && String(data.hasVod) !== "false");
-      if (data.hasEpg !== undefined) updateData.hasEpg = Boolean(data.hasEpg && String(data.hasEpg) !== "false");
-      if (data.hasReplay !== undefined) updateData.hasReplay = Boolean(data.hasReplay && String(data.hasReplay) !== "false");
-      if (data.hasAdults !== undefined) updateData.hasAdults = Boolean(data.hasAdults && String(data.hasAdults) !== "false");
-      if (data.hasIboPlayer !== undefined) updateData.hasIboPlayer = Boolean(data.hasIboPlayer && String(data.hasIboPlayer) !== "false");
-      if (data.hasConnections !== undefined) updateData.hasConnections = Boolean(data.hasConnections && String(data.hasConnections) !== "false");
-      if (data.hasGuarantee !== undefined) updateData.hasGuarantee = Boolean(data.hasGuarantee && String(data.hasGuarantee) !== "false");
-      if (data.hasRefund !== undefined) updateData.hasRefund = Boolean(data.hasRefund && String(data.hasRefund) !== "false");
-      if (data.hasSupport !== undefined) updateData.hasSupport = Boolean(data.hasSupport && String(data.hasSupport) !== "false");
-      if (data.currency !== undefined) updateData.currency = String(data.currency);
-      if (data.duration !== undefined) updateData.duration = String(data.duration);
-      if (data.subtitle !== undefined) updateData.subtitle = String(data.subtitle);
-      if (data.orderIndex !== undefined) updateData.orderIndex = Number(data.orderIndex);
+    const updateData: any = {};
+    if (data.name !== undefined) updateData.name = String(data.name);
+    if (data.price !== undefined) {
+      updateData.price = formatEuroPrice(data.price);
+      updateData.currency = "€";
+    }
+    if (data.liveChannels !== undefined) updateData.liveChannels = String(data.liveChannels);
+    if (data.quality !== undefined) updateData.quality = String(data.quality);
+    if (data.isPopular !== undefined) updateData.isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
+    if (data.hasVod !== undefined) updateData.hasVod = Boolean(data.hasVod && String(data.hasVod) !== "false");
+    if (data.hasEpg !== undefined) updateData.hasEpg = Boolean(data.hasEpg && String(data.hasEpg) !== "false");
+    if (data.hasReplay !== undefined) updateData.hasReplay = Boolean(data.hasReplay && String(data.hasReplay) !== "false");
+    if (data.hasAdults !== undefined) updateData.hasAdults = Boolean(data.hasAdults && String(data.hasAdults) !== "false");
+    if (data.hasIboPlayer !== undefined) updateData.hasIboPlayer = Boolean(data.hasIboPlayer && String(data.hasIboPlayer) !== "false");
+    if (data.hasConnections !== undefined) updateData.hasConnections = Boolean(data.hasConnections && String(data.hasConnections) !== "false");
+    if (data.hasGuarantee !== undefined) updateData.hasGuarantee = Boolean(data.hasGuarantee && String(data.hasGuarantee) !== "false");
+    if (data.hasRefund !== undefined) updateData.hasRefund = Boolean(data.hasRefund && String(data.hasRefund) !== "false");
+    if (data.hasSupport !== undefined) updateData.hasSupport = Boolean(data.hasSupport && String(data.hasSupport) !== "false");
+    if (data.currency !== undefined) updateData.currency = String(data.currency);
+    if (data.duration !== undefined) updateData.duration = String(data.duration);
+    if (data.subtitle !== undefined) updateData.subtitle = String(data.subtitle);
+    if (data.orderIndex !== undefined) updateData.orderIndex = Number(data.orderIndex);
 
-      if (!id.startsWith("plan-")) {
-        await prisma.pricingPlan.update({
-          where: { id },
-          data: updateData,
-        });
-      }
-    } catch (dbError) {
-      console.error("PRISMA ERROR:", dbError);
+    if (!id.startsWith("plan-")) {
+      await prisma.pricingPlan.update({
+        where: { id },
+        data: updateData,
+      });
     }
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     revalidatePath("/tarifs");
-    revalidatePath("/admin");
-    revalidatePath("/admin/forfaits");
+    revalidatePath("/tarifs", "page");
+    revalidatePath("/anaAhmedAdmin");
+    revalidatePath("/anaAhmedAdmin", "layout");
+    revalidatePath("/anaAhmedAdmin/forfaits");
+    revalidatePath("/anaAhmedAdmin/forfaits", "page");
+
     return { success: true };
   } catch (error: any) {
-    console.error("PRISMA ERROR:", error);
+    console.error("PRISMA ERROR in updatePlan:", error);
     return { success: false, error: error.message || "Erreur lors de la modification du forfait" };
   }
 }
@@ -468,23 +464,23 @@ export async function deletePlan(id: string): Promise<{ success: boolean; error?
   try {
     memoryPlans = memoryPlans.filter((p) => p.id !== id);
 
-    try {
-      if (!id.startsWith("plan-")) {
-        await prisma.pricingPlan.delete({
-          where: { id },
-        });
-      }
-    } catch (dbError) {
-      console.error("PRISMA ERROR:", dbError);
+    if (!id.startsWith("plan-")) {
+      await prisma.pricingPlan.delete({
+        where: { id },
+      });
     }
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
     revalidatePath("/tarifs");
+    revalidatePath("/tarifs", "page");
     revalidatePath("/anaAhmedAdmin");
+    revalidatePath("/anaAhmedAdmin", "layout");
     revalidatePath("/anaAhmedAdmin/forfaits");
+    revalidatePath("/anaAhmedAdmin/forfaits", "page");
+
     return { success: true };
   } catch (error: any) {
-    console.error("PRISMA ERROR:", error);
+    console.error("PRISMA ERROR in deletePlan:", error);
     return { success: false, error: error.message || "Erreur lors de la suppression du forfait" };
   }
 }

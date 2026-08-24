@@ -221,6 +221,12 @@ export default function AdminForfaitsPage() {
         <div className="py-12 text-center text-sm font-semibold text-slate-400">
           Chargement des forfaits...
         </div>
+      ) : plans.length === 0 ? (
+        <div className="py-16 text-center rounded-3xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.02] p-8">
+          <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">
+            Aucun forfait disponible. Cliquez sur &apos;Ajouter&apos; pour créer votre premier forfait.
+          </p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan) => (
