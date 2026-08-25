@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+export const metadata: Metadata = {
+  verification: {
+    google: "ovPZcOFou2AOtK_RhTFuX6uumaFngJMlg5ncZwj4oew",
+  },
+};
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
