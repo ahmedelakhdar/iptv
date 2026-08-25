@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { HeroSection } from "@/components/features/HeroSection";
 import { TrendingMovies } from "@/components/features/TrendingMovies";
 import { PricingCards } from "@/components/features/PricingCards";
-import { ComparisonTable } from "@/components/features/ComparisonTable";
 import { WhyUsGrid } from "@/components/features/WhyUsGrid";
 import { HowToOrderGrid } from "@/components/features/HowToOrderGrid";
 import { SEOSection } from "@/components/features/SEOSection";
@@ -25,9 +24,6 @@ export default function Home() {
 
         {/* 3. Pricing Cards Grid (Lite, Standard, Premium, VIP) */}
         <PricingCards />
-
-        {/* 3. Comparison Table Component */}
-        <ComparisonTable />
 
         {/* 4. Pourquoi Nous Feature Grid */}
         <WhyUsGrid />

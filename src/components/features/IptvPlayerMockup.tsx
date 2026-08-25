@@ -220,7 +220,7 @@ export function IptvPlayerMockup() {
   };
 
   return (
-    <div className="relative h-[430px] w-full min-w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10">
+    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10">
       {/* Ambient glows */}
       <div className="pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-3xl" />
       <div className="pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-3xl" />
