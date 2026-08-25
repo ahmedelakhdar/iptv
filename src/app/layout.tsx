@@ -24,8 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: `${siteName} | L'Expérience IPTV Ultime & Streaming 4K`,
-    description:
-      `Diffusion Instantanée, Qualité Impeccable. Découvrez ${siteName} avec +35,000 chaînes en direct et 80,000 VOD en 4K/8K. Activation < 15 min.`,
+    description: `Diffusion Instantanée, Qualité Impeccable. Découvrez ${siteName} avec +35,000 chaînes en direct et 80,000 VOD en 4K/8K. Activation < 15 min.`,
     keywords: [
       siteName,
       "IPTV Premium",
@@ -96,11 +95,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 antialiased selection:bg-cyan-500 selection:text-white transition-colors duration-300 overflow-x-hidden w-full max-w-[100vw]">
+      <body className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100">
         <ThemeProvider>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
