@@ -32,6 +32,7 @@ const EMPTY_FORM = {
   liveChannels: "8 000",
   quality: "HD",
   isPopular: false,
+  isVip: false,
   bonusDays: 0,
   description: "",
   originalPrice: "",
@@ -90,6 +91,7 @@ export default function AdminForfaitsPage() {
       liveChannels: plan.liveChannels || "8 000",
       quality: plan.quality || "HD",
       isPopular: plan.isPopular ?? false,
+      isVip: plan.isVip ?? false,
       bonusDays: plan.bonusDays ?? 0,
       description: plan.description || "",
       originalPrice: plan.originalPrice ? String(plan.originalPrice) : "",
@@ -129,6 +131,7 @@ export default function AdminForfaitsPage() {
       liveChannels: formData.liveChannels,
       quality: formData.quality,
       isPopular: formData.isPopular,
+      isVip: formData.isVip,
       bonusDays: Number(formData.bonusDays) || 0,
       description: formData.description,
       originalPrice: formData.originalPrice ? parseFloat(String(formData.originalPrice)) : null,
@@ -226,18 +229,25 @@ export default function AdminForfaitsPage() {
           {plans.map((plan) => (
             <div
               key={plan.id}
-              className={`glass-bento rounded-3xl p-6 border relative flex flex-col justify-between shadow-sm transition-all bg-white/90 dark:bg-[#070714]/90 ${
-                plan.isPopular
-                  ? "border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
-                  : "border-slate-200 dark:border-white/10 hover:border-violet-500/40"
+              className={`glass-bento rounded-3xl p-6 border relative flex flex-col justify-between shadow-sm transition-all ${
+                plan.isVip
+                  ? "border-2 border-amber-400/80 shadow-[0_0_25px_rgba(251,191,36,0.25)] bg-gradient-to-b from-[#18140c]/95 to-[#0a0a0f]/95 dark:from-[#18140c]/95 dark:to-[#0a0a0f]/95"
+                  : plan.isPopular
+                  ? "border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)] bg-white/90 dark:bg-[#070714]/90"
+                  : "border-slate-200 dark:border-white/10 hover:border-violet-500/40 bg-white/90 dark:bg-[#070714]/90"
               }`}
             >
-              {plan.isPopular && (
+              {plan.isVip ? (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-full border border-amber-400/80 bg-gradient-to-r from-amber-500 to-yellow-500 px-3 py-0.5 text-[10px] font-black text-slate-950 shadow-md">
+                  <Sparkles className="h-3 w-3 text-slate-950" />
+                  <span>CADRE DORÉ VIP</span>
+                </div>
+              ) : plan.isPopular ? (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 rounded-full border border-cyan-400/60 bg-gradient-to-r from-cyan-500 to-emerald-500 px-3 py-0.5 text-[10px] font-bold text-white shadow-md">
                   <Flame className="h-3 w-3 text-amber-300" />
                   <span>POPULAIRE</span>
                 </div>
-              )}
+              ) : null}
 
               <div>
                 <div className="flex items-start justify-between mb-3">
@@ -401,7 +411,7 @@ export default function AdminForfaitsPage() {
                     </select>
                   </div>
 
-                  {/* isPopular toggle — same row as quality */}
+                  {/* isPopular toggle */}
                   <div className="flex items-end">
                     <label className="flex w-full items-center gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 dark:bg-amber-950/20 p-2.5 text-xs text-amber-800 dark:text-amber-200 cursor-pointer hover:border-amber-400 transition-colors h-[42px]">
                       <input
@@ -412,6 +422,20 @@ export default function AdminForfaitsPage() {
                       />
                       <Flame className="h-3.5 w-3.5 text-amber-500 flex-shrink-0" />
                       <span className="font-bold">Badge &quot;POPULAIRE&quot;</span>
+                    </label>
+                  </div>
+
+                  {/* isVip toggle */}
+                  <div className="flex items-end sm:col-span-2">
+                    <label className="flex w-full items-center gap-2.5 rounded-xl border border-amber-400/60 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-600/20 p-2.5 text-xs text-amber-700 dark:text-amber-300 cursor-pointer hover:border-amber-400 transition-colors h-[42px] shadow-sm">
+                      <input
+                        type="checkbox"
+                        checked={formData.isVip}
+                        onChange={(e) => setFormData({ ...formData, isVip: e.target.checked })}
+                        className="h-4 w-4 rounded border-amber-400 text-amber-500 focus:ring-amber-400 flex-shrink-0"
+                      />
+                      <Sparkles className="h-4 w-4 text-amber-400 flex-shrink-0 animate-pulse" />
+                      <span className="font-black tracking-wide">Marquer comme VIP (Cadre doré &quot;Gold&quot;)</span>
                     </label>
                   </div>
 

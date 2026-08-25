@@ -26,6 +26,7 @@ model PricingPlan {
   liveChannels   String
   quality        String
   isPopular      Boolean  @default(false)
+  isVip          Boolean  @default(false)
   features       String[]
   bonusDays      Int      @default(0)
   description    String?

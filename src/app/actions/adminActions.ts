@@ -14,6 +14,7 @@ export interface PlanData {
   liveChannels: string;
   quality: string;
   isPopular: boolean;
+  isVip?: boolean;
   /** Dynamic feature strings shown on the public pricing card and detail modal */
   features: string[];
   bonusDays?: number;
@@ -125,6 +126,7 @@ const DEFAULT_PLANS: PlanData[] = [
     liveChannels: "35 000",
     quality: "4K & 8K",
     isPopular: false,
+    isVip: true,
     features: [
       "35 000 chaînes TV en direct",
       "Qualité 4K & 8K",
@@ -302,6 +304,7 @@ export async function getPlans(): Promise<PlanData[]> {
       liveChannels: p.liveChannels,
       quality: p.quality,
       isPopular: p.isPopular,
+      isVip: p.isVip ?? false,
       features: p.features,
       bonusDays: p.bonusDays ?? 0,
       description: p.description || "",
@@ -332,6 +335,7 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
     const subtitleStr = String(data.subtitle || "");
     const orderIndexInt = typeof data.orderIndex === "number" && !isNaN(data.orderIndex) ? Math.floor(data.orderIndex) : 0;
     const isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
+    const isVip = Boolean(data.isVip && String(data.isVip) !== "false");
     const features = Array.isArray(data.features) ? data.features.filter(Boolean) : [];
     const bonusDays = typeof data.bonusDays === "number" && !isNaN(data.bonusDays) ? Math.max(0, Math.floor(data.bonusDays)) : 0;
     const description = data.description ? String(data.description).trim() : null;
@@ -344,6 +348,7 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
         liveChannels: liveChannelsStr,
         quality: qualityStr,
         isPopular,
+        isVip,
         features,
         bonusDays,
         description,
@@ -362,6 +367,7 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
       liveChannels: dbPlan.liveChannels,
       quality: dbPlan.quality,
       isPopular: dbPlan.isPopular,
+      isVip: dbPlan.isVip,
       features: dbPlan.features,
       bonusDays: dbPlan.bonusDays,
       description: dbPlan.description || "",
@@ -411,6 +417,7 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
     if (data.liveChannels !== undefined) updateData.liveChannels = String(data.liveChannels);
     if (data.quality !== undefined) updateData.quality = String(data.quality);
     if (data.isPopular !== undefined) updateData.isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
+    if (data.isVip !== undefined) updateData.isVip = Boolean(data.isVip && String(data.isVip) !== "false");
     if (Array.isArray(data.features)) updateData.features = data.features.filter(Boolean);
     if (data.bonusDays !== undefined) updateData.bonusDays = Math.max(0, Math.floor(Number(data.bonusDays))) || 0;
     if (data.description !== undefined) updateData.description = String(data.description).trim();

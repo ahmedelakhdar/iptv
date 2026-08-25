@@ -83,23 +83,31 @@ export default function TarifsPage() {
               const numPrice = parseFloat(String(plan.price).replace(/[^0-9.]/g, "")) || 0;
               const origPrice = typeof plan.originalPrice === "number" ? plan.originalPrice : 0;
               const discountPercent = origPrice > numPrice && origPrice > 0 ? Math.round(((origPrice - numPrice) / origPrice) * 100) : 0;
+              const isVipPlan = Boolean(plan.isVip || plan.name?.toLowerCase().includes("vip"));
 
               return (
                 <div
                   key={plan.id}
                   className={`glass-bento glass-bento-hover relative flex flex-col justify-between rounded-3xl p-6 sm:p-7 border transition-all duration-500 group ${
-                    plan.isPopular
+                    isVipPlan
+                      ? "border-2 border-amber-400/80 shadow-[0_0_25px_rgba(251,191,36,0.2)] bg-gradient-to-b from-[#1b170c]/95 via-[#120f08]/95 to-[#0a0a0f]/95 dark:from-[#1b170c]/95 dark:via-[#120f08]/95 dark:to-[#0a0a0f]/95 lg:scale-105 z-20"
+                      : plan.isPopular
                       ? "border-cyan-500/80 dark:border-cyan-400/80 bg-white/90 dark:bg-gradient-to-b dark:from-[#101026]/90 dark:to-[#090918]/80 shadow-xl dark:shadow-[0_0_45px_rgba(6,182,212,0.35)] lg:scale-105 z-20"
                       : "border-slate-200 dark:border-white/10 hover:border-violet-500/40 z-10"
                   }`}
                 >
-                  {/* Floating "POPULAIRE" Badge */}
-                  {plan.isPopular && (
+                  {/* Floating Badges */}
+                  {isVipPlan ? (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full border border-amber-400/80 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 px-4 py-1 text-xs font-black text-slate-950 shadow-[0_0_15px_rgba(251,191,36,0.4)]">
+                      <Sparkles className="h-3.5 w-3.5 text-slate-950 animate-pulse" />
+                      <span>FORFAIT VIP DORÉ</span>
+                    </div>
+                  ) : plan.isPopular ? (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 px-4 py-1 text-xs font-black text-white shadow-md">
                       <Flame className="h-3.5 w-3.5 text-amber-300" />
                       <span>POPULAIRE</span>
                     </div>
-                  )}
+                  ) : null}
 
                   {/* Auto-Calculated Discount Badge */}
                   {discountPercent > 0 && (
@@ -111,7 +119,7 @@ export default function TarifsPage() {
                 <div>
                   {/* Plan Name & Price */}
                   <div className="mb-4">
-                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2">
+                    <h3 className={`text-xl font-extrabold mb-2 ${isVipPlan ? "text-amber-300" : "text-slate-900 dark:text-white"}`}>
                       {plan.name}
                     </h3>
                     {plan.originalPrice && plan.originalPrice > 0 && (
@@ -120,7 +128,13 @@ export default function TarifsPage() {
                       </div>
                     )}
                     <div className="flex items-baseline gap-1.5">
-                      <span className={`text-3xl sm:text-4xl font-black ${plan.isPopular ? "gradient-text-cyan" : "text-slate-900 dark:text-white"}`}>
+                      <span className={`text-3xl sm:text-4xl font-black ${
+                        isVipPlan
+                          ? "text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]"
+                          : plan.isPopular
+                          ? "gradient-text-cyan"
+                          : "text-slate-900 dark:text-white"
+                      }`}>
                         {formatEuroPrice(plan.price)}
                       </span>
                       <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -138,8 +152,12 @@ export default function TarifsPage() {
                   <ul className="space-y-3 mb-8">
                     {(plan.features && plan.features.length > 0 ? plan.features : []).map((feat, idx) => (
                       <li key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                          <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
+                        <div className={`flex h-4 w-4 items-center justify-center rounded-full border flex-shrink-0 shadow-sm ${
+                          isVipPlan
+                            ? "bg-amber-500/20 border-amber-400/50"
+                            : "bg-cyan-100 dark:bg-cyan-950/80 border-cyan-500/40"
+                        }`}>
+                          <Check className={`h-3 w-3 ${isVipPlan ? "text-amber-400" : "text-cyan-600 dark:text-cyan-400"}`} />
                         </div>
                         <span className="leading-snug">{feat}</span>
                       </li>
@@ -149,7 +167,15 @@ export default function TarifsPage() {
 
                 {/* Card Button - Opens PlanDetailsModal */}
                 <div className="pt-4 border-t border-slate-200 dark:border-white/10 relative z-20">
-                  {plan.isPopular ? (
+                  {isVipPlan ? (
+                    <button
+                      onClick={() => handleOpenModal(plan)}
+                      className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 py-3.5 text-center text-xs font-black text-slate-950 shadow-[0_0_20px_rgba(251,191,36,0.3)] transition-all duration-300 hover:scale-105 min-h-[44px]"
+                    >
+                      <span>Voir l&apos;offre</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-slate-950 transition-transform group-hover/btn:translate-x-1" />
+                    </button>
+                  ) : plan.isPopular ? (
                     <button
                       onClick={() => handleOpenModal(plan)}
                       className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full violet-cyan-gradient py-3.5 text-center text-xs font-extrabold text-white shadow-lg transition-all duration-300 hover:scale-105 min-h-[44px]"
