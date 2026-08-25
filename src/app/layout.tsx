@@ -1,9 +1,4 @@
 import type { Metadata } from "next";
-export const metadata: Metadata = {
-  verification: {
-    google: "ovPZcOFou2AOtK_RhTFuX6uumaFngJMlg5ncZwj4oew",
-  },
-};
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -53,6 +48,9 @@ export async function generateMetadata(): Promise<Metadata> {
         es: "https://iptv-netherlands.com?lang=es",
         pt: "https://iptv-netherlands.com?lang=pt",
       },
+    },
+    verification: {
+      google: "ovPZcOFou2AOtK_RhTFuX6uumaFngJMlg5ncZwj4oew",
     },
     openGraph: {
       title: `${siteName} | L'Expérience IPTV Ultime 4K/8K`,
