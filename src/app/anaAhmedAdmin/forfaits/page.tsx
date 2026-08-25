@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, KeyboardEvent } from "react";
 import {
   getPlans,
   createPlan,
@@ -16,58 +16,49 @@ import {
   Flame,
   X,
   Layers,
-  Tv,
-  Film,
-  RotateCcw,
-  ShieldCheck,
-  Headphones,
   Sparkles,
   AlertCircle,
+  Tag,
 } from "lucide-react";
-
 import { useRouter } from "next/navigation";
-import { getConnectionsText, formatEuroPrice } from "@/lib/utils";
+import { formatEuroPrice } from "@/lib/utils";
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const EMPTY_FORM = {
+  name: "Lite",
+  price: "27",
+  duration: "12 mois",
+  liveChannels: "8 000",
+  quality: "HD",
+  isPopular: false,
+  bonusDays: 0,
+  description: "",
+  originalPrice: "",
+};
 
 export default function AdminForfaitsPage() {
   const router = useRouter();
   const [plans, setPlans] = useState<PlanData[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-
-  // Toast Feedback State
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
-  // Modal Error State inside Modal UI
   const [modalError, setModalError] = useState<string | null>(null);
-
-  const showToast = (message: string, type: "success" | "error" = "success") => {
-    setToast({ message, type });
-    setTimeout(() => {
-      setToast(null);
-    }, 4000);
-  };
-
-  // Modal State for Adding/Editing Plans
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<PlanData | null>(null);
 
-  // Form State initialized with valid default starting values
-  const [formData, setFormData] = useState({
-    name: "Lite",
-    price: "27 €",
-    duration: "12 mois",
-    liveChannels: "8 000",
-    quality: "HD",
-    isPopular: false,
-    hasVod: false,
-    hasEpg: false,
-    hasReplay: false,
-    hasAdults: false,
-    hasIboPlayer: false,
-    hasConnections: false,
-    hasGuarantee: false,
-    hasRefund: false,
-    hasSupport: false,
-  });
+  // ── Core scalar form fields ──────────────────────────────────────────────
+  const [formData, setFormData] = useState(EMPTY_FORM);
+
+  // ── Dynamic features state ───────────────────────────────────────────────
+  const [features, setFeatures] = useState<string[]>([]);
+  const [featureInput, setFeatureInput] = useState("");
+  const featureInputRef = useRef<HTMLInputElement>(null);
+
+  const showToast = (message: string, type: "success" | "error" = "success") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
 
   const loadData = async () => {
     setLoading(true);
@@ -76,77 +67,72 @@ export default function AdminForfaitsPage() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useEffect(() => { loadData(); }, []);
 
+  // ── Open create modal ────────────────────────────────────────────────────
   const handleOpenCreateModal = () => {
     setEditingPlan(null);
     setModalError(null);
-    setFormData({
-      name: "Lite",
-      price: "27 €",
-      duration: "12 mois",
-      liveChannels: "8 000",
-      quality: "HD",
-      isPopular: false,
-      hasVod: true,
-      hasEpg: true,
-      hasReplay: false,
-      hasAdults: false,
-      hasIboPlayer: true,
-      hasConnections: true,
-      hasGuarantee: true,
-      hasRefund: true,
-      hasSupport: true,
-    });
+    setFormData({ ...EMPTY_FORM });
+    setFeatures([]);
+    setFeatureInput("");
     setIsModalOpen(true);
   };
 
+  // ── Open edit modal ──────────────────────────────────────────────────────
   const handleOpenEditModal = (plan: PlanData) => {
     setEditingPlan(plan);
     setModalError(null);
     setFormData({
       name: plan.name || "Lite",
-      price: plan.price || "27 €",
+      price: plan.price || "27",
       duration: (plan.duration || plan.period || "12 mois").replace(/^\/\s*/, ""),
       liveChannels: plan.liveChannels || "8 000",
       quality: plan.quality || "HD",
       isPopular: plan.isPopular ?? false,
-      hasVod: plan.hasVod ?? false,
-      hasEpg: plan.hasEpg ?? false,
-      hasReplay: plan.hasReplay ?? false,
-      hasAdults: plan.hasAdults ?? false,
-      hasIboPlayer: plan.hasIboPlayer ?? false,
-      hasConnections: plan.hasConnections ?? false,
-      hasGuarantee: plan.hasGuarantee ?? false,
-      hasRefund: plan.hasRefund ?? false,
-      hasSupport: plan.hasSupport ?? false,
+      bonusDays: plan.bonusDays ?? 0,
+      description: plan.description || "",
+      originalPrice: plan.originalPrice ? String(plan.originalPrice) : "",
     });
+    setFeatures(Array.isArray(plan.features) ? [...plan.features] : []);
+    setFeatureInput("");
     setIsModalOpen(true);
   };
 
+  // ── Add a feature tag ────────────────────────────────────────────────────
+  const addFeature = () => {
+    const trimmed = featureInput.trim();
+    if (!trimmed || features.includes(trimmed)) return;
+    setFeatures((prev) => [...prev, trimmed]);
+    setFeatureInput("");
+    featureInputRef.current?.focus();
+  };
+
+  const handleFeatureKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") { e.preventDefault(); addFeature(); }
+  };
+
+  const removeFeature = (idx: number) => {
+    setFeatures((prev) => prev.filter((_, i) => i !== idx));
+  };
+
+  // ── Submit ───────────────────────────────────────────────────────────────
   const handleSavePlan = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setModalError(null);
 
-    const payload = {
+    const payload: Omit<PlanData, "id"> = {
       name: formData.name,
       price: formData.price,
       duration: formData.duration,
       liveChannels: formData.liveChannels,
       quality: formData.quality,
       isPopular: formData.isPopular,
-      hasVod: formData.hasVod,
-      hasEpg: formData.hasEpg,
-      hasReplay: formData.hasReplay,
-      hasAdults: formData.hasAdults,
-      hasIboPlayer: formData.hasIboPlayer,
-      hasConnections: formData.hasConnections,
-      hasGuarantee: formData.hasGuarantee,
-      hasRefund: formData.hasRefund,
-      hasSupport: formData.hasSupport,
+      bonusDays: Number(formData.bonusDays) || 0,
+      description: formData.description,
+      originalPrice: formData.originalPrice ? parseFloat(String(formData.originalPrice)) : null,
+      features,
     };
 
     let res: { success: boolean; error?: string };
@@ -185,12 +171,12 @@ export default function AdminForfaitsPage() {
   };
 
   return (
-    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-8 relative">
-      
-      {/* Toast Banner Feedback */}
+    <div className="p-4 sm:p-6 lg:p-10 max-w-7xl mx-auto space-y-8 relative">
+
+      {/* Toast */}
       {toast && (
         <div
-          className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border backdrop-blur-xl transition-all animate-bounce-short ${
+          className={`fixed top-6 right-6 z-[60] flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border backdrop-blur-xl transition-all ${
             toast.type === "success"
               ? "bg-emerald-950/90 border-emerald-500/50 text-emerald-200"
               : "bg-rose-950/90 border-rose-500/50 text-rose-200"
@@ -200,22 +186,21 @@ export default function AdminForfaitsPage() {
           <span className="text-xs font-bold">{toast.message}</span>
         </div>
       )}
-      
+
       {/* Header */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/40 px-3.5 py-1 text-xs font-bold text-cyan-600 dark:text-cyan-300 mb-2 backdrop-blur-xl">
-            <Layers className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400" />
+            <Layers className="h-3.5 w-3.5" />
             <span>GESTION DES PACKAGES</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
             Gestion des <span className="animated-gradient-text">Forfaits ({plans.length})</span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light mt-1">
-            Mettez à jour les prix, qualités et options incluses des forfaits IPTV Netherlands en temps réel.
+            Créez et éditez les forfaits avec des fonctionnalités entièrement personnalisées.
           </p>
         </div>
-
         <button
           onClick={handleOpenCreateModal}
           className="flex items-center gap-2 rounded-full violet-cyan-gradient px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg transition-all hover:scale-105"
@@ -225,7 +210,7 @@ export default function AdminForfaitsPage() {
         </button>
       </div>
 
-      {/* PRICING PLANS CARDS GRID */}
+      {/* Plans grid */}
       {loading ? (
         <div className="py-12 text-center text-sm font-semibold text-slate-400">
           Chargement des forfaits...
@@ -243,7 +228,7 @@ export default function AdminForfaitsPage() {
               key={plan.id}
               className={`glass-bento rounded-3xl p-6 border relative flex flex-col justify-between shadow-sm transition-all bg-white/90 dark:bg-[#070714]/90 ${
                 plan.isPopular
-                  ? "border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)] bg-cyan-500/5 dark:bg-cyan-950/20"
+                  ? "border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)]"
                   : "border-slate-200 dark:border-white/10 hover:border-violet-500/40"
               }`}
             >
@@ -257,14 +242,9 @@ export default function AdminForfaitsPage() {
               <div>
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                      {plan.name}
-                    </h3>
-                    <p className="text-2xl font-black gradient-text-cyan mt-1">
-                      {formatEuroPrice(plan.price)}
-                    </p>
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">{plan.name}</h3>
+                    <p className="text-2xl font-black gradient-text-cyan mt-1">{formatEuroPrice(plan.price)}</p>
                   </div>
-
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => handleOpenEditModal(plan)}
@@ -288,29 +268,20 @@ export default function AdminForfaitsPage() {
                   <span>Live: <strong className="text-slate-900 dark:text-white">{plan.liveChannels}</strong></span>
                 </div>
 
-                {/* Inclusion Summary Badges */}
-                <div className="space-y-2 mb-6 text-xs text-slate-600 dark:text-slate-300">
-                  <div className="flex items-center gap-2">
-                    <Check className={`h-3.5 w-3.5 ${plan.hasVod ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-slate-600"}`} />
-                    <span className={plan.hasVod ? "text-slate-900 dark:text-white font-medium" : "text-slate-400 dark:text-slate-500 line-through"}>VOD (Films &amp; Séries)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className={`h-3.5 w-3.5 ${plan.hasEpg ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-slate-600"}`} />
-                    <span className={plan.hasEpg ? "text-slate-900 dark:text-white font-medium" : "text-slate-400 dark:text-slate-500 line-through"}>EPG Guide TV</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className={`h-3.5 w-3.5 ${plan.hasReplay ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-slate-600"}`} />
-                    <span className={plan.hasReplay ? "text-slate-900 dark:text-white font-medium" : "text-slate-400 dark:text-slate-500 line-through"}>Replay 7 jours</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className={`h-3.5 w-3.5 ${plan.hasConnections ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-slate-600"}`} />
-                    <span className={plan.hasConnections ? "text-slate-900 dark:text-white font-bold" : "text-slate-400 dark:text-slate-500 line-through"}>{getConnectionsText(plan.name)}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className={`h-3.5 w-3.5 ${plan.hasAdults ? "text-cyan-600 dark:text-cyan-400" : "text-slate-400 dark:text-slate-600"}`} />
-                    <span className={plan.hasAdults ? "text-slate-900 dark:text-white font-medium" : "text-slate-400 dark:text-slate-500 line-through"}>Chaînes Adultes (+18)</span>
-                  </div>
-                </div>
+                {/* Dynamic features list */}
+                <ul className="space-y-1.5 mb-4">
+                  {(plan.features ?? []).slice(0, 5).map((feat, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
+                      <Check className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400 flex-shrink-0 mt-px" />
+                      <span className="leading-snug">{feat}</span>
+                    </li>
+                  ))}
+                  {(plan.features ?? []).length > 5 && (
+                    <li className="text-[10px] text-slate-500 dark:text-slate-600 ps-5">
+                      + {plan.features.length - 5} autres fonctionnalités
+                    </li>
+                  )}
+                </ul>
               </div>
 
               <div className="pt-3 border-t border-slate-200 dark:border-white/10 text-center">
@@ -323,14 +294,14 @@ export default function AdminForfaitsPage() {
         </div>
       )}
 
-      {/* MODAL EDIT / CREATE PLAN */}
+      {/* ── MODAL ──────────────────────────────────────────────────────────── */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 dark:bg-[#030308]/85 backdrop-blur-2xl">
           <div className="glass-bento relative z-10 max-w-xl w-full rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-cyan-500/40 bg-white dark:bg-[#070714] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden text-slate-900 dark:text-white">
-            
-            {/* Header */}
+
+            {/* Modal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10 flex-shrink-0">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+              <h3 className="text-lg font-bold">
                 {editingPlan ? `Modifier — ${editingPlan.name}` : "Nouveau Forfait"}
               </h3>
               <button
@@ -341,49 +312,41 @@ export default function AdminForfaitsPage() {
               </button>
             </div>
 
-            {/* Modal Error Alert Banner */}
+            {/* Modal Error */}
             {modalError && (
-              <div className="mt-4 p-3.5 rounded-2xl border border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-semibold flex items-center gap-2.5 shadow-sm">
+              <div className="mt-4 p-3.5 rounded-2xl border border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-300 text-xs font-semibold flex items-center gap-2.5">
                 <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
                 <span>{modalError}</span>
               </div>
             )}
 
-            {/* Scrollable Form Body */}
-            <form onSubmit={handleSavePlan} className="overflow-y-auto py-5 space-y-6 pr-1 flex-1 custom-scrollbar">
-              
-              {/* SECTION 1: TEXT & SELECT INPUTS */}
+            {/* Scrollable Form */}
+            <form onSubmit={handleSavePlan} className="overflow-y-auto py-5 space-y-5 pr-1 flex-1 custom-scrollbar">
+
+              {/* ── SECTION 1: Valeurs du forfait ── */}
               <div className="space-y-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] p-4">
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 border-b border-slate-200 dark:border-white/10 pb-2">
                   Valeurs du forfait
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                  {/* Name Select Dropdown */}
+                  {/* Name */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Nom du forfait
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Nom du forfait</label>
                     <select
-                      value={formData.name || "Lite"}
+                      value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#090919] px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none cursor-pointer"
                     >
-                      <option value="Lite">Lite</option>
-                      <option value="Standard">Standard</option>
-                      <option value="Premium">Premium</option>
-                      <option value="VIP">VIP</option>
-                      <option value="Duo">Duo</option>
-                      <option value="Family">Family</option>
-                      <option value="Maison">Maison</option>
+                      {["Lite", "Standard", "Premium", "VIP", "Duo", "Family", "Maison"].map((n) => (
+                        <option key={n} value={n}>{n}</option>
+                      ))}
                     </select>
                   </div>
 
                   {/* Price */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Prix (en €)
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Prix (en €)</label>
                     <div className="relative flex items-center">
                       <input
                         type="text"
@@ -393,33 +356,27 @@ export default function AdminForfaitsPage() {
                         placeholder="27"
                         className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 pl-3.5 pr-10 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none"
                       />
-                      <div className="absolute right-3 pointer-events-none flex items-center justify-center font-bold text-cyan-600 dark:text-cyan-400 text-sm">
-                        €
-                      </div>
+                      <div className="absolute right-3 pointer-events-none font-bold text-cyan-600 dark:text-cyan-400 text-sm">€</div>
                     </div>
                   </div>
 
-                  {/* Duration Select Dropdown */}
+                  {/* Duration */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Durée d&apos;abonnement
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Durée d&apos;abonnement</label>
                     <select
                       value={formData.duration}
                       onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
                       className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#090919] px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none cursor-pointer"
                     >
-                      <option value="3 mois">3 mois</option>
-                      <option value="6 mois">6 mois</option>
-                      <option value="12 mois">12 mois</option>
+                      {["3 mois", "6 mois", "12 mois"].map((d) => (
+                        <option key={d} value={d}>{d}</option>
+                      ))}
                     </select>
                   </div>
 
-                  {/* Live Channels */}
+                  {/* Live channels */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Chaînes live
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Chaînes live</label>
                     <input
                       type="text"
                       required
@@ -430,134 +387,157 @@ export default function AdminForfaitsPage() {
                     />
                   </div>
 
-                  {/* Quality Select Dropdown */}
+                  {/* Quality */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
-                      Qualité d&apos;image
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Qualité d&apos;image</label>
                     <select
                       value={formData.quality}
                       onChange={(e) => setFormData({ ...formData, quality: e.target.value })}
                       className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#090919] px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none cursor-pointer"
                     >
-                      <option value="HD">HD</option>
-                      <option value="HD & Full HD">HD &amp; Full HD</option>
-                      <option value="4K">4K</option>
-                      <option value="4K & 8K">4K &amp; 8K</option>
+                      {["HD", "HD & Full HD", "4K", "4K & 8K"].map((q) => (
+                        <option key={q} value={q}>{q}</option>
+                      ))}
                     </select>
+                  </div>
+
+                  {/* isPopular toggle — same row as quality */}
+                  <div className="flex items-end">
+                    <label className="flex w-full items-center gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 dark:bg-amber-950/20 p-2.5 text-xs text-amber-800 dark:text-amber-200 cursor-pointer hover:border-amber-400 transition-colors h-[42px]">
+                      <input
+                        type="checkbox"
+                        checked={formData.isPopular}
+                        onChange={(e) => setFormData({ ...formData, isPopular: e.target.checked })}
+                        className="h-4 w-4 rounded border-amber-500/40 text-amber-500 focus:ring-amber-400 flex-shrink-0"
+                      />
+                      <Flame className="h-3.5 w-3.5 text-amber-500 flex-shrink-0" />
+                      <span className="font-bold">Badge &quot;POPULAIRE&quot;</span>
+                    </label>
+                  </div>
+
+                  {/* Original Price */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Prix original barré (Optionnel)
+                    </label>
+                    <div className="relative flex items-center">
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        value={formData.originalPrice}
+                        onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
+                        placeholder="Ex: 47"
+                        className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 pl-3.5 pr-10 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none"
+                      />
+                      <div className="absolute right-3 pointer-events-none font-bold text-cyan-600 dark:text-cyan-400 text-sm">€</div>
+                    </div>
+                  </div>
+
+                  {/* Bonus Days */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Jours de garantie supplémentaires (+X jours)
+                    </label>
+                    <input
+                      type="number"
+                      min="0"
+                      value={formData.bonusDays}
+                      onChange={(e) => setFormData({ ...formData, bonusDays: Math.max(0, parseInt(e.target.value) || 0) })}
+                      placeholder="Ex: 45 (si 0, masque l'affichage + X jours)"
+                      className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Description */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Détail de l&apos;offre (Description)
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      placeholder="Ex: Le forfait Lite est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d'image haute fidélité..."
+                      className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none custom-scrollbar"
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* SECTION 2: CHECKBOXES FOR BOOLEAN FIELDS */}
-              <div className="space-y-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] p-4">
+              {/* ── SECTION 2: Dynamic Features ── */}
+              <div className="space-y-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] p-4">
                 <h4 className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 border-b border-slate-200 dark:border-white/10 pb-2">
-                  Fonctionnalités Incluses (Checkboxes)
+                  Fonctionnalités Incluses
                 </h4>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <label className="flex items-center gap-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 dark:bg-amber-950/20 p-2.5 text-xs text-amber-800 dark:text-amber-200 cursor-pointer hover:border-amber-400 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.isPopular}
-                      onChange={(e) => setFormData({ ...formData, isPopular: e.target.checked })}
-                      className="h-4 w-4 rounded border-amber-500/40 text-amber-500 focus:ring-amber-400"
-                    />
-                    <span className="font-bold">Badge &quot;POPULAIRE&quot;</span>
-                  </label>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 font-light">
+                  Tapez une fonctionnalité et appuyez sur <kbd className="rounded bg-slate-200 dark:bg-white/10 px-1 py-px text-[9px] font-mono">Entrée</kbd> ou cliquez sur <strong>Ajouter</strong>.
+                </p>
 
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
+                {/* Input row */}
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Tag className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
                     <input
-                      type="checkbox"
-                      checked={formData.hasVod}
-                      onChange={(e) => setFormData({ ...formData, hasVod: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
+                      ref={featureInputRef}
+                      type="text"
+                      value={featureInput}
+                      onChange={(e) => setFeatureInput(e.target.value)}
+                      onKeyDown={handleFeatureKeyDown}
+                      placeholder="Ex: EPG (Guide TV), Replay 7 jours…"
+                      className="w-full rounded-xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 pl-9 pr-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:border-emerald-500 focus:outline-none placeholder-slate-400"
                     />
-                    <span className="font-semibold">VOD (Films &amp; Séries)</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasEpg}
-                      onChange={(e) => setFormData({ ...formData, hasEpg: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">EPG (Guide TV)</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasReplay}
-                      onChange={(e) => setFormData({ ...formData, hasReplay: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Replay 7 jours</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasAdults}
-                      onChange={(e) => setFormData({ ...formData, hasAdults: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Adultes (+18)</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasIboPlayer}
-                      onChange={(e) => setFormData({ ...formData, hasIboPlayer: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">IBO Player</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasConnections}
-                      onChange={(e) => setFormData({ ...formData, hasConnections: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Connexions</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasGuarantee}
-                      onChange={(e) => setFormData({ ...formData, hasGuarantee: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Abonnement garanti 12 mois</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasRefund}
-                      onChange={(e) => setFormData({ ...formData, hasRefund: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Remboursement 45 jours</span>
-                  </label>
-
-                  <label className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 p-2.5 text-xs text-slate-700 dark:text-slate-200 cursor-pointer hover:border-cyan-500/50 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={formData.hasSupport}
-                      onChange={(e) => setFormData({ ...formData, hasSupport: e.target.checked })}
-                      className="h-4 w-4 rounded border-slate-300 dark:border-white/20 text-cyan-500 focus:ring-cyan-400"
-                    />
-                    <span className="font-semibold">Support</span>
-                  </label>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={addFeature}
+                    disabled={!featureInput.trim()}
+                    className="flex items-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed px-3.5 py-2.5 text-xs font-bold text-white transition-colors flex-shrink-0"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    Ajouter
+                  </button>
                 </div>
+
+                {/* Tags list */}
+                {features.length === 0 ? (
+                  <p className="text-center text-[10px] text-slate-400 dark:text-slate-600 py-3 italic">
+                    Aucune fonctionnalité ajoutée — le forfait s&apos;affichera sans liste sur le site.
+                  </p>
+                ) : (
+                  <ul className="space-y-1.5 max-h-44 overflow-y-auto pr-1 custom-scrollbar">
+                    {features.map((feat, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center justify-between gap-2 rounded-xl border border-emerald-500/20 bg-white dark:bg-white/5 px-3 py-2 text-xs"
+                      >
+                        <span className="flex items-center gap-2 min-w-0">
+                          <Check className="h-3.5 w-3.5 text-emerald-500 flex-shrink-0" />
+                          <span className="text-slate-800 dark:text-slate-200 font-medium truncate">{feat}</span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeFeature(idx)}
+                          className="flex-shrink-0 rounded-full p-0.5 text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 transition-colors"
+                          aria-label={`Supprimer: ${feat}`}
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {features.length > 0 && (
+                  <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" />
+                    {features.length} fonctionnalité{features.length > 1 ? "s" : ""} configurée{features.length > 1 ? "s" : ""}
+                  </p>
+                )}
               </div>
 
+              {/* Footer buttons */}
               <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-end gap-3">
                 <button
                   type="button"
@@ -576,11 +556,9 @@ export default function AdminForfaitsPage() {
               </div>
 
             </form>
-
           </div>
         </div>
       )}
-
     </div>
   );
 }

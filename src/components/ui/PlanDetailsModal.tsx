@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { X, Check, ShieldCheck, MessageCircle, ArrowRight, HelpCircle, Sparkles } from "lucide-react";
 import { getWhatsappNumber } from "@/app/actions/adminActions";
 import { formatWhatsAppNumber, getConnectionsText, formatEuroPrice } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 export interface PlanData {
   id: string;
@@ -12,15 +13,11 @@ export interface PlanData {
   liveChannels: string;
   quality: string;
   isPopular: boolean;
-  hasVod: boolean;
-  hasEpg: boolean;
-  hasReplay: boolean;
-  hasAdults: boolean;
-  hasIboPlayer: boolean;
-  hasConnections: boolean;
-  hasGuarantee: boolean;
-  hasRefund: boolean;
-  hasSupport: boolean;
+  features: string[];
+  bonusDays?: number;
+  description?: string;
+  originalPrice?: number | null;
+  discountBadge?: string | null;
   period?: string;
   duration?: string;
   subtitle?: string;
@@ -33,6 +30,7 @@ interface PlanDetailsModalProps {
 }
 
 export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProps) {
+  const { t } = useLanguage();
   const [whatsappNumber, setWhatsappNumber] = useState("212600000000");
 
   useEffect(() => {
@@ -57,20 +55,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
 
   if (!isOpen || !plan) return null;
 
-  // Generate extended features list based on boolean flags
-  const uniqueFeatures = [
-    `${plan.liveChannels} chaînes TV en direct`,
-    `Qualité d'image ${plan.quality}`,
-    ...(plan.hasVod ? ["VOD (+200 000 Films & Séries)"] : []),
-    ...(plan.hasEpg ? ["EPG Guide TV inclus"] : []),
-    ...(plan.hasReplay ? ["Replay 7 jours inclus"] : []),
-    ...(plan.hasAdults ? ["Chaînes Adultes (+18) incluses"] : []),
-    ...(plan.hasIboPlayer ? ["IBO Player activé"] : []),
-    ...(plan.hasConnections ? [`${getConnectionsText(plan.name)} — accès simultané`] : []),
-    ...(plan.hasGuarantee ? ["Garantie 12 mois"] : []),
-    ...(plan.hasRefund ? ["Remboursement 45 jours"] : []),
-    ...(plan.hasSupport ? ["Support WhatsApp 24/7"] : []),
-  ];
+  const uniqueFeatures = plan.features && plan.features.length > 0 ? plan.features : [];
 
   const formattedNum = formatWhatsAppNumber(whatsappNumber);
 
@@ -81,6 +66,9 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
   const whatsappQuestionUrl = `https://wa.me/${formattedNum}?text=Bonjour,%20j%27ai%20une%20question%20sur%20l%27offre%20IPTV%20${encodeURIComponent(
     plan.name
   )}`;
+
+  const cleanDuration = (plan.duration || plan.period || "12 mois").replace(/^\/\s*/, "");
+  const hasBonusDays = typeof plan.bonusDays === "number" && plan.bonusDays > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 dark:bg-[#030308]/85 backdrop-blur-2xl transition-all duration-300">
@@ -99,7 +87,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
                 {plan.name} — <span className="gradient-text-cyan">{formatEuroPrice(plan.price)}</span>
               </span>
               <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                {plan.duration || plan.period || "/ 12 mois"}
+                / {cleanDuration}
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light">
@@ -127,7 +115,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
                 <Sparkles className="h-4 w-4" />
-                <span>Ce qui est inclus</span>
+                <span>{t("modal.included")}</span>
               </h4>
 
               <ul className="space-y-2.5">
@@ -146,18 +134,20 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
             <div className="space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400 flex items-center gap-1.5">
                 <ShieldCheck className="h-4 w-4" />
-                <span>Engagements &amp; Garanties</span>
+                <span>{t("modal.guarantees")}</span>
               </h4>
 
               <div className="grid grid-cols-1 gap-3">
-                {/* Info Card 1 */}
+                {/* Info Card 1: Dynamic Guarantee */}
                 <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
                     <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <h5 className="text-xs font-bold text-slate-900 dark:text-white">Garantie 12 mois + 45 jours</h5>
+                    <h5 className="text-xs font-bold text-slate-900 dark:text-white">
+                      {t("modal.guarantee_title")}
+                    </h5>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-                    Votre abonnement est garanti une année complète. En paiement direct, vous bénéficiez du remboursement sous 45 jours.
+                    {t("modal.guarantee_desc")}
                   </p>
                 </div>
 
@@ -165,10 +155,10 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
                 <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
                     <MessageCircle className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                    <h5 className="text-xs font-bold text-slate-900 dark:text-white">Support toute la durée</h5>
+                    <h5 className="text-xs font-bold text-slate-900 dark:text-white">{t("modal.support_title")}</h5>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-                    Assistance WhatsApp pendant tout l&apos;abonnement. Numéro dédié pour le dépannage.
+                    {t("modal.support_desc")}
                   </p>
                 </div>
               </div>
@@ -182,7 +172,9 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
               Détail de l&apos;offre {plan.name}
             </h5>
             <p>
-              Le forfait {plan.name} est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d&apos;image haute fidélité, accès instantané à la playlist IPTV Netherlands avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.
+              {plan.description && plan.description.trim() !== ""
+                ? plan.description
+                : `Le forfait ${plan.name} est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d'image haute fidélité, accès instantané à la playlist IPTV Netherlands avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.`}
             </p>
           </div>
 
@@ -199,7 +191,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
               className="group flex-1 w-full flex items-center justify-center gap-2 rounded-full violet-cyan-gradient py-3.5 text-center text-xs sm:text-sm font-extrabold text-white shadow-lg transition-all duration-300 hover:scale-[1.02]"
             >
               <MessageCircle className="h-4 w-4 text-white" />
-              <span>Commander sur WhatsApp</span>
+              <span>{t("modal.order_btn")}</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
 
@@ -211,13 +203,17 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
               className="flex-1 w-full flex items-center justify-center gap-2 rounded-full border border-slate-300 dark:border-white/20 bg-white/80 dark:bg-white/5 py-3.5 text-center text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm"
             >
               <HelpCircle className="h-4 w-4 text-slate-500 dark:text-slate-400" />
-              <span>Poser une question</span>
+              <span>{t("modal.question_btn")}</span>
             </a>
           </div>
 
           {/* Bottom Minimal Onboarding Text */}
           <p className="text-[10px] text-center text-slate-500 dark:text-slate-400 font-light">
-            Comment commencer ? <span className="text-cyan-600 dark:text-cyan-400 font-medium">1) Choisissez</span> · <span className="text-cyan-600 dark:text-cyan-400 font-medium">2) WhatsApp</span> · <span className="text-cyan-600 dark:text-cyan-400 font-medium">3) Paiement</span> · <span className="text-cyan-600 dark:text-cyan-400 font-medium">4) Recevez vos accès</span>
+            {t("modal.how_to_order")}{" "}
+            <span className="text-cyan-600 dark:text-cyan-400 font-medium">{t("modal.step1")}</span> ·{" "}
+            <span className="text-cyan-600 dark:text-cyan-400 font-medium">{t("modal.step2")}</span> ·{" "}
+            <span className="text-cyan-600 dark:text-cyan-400 font-medium">{t("modal.step3")}</span> ·{" "}
+            <span className="text-cyan-600 dark:text-cyan-400 font-medium">{t("modal.step4")}</span>
           </p>
         </div>
 

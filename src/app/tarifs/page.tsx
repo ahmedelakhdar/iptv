@@ -6,8 +6,9 @@ import { SEOSection } from "@/components/features/SEOSection";
 import { PremiumSitemapGrid } from "@/components/features/PremiumSitemapGrid";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingWhatsApp } from "@/components/features/FloatingWhatsApp";
-import { PlanDetailsModal, PlanData } from "@/components/ui/PlanDetailsModal";
-import { getPlans } from "@/app/actions/adminActions";
+import { PlanDetailsModal } from "@/components/ui/PlanDetailsModal";
+import { getPlans, PlanData } from "@/app/actions/adminActions";
+import { formatEuroPrice } from "@/lib/utils";
 import { Check, Flame, Sparkles, ArrowRight, ShieldCheck, Zap, Tv } from "lucide-react";
 
 export default function TarifsPage() {
@@ -78,22 +79,34 @@ export default function TarifsPage() {
 
           {/* Responsive Pricing Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-12 relative z-10">
-            {plans.map((plan) => (
-              <div
-                key={plan.id}
-                className={`glass-bento glass-bento-hover relative flex flex-col justify-between rounded-3xl p-6 sm:p-7 border transition-all duration-500 group ${
-                  plan.isPopular
-                    ? "border-cyan-500/80 dark:border-cyan-400/80 bg-white/90 dark:bg-gradient-to-b dark:from-[#101026]/90 dark:to-[#090918]/80 shadow-xl dark:shadow-[0_0_45px_rgba(6,182,212,0.35)] lg:scale-105 z-20"
-                    : "border-slate-200 dark:border-white/10 hover:border-violet-500/40 z-10"
-                }`}
-              >
-                {/* Floating "POPULAIRE" Badge */}
-                {plan.isPopular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 px-4 py-1 text-xs font-black text-white shadow-md">
-                    <Flame className="h-3.5 w-3.5 text-amber-300" />
-                    <span>POPULAIRE</span>
-                  </div>
-                )}
+            {plans.map((plan) => {
+              const numPrice = parseFloat(String(plan.price).replace(/[^0-9.]/g, "")) || 0;
+              const origPrice = typeof plan.originalPrice === "number" ? plan.originalPrice : 0;
+              const discountPercent = origPrice > numPrice && origPrice > 0 ? Math.round(((origPrice - numPrice) / origPrice) * 100) : 0;
+
+              return (
+                <div
+                  key={plan.id}
+                  className={`glass-bento glass-bento-hover relative flex flex-col justify-between rounded-3xl p-6 sm:p-7 border transition-all duration-500 group ${
+                    plan.isPopular
+                      ? "border-cyan-500/80 dark:border-cyan-400/80 bg-white/90 dark:bg-gradient-to-b dark:from-[#101026]/90 dark:to-[#090918]/80 shadow-xl dark:shadow-[0_0_45px_rgba(6,182,212,0.35)] lg:scale-105 z-20"
+                      : "border-slate-200 dark:border-white/10 hover:border-violet-500/40 z-10"
+                  }`}
+                >
+                  {/* Floating "POPULAIRE" Badge */}
+                  {plan.isPopular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 px-4 py-1 text-xs font-black text-white shadow-md">
+                      <Flame className="h-3.5 w-3.5 text-amber-300" />
+                      <span>POPULAIRE</span>
+                    </div>
+                  )}
+
+                  {/* Auto-Calculated Discount Badge */}
+                  {discountPercent > 0 && (
+                    <div className="absolute top-4 right-4 border border-red-500 text-red-500 rounded-md px-2 py-1 text-sm font-bold z-20">
+                      -{discountPercent}%
+                    </div>
+                  )}
 
                 <div>
                   {/* Plan Name & Price */}
@@ -101,9 +114,14 @@ export default function TarifsPage() {
                     <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2">
                       {plan.name}
                     </h3>
+                    {plan.originalPrice && plan.originalPrice > 0 && (
+                      <div className="text-sm font-semibold text-gray-400 line-through decoration-red-500 mb-0.5">
+                        {formatEuroPrice(plan.originalPrice)}
+                      </div>
+                    )}
                     <div className="flex items-baseline gap-1.5">
                       <span className={`text-3xl sm:text-4xl font-black ${plan.isPopular ? "gradient-text-cyan" : "text-slate-900 dark:text-white"}`}>
-                        {plan.price}
+                        {formatEuroPrice(plan.price)}
                       </span>
                       <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                         {plan.duration || plan.period || "/ 12 mois"}
@@ -118,50 +136,14 @@ export default function TarifsPage() {
 
                   {/* Features List */}
                   <ul className="space-y-3 mb-8">
-                    <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                      <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                        <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-                      </div>
-                      <span className="leading-snug">{plan.liveChannels} chaînes TV</span>
-                    </li>
-                    <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                      <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                        <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-                      </div>
-                      <span className="leading-snug">Qualité {plan.quality}</span>
-                    </li>
-                    {plan.hasVod && (
-                      <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
+                    {(plan.features && plan.features.length > 0 ? plan.features : []).map((feat, idx) => (
+                      <li key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
                         <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
                           <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
                         </div>
-                        <span className="leading-snug">VOD (Films &amp; Séries)</span>
+                        <span className="leading-snug">{feat}</span>
                       </li>
-                    )}
-                    {plan.hasEpg && (
-                      <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                          <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-                        </div>
-                        <span className="leading-snug">EPG Guide TV</span>
-                      </li>
-                    )}
-                    {plan.hasReplay && (
-                      <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                          <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-                        </div>
-                        <span className="leading-snug">Replay 7 jours</span>
-                      </li>
-                    )}
-                    {plan.hasAdults && (
-                      <li className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
-                        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-cyan-100 dark:bg-cyan-950/80 border border-cyan-500/40 flex-shrink-0 shadow-sm">
-                          <Check className="h-3 w-3 text-cyan-600 dark:text-cyan-400" />
-                        </div>
-                        <span className="leading-snug">Chaînes Adultes (+18)</span>
-                      </li>
-                    )}
+                    ))}
                   </ul>
                 </div>
 
@@ -187,7 +169,8 @@ export default function TarifsPage() {
                 </div>
 
               </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>

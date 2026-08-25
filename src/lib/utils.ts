@@ -31,8 +31,8 @@ export function getConnectionsText(name: string): string {
   }
 }
 
-export function formatEuroPrice(rawPrice: string): string {
-  if (!rawPrice) return "0 €";
+export function formatEuroPrice(rawPrice?: string | number | null): string {
+  if (rawPrice === null || rawPrice === undefined || rawPrice === "") return "0 €";
   const cleaned = String(rawPrice)
     .replace(/DH|MAD|Dirham|€/gi, "")
     .trim();

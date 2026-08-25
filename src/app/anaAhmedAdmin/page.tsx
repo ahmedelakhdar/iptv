@@ -32,7 +32,7 @@ export default function AdminDashboardWelcomePage() {
   }, []);
 
   return (
-    <div className="p-6 sm:p-10 max-w-7xl mx-auto space-y-10">
+    <div className="w-full p-4 sm:p-6 lg:p-10 max-w-7xl mx-auto space-y-8 sm:space-y-10 overflow-x-auto">
       
       {/* Welcome Banner */}
       <div className="glass-bento rounded-3xl p-8 sm:p-10 border border-slate-200 dark:border-white/10 relative overflow-hidden bg-white/80 dark:bg-gradient-to-r dark:from-violet-950/40 dark:via-cyan-950/30 dark:to-[#070714] shadow-sm dark:shadow-none transition-colors duration-300">

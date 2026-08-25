@@ -3,14 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import { Sparkles, Compass } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function SEOSection() {
+  const { t } = useLanguage();
+
   const quickLinks = [
     { name: "IPTV Netherlands", href: "#bento" },
-    { name: "Abonnement IPTV Netherlands", href: "#tarifs" },
+    { name: t("seo.link_pricing"), href: "#tarifs" },
     { name: "IPTV 4K", href: "#bento" },
-    { name: "Installation IBO Player", href: "/guide" },
-    { name: "FAQ IPTV", href: "/faq" },
+    { name: t("seo.link_guide"), href: "/guide" },
+    { name: t("seo.link_faq"), href: "/faq" },
   ];
 
   return (
@@ -28,17 +31,17 @@ export function SEOSection() {
               {/* Subtitle Badge */}
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-950/20 dark:bg-cyan-950/50 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 mb-4 backdrop-blur-xl">
                 <Sparkles className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400 animate-pulse" />
-                <span>LE CHOIX N°1</span>
+                <span>{t("seo.badge")}</span>
               </div>
 
               {/* Title */}
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
-              Pourquoi choisir{" "}
-              <span className="animated-gradient-text">IPTV Netherlands</span> ?
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light leading-relaxed">
-              Commencez sur la page d&apos;accueil IPTV Netherlands — forfaits Lite à VIP, abonnement IPTV 4K, essai 24h et garantie 45 jours. Installation : guide IBO Player.
-            </p>
+                {t("seo.title")}{" "}
+                <span className="animated-gradient-text">{t("seo.title_highlight")}</span> ?
+              </h2>
+              <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light leading-relaxed">
+                {t("seo.desc")}
+              </p>
             </div>
 
             {/* Right Icon Accent */}
@@ -51,7 +54,7 @@ export function SEOSection() {
           {/* Quick Link Pills Row */}
           <div className="mt-8 pt-8 border-t border-slate-200 dark:border-white/10">
             <span className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
-              Mots-Clés Populaires &amp; Accès Rapide :
+              {t("seo.keywords_title")}
             </span>
 
             <div className="flex flex-wrap items-center gap-3 relative z-20">

@@ -2,42 +2,45 @@
 
 import React from "react";
 import { Sparkles, Tv, Smartphone, MessageCircle, ShieldCheck, Coins, Globe } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function WhyUsGrid() {
+  const { t } = useLanguage();
+
   const cards = [
     {
-      title: "Catalogue utile",
-      text: "Jusqu'à 35 000 chaînes + VOD. Sport, cinéma, arabes et internationales — ce que vous regardez vraiment.",
+      title: t("whyUs.c1_title"),
+      text: t("whyUs.c1_text"),
       icon: Tv,
       iconColor: "text-cyan-600 dark:text-cyan-400 border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/50",
     },
     {
-      title: "Sans matériel imposé",
-      text: "Smart TV, Firestick, Android, iOS. IBO Player inclus — vous utilisez ce que vous avez déjà.",
+      title: t("whyUs.c2_title"),
+      text: t("whyUs.c2_text"),
       icon: Smartphone,
       iconColor: "text-violet-600 dark:text-violet-400 border-violet-500/30 bg-violet-950/20 dark:bg-violet-950/50",
     },
     {
-      title: "Support WhatsApp 24/7",
-      text: "Installation guidée et dépannage en français. Activation en moins de 15 minutes après paiement.",
+      title: t("whyUs.c3_title"),
+      text: t("whyUs.c3_text"),
       icon: MessageCircle,
       iconColor: "text-emerald-600 dark:text-emerald-400 border-emerald-500/30 bg-emerald-950/20 dark:bg-emerald-950/50",
     },
     {
-      title: "Garantie 12 mois + 45 jours",
-      text: "Abonnement garanti une année complète, avec remboursement de votre crédit sous 45 jours. Pas d'essai : un vrai engagement.",
+      title: t("whyUs.c4_title"),
+      text: t("whyUs.c4_text"),
       icon: ShieldCheck,
       iconColor: "text-pink-600 dark:text-pink-400 border-pink-500/30 bg-pink-950/20 dark:bg-pink-950/50",
     },
     {
-      title: "Prix en euros",
-      text: "De 27 € à 50 € / an. Transparent, sans frais d'activation cachés.",
+      title: t("whyUs.c5_title"),
+      text: t("whyUs.c5_text"),
       icon: Coins,
       iconColor: "text-amber-600 dark:text-amber-400 border-amber-500/30 bg-amber-950/20 dark:bg-amber-950/50",
     },
     {
-      title: "Netherlands & Europe",
-      text: "Amsterdam, Rotterdam, Den Haag... et utilisateurs en Europe. Même accès, même support.",
+      title: t("whyUs.c6_title"),
+      text: t("whyUs.c6_text"),
       icon: Globe,
       iconColor: "text-cyan-600 dark:text-cyan-400 border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/50",
     },
@@ -54,12 +57,12 @@ export function WhyUsGrid() {
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/40 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-3 backdrop-blur-xl shadow-sm">
             <Sparkles className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
-            <span>POURQUOI NOUS</span>
+            <span>{t("whyUs.badge")}</span>
           </div>
 
           <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-5xl tracking-tight leading-tight">
-            Un IPTV Netherlands{" "}
-            <span className="animated-gradient-text">pensé pour chez vous</span>
+            {t("whyUs.title")}{" "}
+            <span className="animated-gradient-text">{t("whyUs.title_highlight")}</span>
           </h2>
         </div>
 

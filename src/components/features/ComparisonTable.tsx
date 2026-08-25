@@ -35,14 +35,14 @@ export function ComparisonTable() {
     { label: t("comparison.live_row"), getValue: (p: PlanData) => p.liveChannels || "8 000" },
     { label: t("comparison.quality_row"), getValue: (p: PlanData) => p.quality || "HD" },
     { label: t("comparison.devices_row"), getValue: (p: PlanData) => getConnectionsText(p.name) },
-    { label: t("comparison.vod_row"), getValue: (p: PlanData) => p.hasVod },
-    { label: t("comparison.epg_row"), getValue: (p: PlanData) => p.hasEpg },
-    { label: t("comparison.replay_row"), getValue: (p: PlanData) => p.hasReplay },
-    { label: t("comparison.adults_row"), getValue: (p: PlanData) => p.hasAdults },
-    { label: t("comparison.ibo_row"), getValue: (p: PlanData) => p.hasIboPlayer },
-    { label: t("comparison.guarantee_row"), getValue: (p: PlanData) => p.hasGuarantee },
-    { label: t("comparison.refund_row"), getValue: (p: PlanData) => p.hasRefund },
-    { label: t("comparison.support_row"), getValue: (p: PlanData) => p.hasSupport },
+    { label: t("comparison.vod_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("vod") || f.toLowerCase().includes("film")) },
+    { label: t("comparison.epg_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("epg") || f.toLowerCase().includes("guide")) },
+    { label: t("comparison.replay_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("replay")) },
+    { label: t("comparison.adults_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("adul") || f.toLowerCase().includes("+18")) },
+    { label: t("comparison.ibo_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("ibo")) },
+    { label: t("comparison.guarantee_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("garant")) },
+    { label: t("comparison.refund_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("rembours")) },
+    { label: t("comparison.support_row"), getValue: (p: PlanData) => (p.features || []).some(f => f.toLowerCase().includes("support")) },
   ];
 
   const renderValue = (val: boolean | string, isPopularCol: boolean = false) => {

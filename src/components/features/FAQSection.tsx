@@ -2,31 +2,18 @@
 
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function FAQSection() {
+  const { t } = useLanguage();
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   const faqs = [
-    {
-      q: "Comment fonctionne l'activation de mon abonnement IPTV Netherlands ?",
-      a: "Dès votre commande validée sur WhatsApp, vous recevez vos identifiants (serveur, nom d'utilisateur, mot de passe et lien M3U / portal Xtream) ainsi que l'activation gratuite de votre application IBO Player en moins de 15 minutes.",
-    },
-    {
-      q: "Quels appareils sont compatibles avec le service IPTV ?",
-      a: "IPTV Netherlands est 100% compatible avec Smart TV (Samsung, LG, Sony), Amazon Firestick, Boîtiers MAG, Android Box, Apple TV, iPhone, iPad, smartphones Android, PC Windows et Mac.",
-    },
-    {
-      q: "Quelle vitesse de connexion internet est recommandée ?",
-      a: "Une vitesse minimale de 12 Mbps est conseillée pour les chaînes HD, 25 Mbps pour la 4K Ultra HD, et 50 Mbps pour la 8K sans aucun buffering.",
-    },
-    {
-      q: "Proposez-vous un remboursement si je ne suis pas satisfait ?",
-      a: "Oui ! Nous offrons une garantie de satisfaction. De plus, notre service client vous assiste 24/7 pour toute question d'installation.",
-    },
-    {
-      q: "Puis-je utiliser mon abonnement sur plusieurs écrans ?",
-      a: "Nos abonnements standard incluent 1 connexion simultanée. Des options multi-écrans sont disponibles lors de la souscription.",
-    },
+    { q: t("faq.q1"), a: t("faq.a1") },
+    { q: t("faq.q2"), a: t("faq.a2") },
+    { q: t("faq.q3"), a: t("faq.a3") },
+    { q: t("faq.q4"), a: t("faq.a4") },
+    { q: t("faq.q5"), a: t("faq.a5") },
   ];
 
   return (
@@ -38,13 +25,13 @@ export function FAQSection() {
         <div className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/20 dark:bg-violet-950/30 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 backdrop-blur-xl">
             <HelpCircle className="h-4 w-4" />
-            <span>Foire Aux Questions</span>
+            <span>{t("faq.badge")}</span>
           </div>
           <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-5xl tracking-tight leading-tight">
-            Questions Fréquemment Posées
+            {t("faq.title")}
           </h2>
           <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light">
-            Tout ce que vous devez savoir sur nos services et la configuration.
+            {t("faq.subtitle")}
           </p>
         </div>
 

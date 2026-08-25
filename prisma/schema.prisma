@@ -26,15 +26,10 @@ model PricingPlan {
   liveChannels   String
   quality        String
   isPopular      Boolean  @default(false)
-  hasVod         Boolean  @default(false)
-  hasEpg         Boolean  @default(false)
-  hasReplay      Boolean  @default(false)
-  hasAdults      Boolean  @default(false)
-  hasIboPlayer   Boolean  @default(false)
-  hasConnections Boolean  @default(false)
-  hasGuarantee   Boolean  @default(false)
-  hasRefund      Boolean  @default(false)
-  hasSupport     Boolean  @default(false)
+  features       String[]
+  bonusDays      Int      @default(0)
+  description    String?
+  originalPrice  Float?
 
   currency       String   @default("€")
   duration       String   @default("/ 12 mois")

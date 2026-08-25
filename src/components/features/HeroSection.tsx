@@ -1,22 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { Sparkles, Play, ArrowRight, ShieldCheck, Tv, Zap } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { getGlobalSettings, GlobalSettingsData } from "@/app/actions/adminActions";
-
-const bentoImages = [
-  "/ui-sport.png",
-  "/ui-livetv.png",
-  "/ui-cinema.png",
-  "/ui-music.png",
-];
+import { IptvPlayerMockup } from "@/components/features/IptvPlayerMockup";
 
 export function HeroSection() {
   const { t } = useLanguage();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "212600000000",
     supportNumber: "212600000000",
@@ -28,13 +20,6 @@ export function HeroSection() {
     getGlobalSettings().then((res) => {
       if (res) setSettings(res);
     });
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % bentoImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -102,66 +87,14 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Interactive Bento Stream Card Carousel Container */}
-        <div className="mt-10 sm:mt-14 relative max-w-4xl mx-auto z-10">
+        {/* Interactive IPTV Player Mockup */}
+        <div className="mt-10 sm:mt-14 relative max-w-4xl mx-auto z-10 w-full min-w-full">
           {/* Glowing Backlight Frame */}
           <div className="pointer-events-none z-0 absolute inset-0 rounded-3xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/20 to-cyan-500/30 blur-3xl opacity-70 animate-pulse" />
 
-          {/* Preserved Outer Frame Container */}
-          <div className="relative z-10 glass-bento rounded-3xl p-2 sm:p-3 border border-slate-200 dark:border-white/15 shadow-xl overflow-hidden bg-black/40">
-            <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-[#070714]">
-              
-              {/* Image Crossfade Container */}
-              {bentoImages.map((src, idx) => (
-                <div
-                  key={src}
-                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    idx === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                  }`}
-                >
-                  <Image
-                    src={src}
-                    alt={["Sport — Football & Champions League", "Live TV — Chaînes Générales France", "Infos — Chaînes Internationales", "Musique — Top Charts"][idx]}
-                    fill
-                    priority={idx === 0}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1000px"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-
-              {/* Gradient Dark Overlay */}
-              <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-t from-[#030308] via-transparent to-transparent opacity-80" />
-
-              {/* Preserved Top-Left Badge: "FLUX 4K/8K EN DIRECT" */}
-              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-30 flex items-center gap-2 rounded-full border border-violet-500/40 bg-[#030308]/80 px-3 py-1 text-[10px] sm:text-xs font-bold text-violet-300 backdrop-blur-xl shadow-lg">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>FLUX 4K/8K EN DIRECT</span>
-              </div>
-
-              {/* Preserved Bottom-Right Badge: "+35,000 Chaînes & VOD" */}
-              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-30 flex items-center gap-2 rounded-2xl border border-cyan-500/40 bg-[#030308]/85 px-3 py-1.5 text-[10px] sm:text-xs font-semibold text-slate-200 backdrop-blur-xl shadow-2xl">
-                <Tv className="h-3.5 w-3.5 text-cyan-400" />
-                <span>+35,000 Chaînes &amp; VOD</span>
-              </div>
-
-              {/* Custom Bottom Dot Indicator (Seed Bar) — centered, above badge */}
-              <div className="absolute bottom-10 sm:bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/10">
-                {bentoImages.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    className={`transition-all duration-300 rounded-full ${
-                      idx === currentIndex
-                        ? "w-4 h-2 bg-cyan-400"
-                        : "w-2 h-2 bg-gray-500 hover:bg-gray-400"
-                    }`}
-                  />
-                ))}
-              </div>
-
-            </div>
+          {/* Outer Frame Container */}
+          <div className="relative z-10 glass-bento rounded-3xl p-2 sm:p-3 border border-slate-200 dark:border-white/15 shadow-xl overflow-hidden bg-black/40 w-full min-w-full">
+            <IptvPlayerMockup />
           </div>
         </div>
 

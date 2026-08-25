@@ -3,36 +3,39 @@
 import React from "react";
 import Link from "next/link";
 import { Compass, Sparkles, Shield, ArrowUpRight, CheckCircle2, ChevronRight } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function PremiumSitemapGrid() {
+  const { t } = useLanguage();
+
   const category1Main = [
-    { title: "IPTV Netherlands", sub: "Plateforme n°1", href: "/" },
-    { title: "Abonnement IPTV Netherlands", sub: "Formules annuelles & tests", href: "/tarifs" },
-    { title: "Guide IPTV Netherlands", sub: "Installation IBO Player", href: "/guide" },
-    { title: "Fonctionnalités IPTV", sub: "Qualité 4K/8K, VOD & Replay", href: "/fonctionnalites" },
-    { title: "FAQ IPTV Netherlands", sub: "Réponses à vos questions", href: "/faq" },
-    { title: "IPTV villes Netherlands", sub: "Amsterdam, Rotterdam, Den Haag...", href: "/contact" },
-    { title: "Support IPTV", sub: "Assistance VIP 24/7 WhatsApp", href: "/contact" },
+    { title: "IPTV Netherlands", sub: t("sitemap.m1_sub"), href: "/" },
+    { title: t("sitemap.m2_title"), sub: t("sitemap.m2_sub"), href: "/tarifs" },
+    { title: t("sitemap.m3_title"), sub: t("sitemap.m3_sub"), href: "/guide" },
+    { title: t("sitemap.m4_title"), sub: t("sitemap.m4_sub"), href: "/fonctionnalites" },
+    { title: t("sitemap.m5_title"), sub: t("sitemap.m5_sub"), href: "/faq" },
+    { title: t("sitemap.m6_title"), sub: t("sitemap.m6_sub"), href: "/contact" },
+    { title: t("sitemap.m7_title"), sub: t("sitemap.m7_sub"), href: "/contact" },
   ];
 
   const category2Netherlands = [
-    { title: "IPTV Lite", sub: "Formule essentielle", href: "/tarifs" },
-    { title: "IPTV Premium Netherlands", sub: "Bouquet complet 4K", href: "/tarifs" },
-    { title: "IPTV VIP Netherlands", sub: "Multi-écrans & 8K", href: "/tarifs" },
+    { title: "IPTV Lite", sub: t("sitemap.n1_sub"), href: "/tarifs" },
+    { title: t("sitemap.n2_title"), sub: t("sitemap.n2_sub"), href: "/tarifs" },
+    { title: t("sitemap.n3_title"), sub: t("sitemap.n3_sub"), href: "/tarifs" },
   ];
 
   const category3Europe = [
-    { title: "IPTV Europe 50€", sub: "Accès annuel Europe", href: "/tarifs" },
-    { title: "IPTV Europe 60€", sub: "Formule Premium Europe", href: "/tarifs" },
-    { title: "IPTV Europe 80€", sub: "Pack VIP Multi-Connexions", href: "/tarifs" },
+    { title: "IPTV Europe 50€", sub: t("sitemap.e1_sub"), href: "/tarifs" },
+    { title: "IPTV Europe 60€", sub: t("sitemap.e2_sub"), href: "/tarifs" },
+    { title: "IPTV Europe 80€", sub: t("sitemap.e3_sub"), href: "/tarifs" },
   ];
 
   const category4Guides = [
-    { title: "Commander IPTV", sub: "Activation en < 15 min", href: "/tarifs" },
-    { title: "IBO Player Netherlands", sub: "Configuration d'application", href: "/guide" },
-    { title: "Comparatif forfaits", sub: "Trouvez la bonne formule", href: "/tarifs" },
-    { title: "Fonctionnalités VOD", sub: "+200 000 VOD & Séries 4K", href: "/fonctionnalites" },
-    { title: "Garantie 45 jours", sub: "Satisfaction garantie", href: "/tarifs" },
+    { title: t("sitemap.g1_title"), sub: t("sitemap.g1_sub"), href: "/tarifs" },
+    { title: "IBO Player Netherlands", sub: t("sitemap.g2_sub"), href: "/guide" },
+    { title: t("sitemap.g3_title"), sub: t("sitemap.g3_sub"), href: "/tarifs" },
+    { title: t("sitemap.g4_title"), sub: t("sitemap.g4_sub"), href: "/fonctionnalites" },
+    { title: t("sitemap.g5_title"), sub: t("sitemap.g5_sub"), href: "/tarifs" },
   ];
 
   return (
@@ -46,13 +49,13 @@ export function PremiumSitemapGrid() {
         <div className="mb-10 sm:mb-14 max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 dark:bg-violet-950/30 px-3.5 py-1 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 backdrop-blur-xl">
             <Compass className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400" />
-            <span>SITEMAP &amp; EXPLORATEUR PREMIUM</span>
+            <span>{t("sitemap.badge")}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-            Explorer <span className="animated-gradient-text">IPTV Netherlands</span>
+            {t("sitemap.title")} <span className="animated-gradient-text">IPTV Netherlands</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light mt-1">
-            Le service IPTV Netherlands — forfaits, IPTV 4K, installation IBO Player et couverture villes.
+            {t("sitemap.desc")}
           </p>
         </div>
 

@@ -14,15 +14,11 @@ export interface PlanData {
   liveChannels: string;
   quality: string;
   isPopular: boolean;
-  hasVod: boolean;
-  hasEpg: boolean;
-  hasReplay: boolean;
-  hasAdults: boolean;
-  hasIboPlayer: boolean;
-  hasConnections: boolean;
-  hasGuarantee: boolean;
-  hasRefund: boolean;
-  hasSupport: boolean;
+  /** Dynamic feature strings shown on the public pricing card and detail modal */
+  features: string[];
+  bonusDays?: number;
+  description?: string;
+  originalPrice?: number | null;
 
   currency?: string;
   duration?: string;
@@ -59,15 +55,17 @@ const DEFAULT_PLANS: PlanData[] = [
     liveChannels: "8 000",
     quality: "HD",
     isPopular: false,
-    hasVod: true,
-    hasEpg: true,
-    hasReplay: false,
-    hasAdults: false,
-    hasIboPlayer: true,
-    hasConnections: true,
-    hasGuarantee: true,
-    hasRefund: true,
-    hasSupport: true,
+    features: [
+      "8 000 chaînes TV en direct",
+      "Qualité HD",
+      "VOD (+200 000 Films & Séries)",
+      "EPG Guide TV inclus",
+      "IBO Player activé",
+      "1 connexion simultanée",
+      "Garantie 12 mois",
+      "Remboursement 45 jours",
+      "Support WhatsApp 24/7",
+    ],
     currency: "€",
     duration: "/ 12 mois",
     subtitle: "8 000 chaînes — offre entrée de gamme Netherlands.",
@@ -80,15 +78,17 @@ const DEFAULT_PLANS: PlanData[] = [
     liveChannels: "12 000",
     quality: "HD & Full HD",
     isPopular: false,
-    hasVod: true,
-    hasEpg: true,
-    hasReplay: false,
-    hasAdults: false,
-    hasIboPlayer: true,
-    hasConnections: true,
-    hasGuarantee: true,
-    hasRefund: true,
-    hasSupport: true,
+    features: [
+      "12 000 chaînes TV en direct",
+      "Qualité HD & Full HD",
+      "VOD (+200 000 Films & Séries)",
+      "EPG Guide TV inclus",
+      "IBO Player activé",
+      "2 connexions simultanées",
+      "Garantie 12 mois",
+      "Remboursement 45 jours",
+      "Support WhatsApp 24/7",
+    ],
     currency: "€",
     duration: "/ 12 mois",
     subtitle: "12 000 chaînes — excellent équilibre.",
@@ -101,15 +101,18 @@ const DEFAULT_PLANS: PlanData[] = [
     liveChannels: "25 000",
     quality: "4K",
     isPopular: true,
-    hasVod: true,
-    hasEpg: true,
-    hasReplay: true,
-    hasAdults: false,
-    hasIboPlayer: true,
-    hasConnections: true,
-    hasGuarantee: true,
-    hasRefund: true,
-    hasSupport: true,
+    features: [
+      "25 000 chaînes TV en direct",
+      "Qualité 4K Ultra HD",
+      "VOD (+200 000 Films & Séries)",
+      "EPG Guide TV inclus",
+      "Replay 7 jours inclus",
+      "IBO Player activé",
+      "3 connexions simultanées",
+      "Garantie 12 mois",
+      "Remboursement 45 jours",
+      "Support WhatsApp 24/7",
+    ],
     currency: "€",
     duration: "/ 12 mois",
     subtitle: "25 000 chaînes + 4K — le plus choisi.",
@@ -122,15 +125,19 @@ const DEFAULT_PLANS: PlanData[] = [
     liveChannels: "35 000",
     quality: "4K & 8K",
     isPopular: false,
-    hasVod: true,
-    hasEpg: true,
-    hasReplay: true,
-    hasAdults: true,
-    hasIboPlayer: true,
-    hasConnections: true,
-    hasGuarantee: true,
-    hasRefund: true,
-    hasSupport: true,
+    features: [
+      "35 000 chaînes TV en direct",
+      "Qualité 4K & 8K",
+      "VOD (+200 000 Films & Séries)",
+      "EPG Guide TV inclus",
+      "Replay 7 jours inclus",
+      "Chaînes Adultes (+18) incluses",
+      "IBO Player activé",
+      "5 connexions simultanées",
+      "Garantie 12 mois",
+      "Remboursement 45 jours",
+      "Support WhatsApp 24/7",
+    ],
     currency: "€",
     duration: "/ 12 mois",
     subtitle: "35 000 chaînes + 4K/8K + Adultes.",
@@ -295,15 +302,10 @@ export async function getPlans(): Promise<PlanData[]> {
       liveChannels: p.liveChannels,
       quality: p.quality,
       isPopular: p.isPopular,
-      hasVod: p.hasVod,
-      hasEpg: p.hasEpg,
-      hasReplay: p.hasReplay,
-      hasAdults: p.hasAdults,
-      hasIboPlayer: p.hasIboPlayer,
-      hasConnections: p.hasConnections,
-      hasGuarantee: p.hasGuarantee,
-      hasRefund: p.hasRefund,
-      hasSupport: p.hasSupport,
+      features: p.features,
+      bonusDays: p.bonusDays ?? 0,
+      description: p.description || "",
+      originalPrice: p.originalPrice ?? null,
       currency: "€",
       duration: p.duration,
       period: p.duration,
@@ -329,17 +331,11 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
     const qualityStr = String(data.quality || "HD");
     const subtitleStr = String(data.subtitle || "");
     const orderIndexInt = typeof data.orderIndex === "number" && !isNaN(data.orderIndex) ? Math.floor(data.orderIndex) : 0;
-
     const isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
-    const hasVod = Boolean(data.hasVod && String(data.hasVod) !== "false");
-    const hasEpg = Boolean(data.hasEpg && String(data.hasEpg) !== "false");
-    const hasReplay = Boolean(data.hasReplay && String(data.hasReplay) !== "false");
-    const hasAdults = Boolean(data.hasAdults && String(data.hasAdults) !== "false");
-    const hasIboPlayer = Boolean(data.hasIboPlayer && String(data.hasIboPlayer) !== "false");
-    const hasConnections = Boolean(data.hasConnections && String(data.hasConnections) !== "false");
-    const hasGuarantee = Boolean(data.hasGuarantee && String(data.hasGuarantee) !== "false");
-    const hasRefund = Boolean(data.hasRefund && String(data.hasRefund) !== "false");
-    const hasSupport = Boolean(data.hasSupport && String(data.hasSupport) !== "false");
+    const features = Array.isArray(data.features) ? data.features.filter(Boolean) : [];
+    const bonusDays = typeof data.bonusDays === "number" && !isNaN(data.bonusDays) ? Math.max(0, Math.floor(data.bonusDays)) : 0;
+    const description = data.description ? String(data.description).trim() : null;
+    const originalPrice = typeof data.originalPrice === "number" && !isNaN(data.originalPrice) && data.originalPrice > 0 ? data.originalPrice : null;
 
     const dbPlan = await prisma.pricingPlan.create({
       data: {
@@ -348,15 +344,10 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
         liveChannels: liveChannelsStr,
         quality: qualityStr,
         isPopular,
-        hasVod,
-        hasEpg,
-        hasReplay,
-        hasAdults,
-        hasIboPlayer,
-        hasConnections,
-        hasGuarantee,
-        hasRefund,
-        hasSupport,
+        features,
+        bonusDays,
+        description,
+        originalPrice,
         currency: "€",
         duration: durationStr,
         subtitle: subtitleStr,
@@ -371,15 +362,10 @@ export async function createPlan(data: Omit<PlanData, "id">): Promise<{ success:
       liveChannels: dbPlan.liveChannels,
       quality: dbPlan.quality,
       isPopular: dbPlan.isPopular,
-      hasVod: dbPlan.hasVod,
-      hasEpg: dbPlan.hasEpg,
-      hasReplay: dbPlan.hasReplay,
-      hasAdults: dbPlan.hasAdults,
-      hasIboPlayer: dbPlan.hasIboPlayer,
-      hasConnections: dbPlan.hasConnections,
-      hasGuarantee: dbPlan.hasGuarantee,
-      hasRefund: dbPlan.hasRefund,
-      hasSupport: dbPlan.hasSupport,
+      features: dbPlan.features,
+      bonusDays: dbPlan.bonusDays,
+      description: dbPlan.description || "",
+      originalPrice: dbPlan.originalPrice,
       currency: "€",
       duration: dbPlan.duration,
       period: dbPlan.duration,
@@ -410,7 +396,6 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
     if (planIdx !== -1) {
       const existing = memoryPlans[planIdx];
       const formattedPrice = data.price ? formatEuroPrice(data.price) : existing.price;
-
       memoryPlans[planIdx] = {
         ...existing,
         ...data,
@@ -420,34 +405,23 @@ export async function updatePlan(id: string, data: Partial<PlanData>): Promise<{
       };
     }
 
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (data.name !== undefined) updateData.name = String(data.name);
-    if (data.price !== undefined) {
-      updateData.price = formatEuroPrice(data.price);
-      updateData.currency = "€";
-    }
+    if (data.price !== undefined) { updateData.price = formatEuroPrice(data.price); updateData.currency = "€"; }
     if (data.liveChannels !== undefined) updateData.liveChannels = String(data.liveChannels);
     if (data.quality !== undefined) updateData.quality = String(data.quality);
     if (data.isPopular !== undefined) updateData.isPopular = Boolean(data.isPopular && String(data.isPopular) !== "false");
-    if (data.hasVod !== undefined) updateData.hasVod = Boolean(data.hasVod && String(data.hasVod) !== "false");
-    if (data.hasEpg !== undefined) updateData.hasEpg = Boolean(data.hasEpg && String(data.hasEpg) !== "false");
-    if (data.hasReplay !== undefined) updateData.hasReplay = Boolean(data.hasReplay && String(data.hasReplay) !== "false");
-    if (data.hasAdults !== undefined) updateData.hasAdults = Boolean(data.hasAdults && String(data.hasAdults) !== "false");
-    if (data.hasIboPlayer !== undefined) updateData.hasIboPlayer = Boolean(data.hasIboPlayer && String(data.hasIboPlayer) !== "false");
-    if (data.hasConnections !== undefined) updateData.hasConnections = Boolean(data.hasConnections && String(data.hasConnections) !== "false");
-    if (data.hasGuarantee !== undefined) updateData.hasGuarantee = Boolean(data.hasGuarantee && String(data.hasGuarantee) !== "false");
-    if (data.hasRefund !== undefined) updateData.hasRefund = Boolean(data.hasRefund && String(data.hasRefund) !== "false");
-    if (data.hasSupport !== undefined) updateData.hasSupport = Boolean(data.hasSupport && String(data.hasSupport) !== "false");
+    if (Array.isArray(data.features)) updateData.features = data.features.filter(Boolean);
+    if (data.bonusDays !== undefined) updateData.bonusDays = Math.max(0, Math.floor(Number(data.bonusDays))) || 0;
+    if (data.description !== undefined) updateData.description = String(data.description).trim();
+    if (data.originalPrice !== undefined) updateData.originalPrice = typeof data.originalPrice === "number" && !isNaN(data.originalPrice) && data.originalPrice > 0 ? data.originalPrice : null;
     if (data.currency !== undefined) updateData.currency = String(data.currency);
     if (data.duration !== undefined) updateData.duration = String(data.duration);
     if (data.subtitle !== undefined) updateData.subtitle = String(data.subtitle);
     if (data.orderIndex !== undefined) updateData.orderIndex = Math.floor(Number(data.orderIndex)) || 0;
 
     if (!id.startsWith("plan-")) {
-      await prisma.pricingPlan.update({
-        where: { id },
-        data: updateData,
-      });
+      await prisma.pricingPlan.update({ where: { id }, data: updateData });
     }
 
     revalidatePath("/", "layout");

@@ -16,8 +16,11 @@ import {
   Flame,
   Radio,
 } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function BentoGrid() {
+  const { t } = useLanguage();
+
   return (
     <section id="bento" className="relative py-20 lg:py-32">
       {/* Background Glow Orbs */}
@@ -29,13 +32,13 @@ export function BentoGrid() {
         <div className="mx-auto max-w-3xl text-center mb-16">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/20 dark:bg-violet-950/30 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-4 backdrop-blur-xl">
             <Sparkles className="h-4 w-4" />
-            <span>Architecture &amp; Performance Exclusives</span>
+            <span>{t("bento.badge")}</span>
           </div>
           <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white sm:text-5xl lg:text-6xl tracking-tight">
-            Conçu Pour L&apos;Excellence Absolue
+            {t("bento.title")}
           </h2>
           <p className="mt-4 text-base text-slate-600 dark:text-slate-400 sm:text-lg font-light">
-            Découvrez notre infrastructure technique et nos offres curatées à travers une expérience bento unique.
+            {t("bento.subtitle")}
           </p>
         </div>
 
@@ -55,29 +58,29 @@ export function BentoGrid() {
                 </div>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-3 py-1 text-xs font-bold text-cyan-300">
                   <Radio className="h-3.5 w-3.5 animate-pulse text-cyan-400" />
-                  Mise à jour en direct
+                  {t("bento.t1_live_tag")}
                 </span>
               </div>
 
               <span className="text-xs font-bold tracking-wider text-violet-500 dark:text-violet-400 uppercase">
-                Bibliothèque Complète
+                {t("bento.t1_category")}
               </span>
               <h3 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white mt-1 mb-3 tracking-tight">
-                +35,000 Chaînes <span className="animated-gradient-text">Live</span>
+                {t("bento.t1_title")} <span className="animated-gradient-text">{t("bento.t1_highlight")}</span>
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-300 max-w-md font-light leading-relaxed">
-                Accès illimité aux plus grands événements sportifs en direct (Ligue 1, Champions League, F1, UFC), chaînes internationales et plus de 80,000 VOD mis à jour quotidiennement.
+                {t("bento.t1_desc")}
               </p>
             </div>
 
             <div className="relative z-10 mt-6 pt-4 border-t border-slate-200 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <div className="flex items-center gap-2">
                 <Film className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
-                <span>80,000+ VOD Movies &amp; Series</span>
+                <span>{t("bento.t1_sub1")}</span>
               </div>
               <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
                 <CheckCircle2 className="h-4 w-4" />
-                <span>EPG Guide TV Inclus</span>
+                <span>{t("bento.t1_sub2")}</span>
               </div>
             </div>
           </div>
@@ -92,26 +95,26 @@ export function BentoGrid() {
               </div>
 
               <span className="text-xs font-bold tracking-wider text-cyan-500 dark:text-cyan-400 uppercase">
-                Standard D&apos;Image
+                {t("bento.t2_category")}
               </span>
               <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1 mb-3">
-                Qualité <span className="gradient-text-cyan">4K / 8K</span> HDR
+                {t("bento.t2_title")} <span className="gradient-text-cyan">{t("bento.t2_highlight")}</span> HDR
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-6">
-                Profitez d&apos;une netteté cristalline jusqu&apos;à 60 images par seconde sans aucune compression excessive.
+                {t("bento.t2_desc")}
               </p>
 
               <div className="space-y-3">
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 p-3 text-xs flex items-center justify-between">
-                  <span className="text-slate-600 dark:text-slate-300">Résolution Max</span>
+                  <span className="text-slate-600 dark:text-slate-300">{t("bento.t2_r1_label")}</span>
                   <span className="font-bold text-cyan-600 dark:text-cyan-300">Ultra HD 8K</span>
                 </div>
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 p-3 text-xs flex items-center justify-between">
-                  <span className="text-slate-600 dark:text-slate-300">Fréquence</span>
-                  <span className="font-bold text-violet-600 dark:text-violet-300">60 FPS Fluidité</span>
+                  <span className="text-slate-600 dark:text-slate-300">{t("bento.t2_r2_label")}</span>
+                  <span className="font-bold text-violet-600 dark:text-violet-300">60 FPS</span>
                 </div>
                 <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-white/5 p-3 text-xs flex items-center justify-between">
-                  <span className="text-slate-600 dark:text-slate-300">Audio</span>
+                  <span className="text-slate-600 dark:text-slate-300">{t("bento.t2_r3_label")}</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-300">Dolby Atmos</span>
                 </div>
               </div>
@@ -119,7 +122,7 @@ export function BentoGrid() {
 
             <div className="mt-8 pt-4 border-t border-slate-200 dark:border-white/10 text-center">
               <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
-                Adaptation automatique de la bande passante
+                {t("bento.t2_footer")}
               </span>
             </div>
           </div>
@@ -128,7 +131,7 @@ export function BentoGrid() {
           <div className="glass-bento glass-bento-hover md:col-span-2 lg:col-span-1 rounded-3xl p-8 relative overflow-hidden flex flex-col justify-between border border-violet-500/30 group min-h-[320px]">
             <div className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full border border-pink-500/40 bg-pink-950/60 px-2.5 py-0.5 text-[10px] font-bold text-pink-300">
               <Flame className="h-3 w-3 text-pink-400" />
-              Populaire
+              {t("pricing.popular")}
             </div>
 
             <div>
@@ -137,14 +140,14 @@ export function BentoGrid() {
               </div>
 
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
-                Nos Plans Curatés
+                {t("bento.t3_title")}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
-                Accès annuel illimité tout-en-un.
+                {t("bento.t3_desc")}
               </p>
 
               <div className="mb-4">
-                <span className="text-4xl font-black text-slate-900 dark:text-white">13.00 €</span>
+                <span className="text-4xl font-black text-slate-900 dark:text-white">27.00 €</span>
                 <span className="text-xs font-semibold text-violet-500 dark:text-violet-400"> / an</span>
               </div>
             </div>
@@ -153,7 +156,7 @@ export function BentoGrid() {
               href="/tarifs"
               className="flex items-center justify-center gap-2 rounded-full violet-cyan-gradient py-3 text-xs font-bold text-white transition-all hover:scale-105 shadow-lg"
             >
-              <span>Commander Maintenant</span>
+              <span>{t("nav.commander")}</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -164,13 +167,13 @@ export function BentoGrid() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-violet-500/30 bg-violet-950/50 shadow-lg">
                 <Zap className="h-5 w-5 text-violet-400" />
               </div>
-              <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">Instantané</span>
+              <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400">{t("bento.t4_tag")}</span>
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white">Activation Rapide</h4>
+              <h4 className="text-lg font-bold text-slate-900 dark:text-white">{t("bento.t4_title")}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-300 font-light mt-1">
-                Identifiants livrés sous <span className="font-bold text-violet-500 dark:text-violet-300">&lt; 15 min</span>.
+                {t("bento.t4_desc")}
               </p>
             </div>
           </div>
@@ -185,9 +188,9 @@ export function BentoGrid() {
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white">Support 24/7</h4>
+              <h4 className="text-lg font-bold text-slate-900 dark:text-white">{t("bento.t5_title")}</h4>
               <p className="text-xs text-slate-600 dark:text-slate-300 font-light mt-1">
-                Assistance VIP personnalisée par Ahmed.
+                {t("bento.t5_desc")}
               </p>
             </div>
           </div>
@@ -200,15 +203,15 @@ export function BentoGrid() {
               </div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                <span>Serveurs En Ligne</span>
+                <span>{t("bento.t6_status")}</span>
               </div>
             </div>
 
             <div className="flex items-end justify-between">
               <div>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white">Serveurs Ultra-Stables 99.9%</h4>
+                <h4 className="text-lg font-bold text-slate-900 dark:text-white">{t("bento.t6_title")}</h4>
                 <p className="text-xs text-slate-600 dark:text-slate-300 font-light mt-1">
-                  Technologie anti-coupure et répartition de charge intelligente pour les soirs de grands matchs.
+                  {t("bento.t6_desc")}
                 </p>
               </div>
               <TrendingUp className="h-6 w-6 text-cyan-500 dark:text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity" />
