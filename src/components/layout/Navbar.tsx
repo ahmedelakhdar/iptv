@@ -52,10 +52,10 @@ export function Navbar() {
     <>
       {/* Floating Pill Container Centered at Top */}
       <div className="fixed top-4 left-1/2 z-50 -translate-x-1/2 w-[94%] max-w-5xl pointer-events-auto">
-        <header className="glass-pill flex items-center justify-between w-full rounded-full px-4 py-2.5 sm:px-6 sm:py-3 transition-all duration-300 relative z-50 shadow-xl">
+        <header className="glass-pill flex items-center justify-between w-full max-w-full rounded-full px-3.5 py-2 sm:px-6 sm:py-3 transition-all duration-300 relative z-50 shadow-xl overflow-hidden">
           
-          {/* Left / Start: Brand Logo Group */}
-          <Link href="/" onClick={() => setMobileMenuOpen(false)} className="group flex items-center gap-2 sm:gap-2.5 shrink min-w-0 max-w-[52%] sm:max-w-none">
+          {/* Starting Edge: Brand Logo & Title Group */}
+          <Link href="/" onClick={() => setMobileMenuOpen(false)} className="group flex items-center gap-2 sm:gap-2.5 shrink min-w-0 max-w-[55%] sm:max-w-none me-2">
             <div className="relative flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-violet-600 via-fuchsia-500 to-cyan-400 p-0.5 shadow-lg shadow-violet-500/25 transition-transform duration-300 group-hover:scale-110">
               <Image
                 src={settings.logoUrl || "/logo.jpeg"}
@@ -84,7 +84,7 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Right / End: Desktop Actions */}
+          {/* Ending Edge: Desktop Actions */}
           <div className="hidden items-center gap-3 md:flex shrink-0">
             
             {/* Language Switcher Dropdown */}
@@ -149,8 +149,8 @@ export function Navbar() {
 
           </div>
 
-          {/* Mobile Controls Side-By-Side (Language, Theme, Hamburger) */}
-          <div className="flex items-center gap-1 sm:gap-1.5 md:hidden relative z-50 pointer-events-auto shrink-0">
+          {/* Ending Edge: Mobile Controls Group (Language, Theme, Hamburger) */}
+          <div className="ms-auto flex items-center gap-1 sm:gap-1.5 md:hidden relative z-50 pointer-events-auto shrink-0">
             
             {/* 1. Language Switcher Pill */}
             <div className="relative">
