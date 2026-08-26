@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PremiumSitemapGrid } from "@/components/features/PremiumSitemapGrid";
 import { useLanguage } from "@/context/LanguageContext";
+import { BidiText } from "@/components/ui/BidiText";
 import {
   Sparkles,
   Play,
@@ -62,28 +63,28 @@ export default function FonctionnalitesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 transition-colors duration-300 selection:bg-cyan-500 selection:text-white">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 transition-colors duration-300 selection:bg-cyan-500 selection:text-white">
       <Navbar />
 
-      <main className="pt-28 sm:pt-36 pb-16">
+      <main className="relative overflow-x-hidden w-full pt-28 sm:pt-36 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
           
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 dark:bg-violet-950/40 px-4 py-1.5 backdrop-blur-xl">
-              <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400" />
+              <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400 shrink-0" />
               <span className="text-xs font-bold text-violet-700 dark:text-violet-300">
-                {t("featuresPage.badge")}
+                <BidiText text={t("featuresPage.badge")} />
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-              {t("featuresPage.title_part1")}{" "}
-              <span className="animated-gradient-text">{t("featuresPage.title_part2")}</span>
+            <h1 dir="auto" className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              <BidiText text={t("featuresPage.title_part1")} />{" "}
+              <bdi className="animated-gradient-text inline-block"><BidiText text={t("featuresPage.title_part2")} /></bdi>
             </h1>
 
-            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-              {t("featuresPage.subtitle")}
+            <p dir="auto" className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed">
+              <BidiText text={t("featuresPage.subtitle")} />
             </p>
           </div>
 
@@ -94,25 +95,25 @@ export default function FonctionnalitesPage() {
               return (
                 <div
                   key={idx}
-                  className="glass-bento glass-bento-hover rounded-3xl p-7 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#070714]/90 relative overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-sm"
+                  className="glass-bento glass-bento-hover rounded-3xl p-7 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#070714]/90 relative overflow-hidden flex flex-col justify-between items-start transition-all duration-300 group shadow-sm text-start"
                 >
-                  <div>
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border shadow-md mb-6 ${item.badgeColor}`}>
+                  <div className="w-full flex flex-col items-start text-start">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border shadow-md mb-6 self-start ${item.badgeColor}`}>
                       <IconComp className="h-6 w-6" />
                     </div>
 
-                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
-                      {item.title}
+                    <h3 dir="auto" className="text-xl font-extrabold text-slate-900 dark:text-white mb-3 text-start group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors w-full">
+                      <BidiText text={item.title} />
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-                      {item.description}
+                    <p dir="auto" className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed text-start w-full">
+                      <BidiText text={item.description} />
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-2 text-xs font-bold text-cyan-600 dark:text-cyan-400">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <span>{t("featuresPage.included")}</span>
+                  <div className="mt-6 pt-4 border-t border-slate-100 dark:border-white/5 flex items-center gap-2 text-xs font-bold text-cyan-600 dark:text-cyan-400 w-full justify-start text-start">
+                    <CheckCircle2 className="h-4 w-4 shrink-0" />
+                    <span dir="auto"><BidiText text={t("featuresPage.included")} /></span>
                   </div>
                 </div>
               );
@@ -121,31 +122,31 @@ export default function FonctionnalitesPage() {
 
           {/* Highlighted Bottom Box: "Pour qui est cet IPTV For Europe ?" */}
           <div className="glass-bento rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-gradient-to-br dark:from-violet-950/40 dark:via-cyan-950/30 dark:to-[#070714] relative overflow-hidden shadow-lg transition-colors duration-300">
-            <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 -right-24 rtl:-right-auto rtl:-left-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
 
-            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-              <div className="space-y-4 max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/50 px-3.5 py-1 text-xs font-bold text-cyan-700 dark:text-cyan-300">
-                  <MapPin className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                  <span>{t("featuresPage.whoBadge")}</span>
+            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 text-start">
+              <div className="space-y-4 max-w-2xl text-start">
+                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/50 px-3.5 py-1 text-xs font-bold text-cyan-700 dark:text-cyan-300 self-start">
+                  <MapPin className="h-4 w-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                  <span dir="auto"><BidiText text={t("featuresPage.whoBadge")} /></span>
                 </div>
 
-                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-                  {t("featuresPage.whoTitle")}
+                <h2 dir="auto" className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight text-start">
+                  <BidiText text={t("featuresPage.whoTitle")} />
                 </h2>
 
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-                  {t("featuresPage.whoText")}
+                <p dir="auto" className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed text-start">
+                  <BidiText text={t("featuresPage.whoText")} />
                 </p>
               </div>
 
               <div className="flex-shrink-0 w-full lg:w-auto">
                 <Link
                   href="/tarifs"
-                  className="w-full lg:w-auto inline-flex items-center justify-center gap-3 rounded-full violet-cyan-gradient px-8 py-4 text-sm font-extrabold text-white shadow-xl hover:scale-105 transition-all duration-300"
+                  className="w-full lg:w-auto inline-flex items-center justify-center gap-3 rounded-full violet-cyan-gradient px-8 py-4 text-sm font-extrabold text-white shadow-xl hover:scale-105 transition-all duration-300 group"
                 >
                   <span>{t("nav.pricing")}</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
                 </Link>
               </div>
             </div>

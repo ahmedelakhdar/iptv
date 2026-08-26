@@ -54,23 +54,23 @@ export function HowToOrderGrid() {
             return (
               <div
                 key={idx}
-                className="glass-bento rounded-3xl p-6 sm:p-10 border border-black/10 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-2xl transition-all duration-300 relative z-10 overflow-hidden group hover:scale-[1.02] shadow-lg flex flex-col justify-between"
+                className="glass-bento rounded-3xl p-6 sm:p-10 border border-black/10 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-2xl transition-all duration-300 relative z-10 overflow-hidden group hover:scale-[1.02] shadow-lg flex flex-col justify-between items-start text-start"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
+                <div className="w-full text-start">
+                  <div className="flex items-center justify-between mb-6 w-full">
                     <span className="text-4xl sm:text-5xl font-black text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]">
                       {card.num}
                     </span>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/40 text-cyan-400">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/40 text-cyan-400 shrink-0">
                       <IconComp className="h-6 w-6" />
                     </div>
                   </div>
 
-                  <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-400 transition-colors">
+                  <h3 dir="auto" className="text-2xl font-extrabold text-slate-900 dark:text-white mb-3 group-hover:text-cyan-400 transition-colors text-start">
                     {card.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-light leading-relaxed">
+                  <p dir="auto" className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-light leading-relaxed text-start">
                     {card.text}
                   </p>
                 </div>

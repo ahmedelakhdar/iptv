@@ -73,18 +73,18 @@ export function WhyUsGrid() {
             return (
               <div
                 key={idx}
-                className="glass-bento glass-bento-hover rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-white/10 relative z-10 overflow-hidden flex flex-col justify-between transition-all duration-300 group"
+                className="glass-bento glass-bento-hover rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-white/10 relative z-10 overflow-hidden flex flex-col justify-between transition-all duration-300 group text-start"
               >
                 <div>
                   <div className={`flex h-12 w-12 items-center justify-center rounded-2xl border shadow-lg mb-6 ${card.iconColor}`}>
                     <IconComp className="h-6 w-6" />
                   </div>
 
-                  <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2 text-start group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
                     {card.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 font-light leading-relaxed text-start">
                     {card.text}
                   </p>
                 </div>

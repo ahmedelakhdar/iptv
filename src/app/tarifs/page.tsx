@@ -109,25 +109,25 @@ export default function TarifsPage() {
                     </div>
                   ) : null}
 
-                  {/* Auto-Calculated Discount Badge */}
+                  {/* Auto-Calculated Discount Badge (Mirrors to top-left in RTL mode) */}
                   {discountPercent > 0 && (
-                    <div className="absolute top-4 right-4 border border-red-500 text-red-500 rounded-md px-2 py-1 text-sm font-bold z-20">
+                    <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 border border-red-500 text-red-500 rounded-md px-2 py-1 text-sm font-bold z-20">
                       -{discountPercent}%
                     </div>
                   )}
 
-                <div>
+                <div className="text-start">
                   {/* Plan Name & Price */}
-                  <div className="mb-4">
-                    <h3 className={`text-xl font-extrabold mb-2 ${isVipPlan ? "text-amber-300" : "text-slate-900 dark:text-white"}`}>
+                  <div className="mb-4 text-start">
+                    <h3 className={`text-xl font-extrabold mb-2 text-start ${isVipPlan ? "text-amber-300" : "text-slate-900 dark:text-white"}`}>
                       {plan.name}
                     </h3>
                     {plan.originalPrice && plan.originalPrice > 0 && (
-                      <div className="text-sm font-semibold text-gray-400 line-through decoration-red-500 mb-0.5">
+                      <div className="text-sm font-semibold text-gray-400 line-through decoration-red-500 mb-0.5 text-start">
                         {formatEuroPrice(plan.originalPrice)}
                       </div>
                     )}
-                    <div className="flex items-baseline gap-1.5">
+                    <div className="flex items-baseline gap-1.5 justify-start">
                       <span className={`text-3xl sm:text-4xl font-black ${
                         isVipPlan
                           ? "text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]"
@@ -144,14 +144,14 @@ export default function TarifsPage() {
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-xs text-slate-600 dark:text-slate-300 font-light pb-4 border-b border-slate-200 dark:border-white/10 mb-6 leading-relaxed min-h-[38px]">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 font-light pb-4 border-b border-slate-200 dark:border-white/10 mb-6 leading-relaxed min-h-[38px] text-start">
                     {plan.subtitle}
                   </p>
 
                   {/* Features List */}
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-3 mb-8 text-start">
                     {(plan.features && plan.features.length > 0 ? plan.features : []).map((feat, idx) => (
-                      <li key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light">
+                      <li key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-200 font-light text-start">
                         <div className={`flex h-4 w-4 items-center justify-center rounded-full border flex-shrink-0 shadow-sm ${
                           isVipPlan
                             ? "bg-amber-500/20 border-amber-400/50"
@@ -159,7 +159,7 @@ export default function TarifsPage() {
                         }`}>
                           <Check className={`h-3 w-3 ${isVipPlan ? "text-amber-400" : "text-cyan-600 dark:text-cyan-400"}`} />
                         </div>
-                        <span className="leading-snug">{feat}</span>
+                        <span className="leading-snug text-start">{feat}</span>
                       </li>
                     ))}
                   </ul>
