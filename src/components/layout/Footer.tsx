@@ -12,7 +12,7 @@ export function Footer() {
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "212600000000",
     supportNumber: "212600000000",
-    siteName: "IPTV Netherlands",
+    siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
   });
 
@@ -33,7 +33,7 @@ export function Footer() {
               <div className="relative flex h-10 w-10 items-center justify-center rounded-full violet-cyan-gradient p-0.5 shadow-lg shadow-violet-500/30">
                 <Image
                   src={settings.logoUrl || "/logo.jpeg"}
-                  alt={`${settings.siteName || "IPTV Netherlands"} Logo`}
+                  alt={`${settings.siteName || "IPTV For Europe"} Logo`}
                   width={40}
                   height={40}
                   unoptimized={settings.logoUrl?.startsWith("data:") || settings.logoUrl?.startsWith("http")}
@@ -41,7 +41,7 @@ export function Footer() {
                 />
               </div>
               <span className="text-xl font-extrabold text-slate-900 dark:text-white">
-                {settings.siteName || "IPTV Netherlands"}
+                {settings.siteName || "IPTV For Europe"}
               </span>
             </Link>
 
@@ -57,7 +57,7 @@ export function Footer() {
             </div>
 
             <p className="text-[11px] text-slate-500 pt-2">
-              © 2026 {settings.siteName || "IPTV Netherlands"}. {t("footer.rights")}
+              © 2026 {settings.siteName || "IPTV For Europe"}. {t("footer.rights")}
             </p>
           </div>
 
@@ -131,7 +131,7 @@ export function Footer() {
 
         {/* Bottom copyright line */}
         <div className="mt-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row text-xs text-slate-500 dark:text-slate-400 font-light">
-          <p>© 2022 - 2026 {settings.siteName || "IPTV Netherlands"}.</p>
+          <p>© 2022 - 2026 {settings.siteName || "IPTV For Europe"}.</p>
           <div className="flex items-center gap-1">
             <span>Conçu avec</span>
             <Heart className="h-3.5 w-3.5 text-pink-500 fill-pink-500" />

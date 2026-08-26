@@ -9,7 +9,7 @@ export function PremiumSitemapGrid() {
   const { t } = useLanguage();
 
   const category1Main = [
-    { title: "IPTV Netherlands", sub: t("sitemap.m1_sub"), href: "/" },
+    { title: "IPTV For Europe", sub: t("sitemap.m1_sub"), href: "/" },
     { title: t("sitemap.m2_title"), sub: t("sitemap.m2_sub"), href: "/tarifs" },
     { title: t("sitemap.m3_title"), sub: t("sitemap.m3_sub"), href: "/guide" },
     { title: t("sitemap.m4_title"), sub: t("sitemap.m4_sub"), href: "/fonctionnalites" },
@@ -32,7 +32,7 @@ export function PremiumSitemapGrid() {
 
   const category4Guides = [
     { title: t("sitemap.g1_title"), sub: t("sitemap.g1_sub"), href: "/tarifs" },
-    { title: "IBO Player Netherlands", sub: t("sitemap.g2_sub"), href: "/guide" },
+    { title: "IBO Player Europe", sub: t("sitemap.g2_sub"), href: "/guide" },
     { title: t("sitemap.g3_title"), sub: t("sitemap.g3_sub"), href: "/tarifs" },
     { title: t("sitemap.g4_title"), sub: t("sitemap.g4_sub"), href: "/fonctionnalites" },
     { title: t("sitemap.g5_title"), sub: t("sitemap.g5_sub"), href: "/tarifs" },
@@ -52,7 +52,7 @@ export function PremiumSitemapGrid() {
             <span>{t("sitemap.badge")}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-            {t("sitemap.title")} <span className="animated-gradient-text">IPTV Netherlands</span>
+            {t("sitemap.title")} <span className="animated-gradient-text">IPTV For Europe</span>
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-light mt-1">
             {t("sitemap.desc")}

@@ -119,7 +119,7 @@ export default function FonctionnalitesPage() {
             })}
           </div>
 
-          {/* Highlighted Bottom Box: "Pour qui est cet IPTV Netherlands ?" */}
+          {/* Highlighted Bottom Box: "Pour qui est cet IPTV For Europe ?" */}
           <div className="glass-bento rounded-3xl p-8 sm:p-12 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-gradient-to-br dark:from-violet-950/40 dark:via-cyan-950/30 dark:to-[#070714] relative overflow-hidden shadow-lg transition-colors duration-300">
             <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
 

@@ -23,7 +23,7 @@ export default function ContactPage() {
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "31600000000",
     supportNumber: "31600000000",
-    siteName: "IPTV Netherlands",
+    siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
     supportEmail: "contact@iptv-netherlands.com",
   });

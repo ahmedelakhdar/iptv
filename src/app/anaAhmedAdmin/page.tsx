@@ -46,11 +46,11 @@ export default function AdminDashboardWelcomePage() {
 
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-3">
             Bienvenue sur l&apos;Administration{" "}
-            <span className="animated-gradient-text">IPTV Netherlands</span>
+            <span className="animated-gradient-text">IPTV For Europe</span>
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-6">
-            Gérez vos offres IPTV Netherlands, mettez à jour votre numéro WhatsApp et suivez l&apos;état global de votre plateforme.
+            Gérez vos offres IPTV For Europe, mettez à jour votre numéro WhatsApp et suivez l&apos;état global de votre plateforme.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">

@@ -9,7 +9,7 @@ export function SEOSection() {
   const { t } = useLanguage();
 
   const quickLinks = [
-    { name: "IPTV Netherlands", href: "#bento" },
+    { name: "IPTV For Europe", href: "#bento" },
     { name: t("seo.link_pricing"), href: "#tarifs" },
     { name: "IPTV 4K", href: "#bento" },
     { name: t("seo.link_guide"), href: "/guide" },

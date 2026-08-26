@@ -12,7 +12,7 @@ model GlobalSettings {
   id             String   @id @default(cuid())
   whatsappNumber String   @default("33600000000")
   supportNumber  String   @default("33600000000")
-  siteName       String   @default("IPTV Netherlands")
+  siteName       String   @default("IPTV For Europe")
   logoUrl        String   @default("/logo.jpeg")
   supportEmail   String?  @default("contact@iptv-netherlands.com")
   adminPassword  String?

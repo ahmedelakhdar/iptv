@@ -12,7 +12,7 @@ export function HeroSection() {
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "212600000000",
     supportNumber: "212600000000",
-    siteName: "IPTV Netherlands",
+    siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
   });
 

@@ -30,7 +30,7 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "212600000000",
     supportNumber: "212600000000",
-    siteName: "IPTV Netherlands",
+    siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
   });
 
@@ -79,7 +79,7 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
             <div className="relative flex h-10 w-10 items-center justify-center rounded-full violet-cyan-gradient p-0.5 shadow-lg shadow-violet-500/30 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src={settings.logoUrl || "/logo.jpeg"}
-                alt={`${settings.siteName || "IPTV Netherlands"} Logo`}
+                alt={`${settings.siteName || "IPTV For Europe"} Logo`}
                 width={40}
                 height={40}
                 unoptimized={
@@ -91,7 +91,7 @@ export function AdminSidebar({ mobileOpen, onClose }: AdminSidebarProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight">
-                {settings.siteName || "IPTV Netherlands"}
+                {settings.siteName || "IPTV For Europe"}
               </span>
               <span className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
                 ADMIN DASHBOARD

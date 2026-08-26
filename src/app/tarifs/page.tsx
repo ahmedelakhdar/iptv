@@ -43,13 +43,13 @@ export default function TarifsPage() {
             
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/40 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-4 backdrop-blur-xl shadow-[0_0_20px_rgba(6,182,212,0.2)]">
               <Sparkles className="h-4 w-4 animate-spin text-cyan-500 dark:text-cyan-400" />
-              <span>GRILLE DES TARIFS OFFICIELS • NETHERLANDS</span>
+              <span>GRILLE DES TARIFS OFFICIELS • EUROPE</span>
             </div>
 
-            {/* Title: IPTV Netherlands */}
+            {/* Title: IPTV For Europe */}
             <h1 className="text-3xl font-black text-slate-900 dark:text-white sm:text-6xl lg:text-7xl tracking-tight leading-tight">
               <span className="gradient-text-cyan drop-shadow-[0_0_35px_rgba(6,182,212,0.4)]">
-                IPTV Netherlands
+                IPTV For Europe
               </span>{" "}
               <span className="text-lg sm:text-3xl text-slate-500 dark:text-slate-400 font-light tracking-normal">
                 (EUR)

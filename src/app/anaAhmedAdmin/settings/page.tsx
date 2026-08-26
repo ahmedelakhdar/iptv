@@ -8,7 +8,7 @@ import { InternationalPhoneInput } from "@/components/ui/InternationalPhoneInput
 
 export default function AdminSettingsPage() {
   const [whatsappInput, setWhatsappInput] = useState("31600000000");
-  const [siteNameInput, setSiteNameInput] = useState("IPTV Netherlands");
+  const [siteNameInput, setSiteNameInput] = useState("IPTV For Europe");
   const [logoUrlInput, setLogoUrlInput] = useState("/logo.jpeg");
   const [logoPreview, setLogoPreview] = useState("/logo.jpeg");
   const [supportEmailInput, setSupportEmailInput] = useState("contact@iptv-netherlands.com");
@@ -29,7 +29,7 @@ export default function AdminSettingsPage() {
       setLoading(true);
       const settings = await getGlobalSettings();
       setWhatsappInput(settings.whatsappNumber || "31600000000");
-      setSiteNameInput(settings.siteName || "IPTV Netherlands");
+      setSiteNameInput(settings.siteName || "IPTV For Europe");
       setSupportEmailInput(settings.supportEmail || "contact@iptv-netherlands.com");
       const currentLogo = settings.logoUrl || "/logo.jpeg";
       setLogoUrlInput(currentLogo);
@@ -198,7 +198,7 @@ export default function AdminSettingsPage() {
                     required
                     value={siteNameInput}
                     onChange={(e) => setSiteNameInput(e.target.value)}
-                    placeholder="IPTV Netherlands"
+                    placeholder="IPTV For Europe"
                     className="w-full rounded-2xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-cyan-500 focus:outline-none backdrop-blur-xl shadow-inner transition-colors duration-300"
                   />
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 font-light">

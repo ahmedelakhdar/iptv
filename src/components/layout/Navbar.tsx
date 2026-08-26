@@ -17,7 +17,7 @@ export function Navbar() {
   const [settings, setSettings] = useState<GlobalSettingsData>({
     whatsappNumber: "212600000000",
     supportNumber: "212600000000",
-    siteName: "IPTV Netherlands",
+    siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
   });
 
@@ -59,7 +59,7 @@ export function Navbar() {
             <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-violet-600 via-fuchsia-500 to-cyan-400 p-0.5 shadow-lg shadow-violet-500/25 transition-transform duration-300 group-hover:scale-110">
               <Image
                 src={settings.logoUrl || "/logo.jpeg"}
-                alt={`${settings.siteName || "IPTV Netherlands"} Logo`}
+                alt={`${settings.siteName || "IPTV For Europe"} Logo`}
                 width={40}
                 height={40}
                 unoptimized={settings.logoUrl?.startsWith("data:") || settings.logoUrl?.startsWith("http")}
@@ -67,7 +67,7 @@ export function Navbar() {
               />
             </div>
             <span className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-lg">
-              {settings.siteName || "IPTV Netherlands"}
+              {settings.siteName || "IPTV For Europe"}
             </span>
           </Link>
 
@@ -228,7 +228,7 @@ export function Navbar() {
               <div className="relative flex h-8 w-8 items-center justify-center rounded-full violet-cyan-gradient p-0.5 shadow-md">
                 <Image
                   src={settings.logoUrl || "/logo.jpeg"}
-                  alt={`${settings.siteName || "IPTV Netherlands"} Logo`}
+                  alt={`${settings.siteName || "IPTV For Europe"} Logo`}
                   width={32}
                   height={32}
                   unoptimized={settings.logoUrl?.startsWith("data:") || settings.logoUrl?.startsWith("http")}
@@ -236,7 +236,7 @@ export function Navbar() {
                 />
               </div>
               <span className="text-sm font-extrabold text-slate-900 dark:text-white">
-                {settings.siteName || "IPTV Netherlands"}
+                {settings.siteName || "IPTV For Europe"}
               </span>
             </div>
 

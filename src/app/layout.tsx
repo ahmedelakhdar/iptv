@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
     // Silently fall back to default settings during build
   }
 
-  const siteName = settings?.siteName || "IPTV Netherlands";
+  const siteName = settings?.siteName || "IPTV For Europe";
   const logoUrl = settings?.logoUrl || "/logo.jpeg";
 
   return {
@@ -31,8 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "Abonnement IPTV 4K",
       "Chaînes Sport Live",
       "IPTV Europe",
-      "IPTV Netherlands",
-      "IPTV Pays-Bas",
+      "IPTV For Europe",
       "IBO Player",
     ],
     authors: [{ name: siteName }],

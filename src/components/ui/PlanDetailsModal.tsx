@@ -174,7 +174,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
             <p>
               {plan.description && plan.description.trim() !== ""
                 ? plan.description
-                : `Le forfait ${plan.name} est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d'image haute fidélité, accès instantané à la playlist IPTV Netherlands avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.`}
+                : `Le forfait ${plan.name} est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d'image haute fidélité, accès instantané à la playlist IPTV For Europe avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.`}
             </p>
           </div>
 

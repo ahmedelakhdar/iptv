@@ -44,7 +44,7 @@ export interface GlobalSettingsData {
 
 const DEFAULT_WHATSAPP_NUMBER = "212600000000";
 const DEFAULT_SUPPORT_NUMBER = "212600000000";
-const DEFAULT_SITE_NAME = "IPTV Netherlands";
+const DEFAULT_SITE_NAME = "IPTV For Europe";
 const DEFAULT_LOGO_URL = "/logo.jpeg";
 const DEFAULT_SUPPORT_EMAIL = "contact@iptv-netherlands.com";
 

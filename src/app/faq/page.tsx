@@ -8,9 +8,9 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingWhatsApp } from "@/components/features/FloatingWhatsApp";
 
 export const metadata: Metadata = {
-  title: "Foire Aux Questions IPTV | FAQ IPTV Netherlands",
+  title: "Foire Aux Questions IPTV | FAQ IPTV For Europe",
   description:
-    "Trouvez les réponses à toutes vos questions sur l'abonnement IPTV Netherlands : compatibilité Smart TV, vitesse internet requise, IBO Player et support WhatsApp.",
+    "Trouvez les réponses à toutes vos questions sur l'abonnement IPTV For Europe : compatibilité Smart TV, vitesse internet requise, IBO Player et support WhatsApp.",
 };
 
 export default function FAQPage() {
@@ -31,7 +31,7 @@ export default function FAQPage() {
               Accueil
             </Link>
             <span>&gt;</span>
-            <span className="text-cyan-400 font-bold">FAQ IPTV Netherlands</span>
+            <span className="text-cyan-400 font-bold">FAQ IPTV For Europe</span>
           </nav>
 
           {/* FAQ Accordions Section */}
