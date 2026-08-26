@@ -34,15 +34,27 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("fr");
 
   useEffect(() => {
-    const saved = localStorage.getItem("iptv_locale") as Locale;
-    if (saved && (saved === "fr" || saved === "ar" || saved === "en" || saved === "nl" || saved === "pt" || saved === "es")) {
-      setLocaleState(saved);
+    try {
+      if (typeof window !== "undefined") {
+        const saved = localStorage.getItem("iptv_locale") as Locale;
+        if (saved && ["fr", "ar", "en", "nl", "pt", "es"].includes(saved)) {
+          setLocaleState(saved);
+        }
+      }
+    } catch (_err) {
+      // Safe fallback for Safari Private Browsing / Restricted Storage
     }
   }, []);
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem("iptv_locale", newLocale);
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("iptv_locale", newLocale);
+      }
+    } catch (_err) {
+      // Safe fallback for Safari Private Browsing / Restricted Storage
+    }
   };
 
   const dir = locale === "ar" ? "rtl" : "ltr";

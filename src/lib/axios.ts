@@ -10,11 +10,15 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("iptv_token");
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
+    try {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("iptv_token");
+        if (token && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
+    } catch (_err) {
+      // Safe fallback for Safari Private Browsing / Restricted Storage
     }
     return config;
   },
