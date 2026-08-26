@@ -128,6 +128,7 @@ function MovieCard({ movie }: { movie: Movie }) {
         alt={movie.title}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         loading="lazy"
+        decoding="async"
       />
 
       {/* Dark tint overlay */}
