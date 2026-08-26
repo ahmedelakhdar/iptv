@@ -183,12 +183,12 @@ export function TrendingMovies() {
       className="relative py-16 sm:py-20 overflow-hidden w-full max-w-full bg-slate-50 dark:bg-[#030308]"
     >
       {/* Ambient glow */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-gradient-to-r from-cyan-600/8 via-violet-600/10 to-pink-600/8 blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[500px] sm:h-[500px] sm:w-[800px] rounded-full bg-gradient-to-r from-cyan-600/8 via-violet-600/10 to-pink-600/8 blur-2xl sm:blur-3xl transform-gpu" />
 
       {/* ── Section Header ── */}
       <div className="relative z-10 text-center px-4 mb-10 sm:mb-12">
         {/* VOD badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/80 dark:bg-black/60 px-3.5 py-1 mb-4 backdrop-blur-sm shadow-sm">
+        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/80 dark:bg-black/60 px-3.5 py-1 mb-4 backdrop-blur-sm shadow-sm transform-gpu">
           <Film className="h-3 w-3 text-cyan-400" />
           <span className="text-[10px] font-black uppercase tracking-[0.18em] text-cyan-400">
             {t("vod.badge")}
@@ -218,7 +218,7 @@ export function TrendingMovies() {
           The marquee always scrolls LTR regardless of locale so movie
           posters remain readable. We force dir="ltr" on the marquee
           wrapper to prevent RTL from reversing the scroll direction.  */}
-      <div className="relative marquee-track" dir="ltr">
+      <div className="relative marquee-track transform-gpu" dir="ltr">
         {/* Start-side fade (left in LTR, but marquee is always LTR here) */}
         <div className="pointer-events-none absolute start-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-r from-slate-50 dark:from-[#030308] to-transparent" />
         {/* End-side fade */}
@@ -226,7 +226,7 @@ export function TrendingMovies() {
 
         {/* Scrolling strip */}
         <div className="overflow-hidden">
-          <div className="animate-marquee flex gap-4 px-4 w-max">
+          <div className="animate-marquee flex gap-4 px-4 w-max transform-gpu">
             {doubled.map((movie, idx) => (
               <MovieCard key={`${movie.id}-${idx}`} movie={movie} />
             ))}

@@ -11,7 +11,7 @@ import { FloatingWhatsApp } from "@/components/features/FloatingWhatsApp";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white transition-colors duration-300">
+    <div className="relative min-h-[100dvh] bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white transition-colors duration-300">
       {/* Floating Pill Navbar */}
       <Navbar />
 

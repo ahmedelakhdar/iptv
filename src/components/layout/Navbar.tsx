@@ -74,9 +74,9 @@ export function Navbar() {
   return (
     <>
       {/* Fixed Header Container - pointer-events-none and max-w-[100vw] removed for iOS Safari stability */}
-      <div className="fixed top-0 left-0 right-0 z-50 w-full pt-3 px-3 sm:px-4 box-border">
+      <div className="fixed top-0 left-0 right-0 z-50 w-full pt-3 px-3 sm:px-4 box-border transform-gpu">
         <div className="mx-auto w-full max-w-5xl">
-          <header className="glass-pill flex flex-row items-center justify-between w-full max-w-full rounded-full px-3.5 py-2.5 sm:px-6 sm:py-3 transition-all duration-300 relative z-50 shadow-xl box-border">
+          <header className="glass-pill flex flex-row items-center justify-between w-full max-w-full rounded-full px-3.5 py-2.5 sm:px-6 sm:py-3 transition-all duration-300 relative z-50 shadow-xl box-border transform-gpu">
 
             {/* Starting Edge: Brand Logo & Title Group */}
             <Link href="/" onClick={() => setMobileMenuOpen(false)} className="group flex flex-row items-center gap-2 sm:gap-2.5 shrink min-w-0 max-w-[55%] sm:max-w-none me-2">
@@ -127,7 +127,7 @@ export function Navbar() {
                 </button>
 
                 {langDropdownOpen && (
-                  <div className="absolute end-0 top-full mt-2 w-40 rounded-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[9999]">
+                  <div className="absolute end-0 top-full mt-2 w-40 rounded-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 p-1.5 shadow-2xl backdrop-blur-md z-[9999] transform-gpu">
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
@@ -190,7 +190,7 @@ export function Navbar() {
                     e.stopPropagation();
                     setLangDropdownOpen((prev) => !prev);
                   }}
-                  className="flex items-center gap-1 rounded-full border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 px-2.5 py-1.5 text-xs font-bold text-white backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px]"
+                  className="flex items-center gap-1 rounded-full border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 px-2.5 py-1.5 text-xs font-bold text-white backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] transform-gpu"
                 >
                   <Globe className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
                   <span className="uppercase">{locale}</span>
@@ -198,7 +198,7 @@ export function Navbar() {
                 </button>
 
                 {langDropdownOpen && (
-                  <div className="absolute end-0 top-full mt-2 w-40 rounded-2xl border border-slate-700/60 dark:border-white/20 bg-slate-950/95 dark:bg-[#070714]/95 p-1.5 shadow-2xl backdrop-blur-2xl z-[9999]">
+                  <div className="absolute end-0 top-full mt-2 w-40 rounded-2xl border border-slate-700/60 dark:border-white/20 bg-slate-950/95 dark:bg-[#070714]/95 p-1.5 shadow-2xl backdrop-blur-md z-[9999] transform-gpu">
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
@@ -226,7 +226,7 @@ export function Navbar() {
                 type="button"
                 onClick={() => mounted && setTheme(theme === "dark" ? "light" : "dark")}
                 aria-label="Toggle Theme"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0 transform-gpu"
               >
                 {mounted ? (
                   theme === "dark" ? (
@@ -247,7 +247,7 @@ export function Navbar() {
                   setMobileMenuOpen((prev) => !prev);
                 }}
                 aria-label="Toggle Navigation Menu"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0 cursor-pointer"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0 cursor-pointer transform-gpu"
               >
                 {mobileMenuOpen ? (
                   <X className="h-4 w-4 text-cyan-400" />
@@ -261,7 +261,7 @@ export function Navbar() {
 
           {/* Mobile Menu Dropdown Drawer */}
           {mobileMenuOpen && (
-            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] navbar-dropdown-enter w-full max-w-full">
+            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-md border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] navbar-dropdown-enter w-full max-w-full transform-gpu">
 
               {/* Mobile Header Logo */}
               <div className="flex items-center gap-3 pb-3 mb-2 border-b border-slate-200 dark:border-white/10">

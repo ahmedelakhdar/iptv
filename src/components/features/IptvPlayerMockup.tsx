@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Trophy,
   PlaySquare,
@@ -187,6 +187,7 @@ export function IptvPlayerMockup() {
   const [activeTab, setActiveTab] = useState<TabKey>("sport");
   // Track whether user manually selected a tab to pause auto-cycle
   const [userPaused, setUserPaused] = useState(false);
+  const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeConfig = TABS.find((tab) => tab.key === activeTab)!;
 
@@ -204,11 +205,19 @@ export function IptvPlayerMockup() {
     return () => clearInterval(timer);
   }, [userPaused]);
 
+  // Clean up pauseTimeout on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, []);
+
   const handleTabClick = useCallback((key: TabKey) => {
     setActiveTab(key);
     // Pause auto-cycle for 15 s after manual interaction, then resume
     setUserPaused(true);
-    setTimeout(() => setUserPaused(false), 15000);
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => setUserPaused(false), 15000);
   }, []);
 
   const extraCounts: Record<TabKey, string> = {
@@ -220,10 +229,10 @@ export function IptvPlayerMockup() {
   };
 
   return (
-    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10">
+    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10 transform-gpu">
       {/* Ambient glows */}
-      <div className="pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-3xl" />
-      <div className="pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-2xl transform-gpu" />
+      <div className="pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-2xl transform-gpu" />
 
       {/*
         flex-row respects direction:
@@ -233,7 +242,7 @@ export function IptvPlayerMockup() {
       <div className="relative flex h-full w-full min-w-0 flex-row">
 
         {/* ── Sidebar (start side — left in LTR, right in RTL) ── */}
-        <aside className="flex w-20 min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-black/30 py-3 backdrop-blur-md">
+        <aside className="flex w-20 min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-black/30 py-3 backdrop-blur-md transform-gpu">
           {/* Mini logo */}
           <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-cyan-500/20">
             <Wifi className="h-3.5 w-3.5 text-white" />

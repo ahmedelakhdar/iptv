@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
+import { ServiceWorkerUnregister } from "@/components/providers/ServiceWorkerUnregister";
 import { getGlobalSettings } from "@/app/actions/adminActions";
 
 const inter = Inter({
@@ -29,10 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
     settings = (await Promise.race([
       getGlobalSettings(),
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Timeout")), 3000)
+        setTimeout(() => reject(new Error("Timeout")), 1000)
       ),
     ])) as any;
   } catch (_err) {
+    // Fall back immediately to default branding if DB query stalls
   }
 
   const siteName = settings?.siteName || "IPTV For Europe";
@@ -125,9 +127,10 @@ export default function RootLayout({
   return (
     <html lang="fr" dir="ltr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
       <body
-        className="min-h-screen min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100"
+        className="min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100"
         suppressHydrationWarning
       >
+        <ServiceWorkerUnregister />
         <ErrorBoundary>
           <ThemeProvider>
             <LanguageProvider>{children}</LanguageProvider>
