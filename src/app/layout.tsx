@@ -48,6 +48,11 @@ export async function generateMetadata(): Promise<Metadata> {
         pt: "https://iptv-netherlands.com?lang=pt",
       },
     },
+    icons: {
+      icon: logoUrl,
+      shortcut: logoUrl,
+      apple: logoUrl,
+    },
     verification: {
       google: "ovPZcOFou2AOtK_RhTFuX6uumaFngJMlg5ncZwj4oew",
     },
