@@ -73,11 +73,11 @@ export function Navbar() {
 
   return (
     <>
-      {/* 100% Viewport-Locked Floating Header Container */}
-      <div className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] pt-3 px-3 sm:px-4 pointer-events-none box-border">
-        <div className="mx-auto w-full max-w-5xl pointer-events-auto">
+      {/* Fixed Header Container - pointer-events-none and max-w-[100vw] removed for iOS Safari stability */}
+      <div className="fixed top-0 left-0 right-0 z-50 w-full pt-3 px-3 sm:px-4 box-border">
+        <div className="mx-auto w-full max-w-5xl">
           <header className="glass-pill flex flex-row items-center justify-between w-full max-w-full rounded-full px-3.5 py-2.5 sm:px-6 sm:py-3 transition-all duration-300 relative z-50 shadow-xl box-border">
-            
+
             {/* Starting Edge: Brand Logo & Title Group */}
             <Link href="/" onClick={() => setMobileMenuOpen(false)} className="group flex flex-row items-center gap-2 sm:gap-2.5 shrink min-w-0 max-w-[55%] sm:max-w-none me-2">
               <div className="relative flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-violet-600 via-fuchsia-500 to-cyan-400 p-0.5 shadow-lg shadow-violet-500/25 transition-transform duration-300 group-hover:scale-110">
@@ -110,7 +110,7 @@ export function Navbar() {
 
             {/* Ending Edge: Desktop Actions */}
             <div className="hidden items-center gap-3 md:flex shrink-0">
-              
+
               {/* Desktop Language Switcher Dropdown */}
               <div className="relative z-50" ref={dropdownRef}>
                 <button
@@ -180,8 +180,8 @@ export function Navbar() {
             </div>
 
             {/* Ending Edge: Mobile Controls Group (Language, Theme, Hamburger) */}
-            <div className="ms-auto flex flex-row items-center gap-1 sm:gap-1.5 md:hidden relative z-50 pointer-events-auto shrink-0">
-              
+            <div className="ms-auto flex flex-row items-center gap-1 sm:gap-1.5 md:hidden relative z-50 shrink-0">
+
               {/* 1. Mobile Language Switcher Pill */}
               <div className="relative z-50" ref={mobileDropdownRef}>
                 <button
@@ -247,7 +247,7 @@ export function Navbar() {
                   setMobileMenuOpen((prev) => !prev);
                 }}
                 aria-label="Toggle Navigation Menu"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0 pointer-events-auto cursor-pointer"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-300/80 dark:border-white/15 bg-slate-900/80 dark:bg-black/60 text-slate-100 backdrop-blur-md shadow-sm transition-all active:scale-95 min-h-[36px] min-w-[36px] shrink-0 cursor-pointer"
               >
                 {mobileMenuOpen ? (
                   <X className="h-4 w-4 text-cyan-400" />
@@ -259,10 +259,10 @@ export function Navbar() {
 
           </header>
 
-          {/* Mobile Menu Dropdown Drawer (Inside pointer-events-auto container) */}
+          {/* Mobile Menu Dropdown Drawer */}
           {mobileMenuOpen && (
-            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] pointer-events-auto animate-in fade-in slide-in-from-top-4 duration-300 w-full max-w-full">
-              
+            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] animate-in fade-in slide-in-from-top-4 duration-300 w-full max-w-full">
+
               {/* Mobile Header Logo */}
               <div className="flex items-center gap-3 pb-3 mb-2 border-b border-slate-200 dark:border-white/10">
                 <div className="relative flex h-8 w-8 items-center justify-center rounded-full violet-cyan-gradient p-0.5 shadow-md shrink-0">
@@ -281,7 +281,7 @@ export function Navbar() {
               </div>
 
               {/* Mobile Navigation Links */}
-              <nav className="flex flex-col gap-1.5 pointer-events-auto relative z-50">
+              <nav className="flex flex-col gap-1.5 relative z-50">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
@@ -290,14 +290,14 @@ export function Navbar() {
                       setMobileMenuOpen(false);
                       setLangDropdownOpen(false);
                     }}
-                    className="flex items-center rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 hover:bg-cyan-500/10 hover:text-cyan-600 dark:hover:text-cyan-300 min-h-[44px] transition-all cursor-pointer pointer-events-auto relative z-50"
+                    className="flex items-center rounded-2xl px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 hover:bg-cyan-500/10 hover:text-cyan-600 dark:hover:text-cyan-300 min-h-[44px] transition-all cursor-pointer relative z-50"
                   >
                     {link.name}
                   </Link>
                 ))}
               </nav>
 
-              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 pointer-events-auto relative z-50">
+              <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 relative z-50">
                 {/* Mobile Commander CTA Button */}
                 <Link
                   href="/tarifs"
@@ -305,7 +305,7 @@ export function Navbar() {
                     setMobileMenuOpen(false);
                     setLangDropdownOpen(false);
                   }}
-                  className="flex w-full items-center justify-center gap-2 rounded-full violet-cyan-gradient py-3.5 text-center text-xs font-extrabold text-white shadow-lg min-h-[44px] cursor-pointer pointer-events-auto relative z-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-full violet-cyan-gradient py-3.5 text-center text-xs font-extrabold text-white shadow-lg min-h-[44px] cursor-pointer relative z-50"
                 >
                   <ShoppingBag className="h-4 w-4" />
                   <span>{t("nav.commander")}</span>
