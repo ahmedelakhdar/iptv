@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/anaAhmedAdmin/", "/admin/"],
       },
     ],
-    sitemap: "https://iptv-netherlands.com/sitemap.xml",
+    sitemap: "https://www.iptvforeurop.com/sitemap.xml",
   };
 }

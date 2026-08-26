@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://iptv-netherlands.com";
+  const baseUrl = "https://www.iptvforeurop.com";
   const locales = ["fr", "nl", "ar", "en", "es", "pt"];
   const routes = ["", "/tarifs", "/fonctionnalites", "/contact", "/guide", "/faq"];
 
