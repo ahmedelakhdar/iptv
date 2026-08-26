@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
 import { getGlobalSettings } from "@/app/actions/adminActions";
-
 
 const inter = Inter({
   subsets: ["latin"],
@@ -130,6 +130,40 @@ export default function RootLayout({
         className="min-h-screen min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100"
         suppressHydrationWarning
       >
+        {/* ── SAFARI DIAGNOSTIC: On-Screen Error Logger ─────────────────────
+            Captures JS errors BEFORE React mounts. Remove after diagnosis. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(function() {
+  function showErr(msg, src, line, col, err) {
+    var d = document.getElementById('__safari_err');
+    if (!d) {
+      d = document.createElement('div');
+      d.id = '__safari_err';
+      d.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#c0392b;color:#fff;padding:16px;font:13px/1.5 monospace;word-break:break-all;max-height:60vh;overflow:auto;';
+      document.body.insertBefore(d, document.body.firstChild);
+    }
+    var entry = document.createElement('div');
+    entry.style.cssText = 'border-bottom:1px solid rgba(255,255,255,0.3);padding:8px 0;';
+    entry.innerHTML = '<b>[JS ERROR]</b> ' + String(msg) + '<br><small>' + (src||'') + ':' + (line||'?') + ':' + (col||'?') + '</small>' + (err && err.stack ? '<br><small style="opacity:.7">' + err.stack.slice(0,400) + '</small>' : '');
+    d.appendChild(entry);
+    return false;
+  }
+  window.onerror = showErr;
+  window.addEventListener('unhandledrejection', function(e) {
+    var reason = e.reason;
+    showErr(reason && reason.message ? reason.message : String(reason), 'Promise', 0, 0, reason);
+  });
+  window.addEventListener('error', function(e) {
+    if (e.target && e.target !== window) {
+      showErr('Resource failed to load: ' + (e.target.src || e.target.href || 'unknown'), 'resource', 0, 0, null);
+    }
+  }, true);
+})();
+`,
+          }}
+        />
         <ErrorBoundary>
           <ThemeProvider>
             <LanguageProvider>{children}</LanguageProvider>
