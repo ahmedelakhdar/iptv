@@ -38,3 +38,39 @@ export function formatEuroPrice(rawPrice?: string | number | null): string {
     .trim();
   return `${cleaned} €`;
 }
+
+export function parseDurationMonths(durationStr?: string): number {
+  if (!durationStr) return 12;
+  const match = durationStr.match(/(\d+)/);
+  return match ? parseInt(match[1], 10) : 12;
+}
+
+export function parsePriceNumeric(priceStr?: string | number): number {
+  if (typeof priceStr === "number") return priceStr;
+  if (!priceStr) return 0;
+  const cleaned = String(priceStr).replace(/[^0-9.]/g, "");
+  return parseFloat(cleaned) || 0;
+}
+
+export function sortPricingPlans<T extends { isVip?: boolean; name?: string; duration?: string; period?: string; price?: string | number }>(plans: T[]): T[] {
+  return [...plans].sort((a, b) => {
+    const isVipA = Boolean(a.isVip || a.name?.toLowerCase().includes("vip"));
+    const isVipB = Boolean(b.isVip || b.name?.toLowerCase().includes("vip"));
+
+    // Condition A (VIP Last): Any VIP plan MUST ALWAYS be placed at the very end
+    if (isVipA && !isVipB) return 1;
+    if (!isVipA && isVipB) return -1;
+
+    // Condition B (Ascending Duration): 3 months, 6 months, 12 months
+    const durationA = parseDurationMonths(a.duration || a.period);
+    const durationB = parseDurationMonths(b.duration || b.period);
+    if (durationA !== durationB) {
+      return durationA - durationB;
+    }
+
+    // Condition C (Ascending Price): Cheapest price first if duration is identical
+    const priceA = parsePriceNumeric(a.price);
+    const priceB = parsePriceNumeric(b.price);
+    return priceA - priceB;
+  });
+}

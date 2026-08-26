@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import bcrypt from "bcryptjs";
-import { formatWhatsAppNumber, formatEuroPrice } from "@/lib/utils";
+import { formatWhatsAppNumber, formatEuroPrice, sortPricingPlans } from "@/lib/utils";
 
 export interface PlanData {
   id: string;
@@ -297,7 +297,7 @@ export async function getPlans(): Promise<PlanData[]> {
       orderBy: { orderIndex: "asc" },
     });
 
-    return dbPlans.map((p) => ({
+    const mappedPlans: PlanData[] = dbPlans.map((p) => ({
       id: p.id,
       name: p.name,
       price: formatEuroPrice(p.price),
@@ -315,6 +315,8 @@ export async function getPlans(): Promise<PlanData[]> {
       subtitle: p.subtitle || "",
       orderIndex: p.orderIndex,
     }));
+
+    return sortPricingPlans(mappedPlans);
   } catch (error) {
     console.error("PRISMA ERROR in getPlans:", error);
     return [];

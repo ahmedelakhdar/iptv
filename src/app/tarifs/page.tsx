@@ -8,7 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingWhatsApp } from "@/components/features/FloatingWhatsApp";
 import { PlanDetailsModal } from "@/components/ui/PlanDetailsModal";
 import { getPlans, PlanData } from "@/app/actions/adminActions";
-import { formatEuroPrice } from "@/lib/utils";
+import { formatEuroPrice, sortPricingPlans } from "@/lib/utils";
 import { Check, Flame, Sparkles, ArrowRight, ShieldCheck, Zap, Tv } from "lucide-react";
 
 export default function TarifsPage() {
@@ -17,7 +17,7 @@ export default function TarifsPage() {
   const [plans, setPlans] = useState<PlanData[]>([]);
 
   useEffect(() => {
-    getPlans().then((loadedPlans) => setPlans(loadedPlans));
+    getPlans().then((loadedPlans) => setPlans(sortPricingPlans(loadedPlans)));
   }, []);
 
   const handleOpenModal = (plan: PlanData) => {

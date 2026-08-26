@@ -6,7 +6,7 @@ import { getPlans, PlanData } from "@/app/actions/adminActions";
 import { PlanDetailsModal } from "@/components/ui/PlanDetailsModal";
 
 import { useLanguage } from "@/context/LanguageContext";
-import { getConnectionsText, formatEuroPrice } from "@/lib/utils";
+import { getConnectionsText, formatEuroPrice, sortPricingPlans } from "@/lib/utils";
 
 export function PricingCards() {
   const { t } = useLanguage();
@@ -18,7 +18,7 @@ export function PricingCards() {
     async function fetchPlans() {
       setLoading(true);
       const loadedPlans = await getPlans();
-      setPlans(loadedPlans);
+      setPlans(sortPricingPlans(loadedPlans));
       setLoading(false);
     }
     fetchPlans();
