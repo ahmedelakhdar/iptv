@@ -10,6 +10,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       defaultTheme="dark"
       enableSystem={false}
       disableTransitionOnChange
+      storageKey="iptv-theme"
     >
       {children}
     </NextThemesProvider>

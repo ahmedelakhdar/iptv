@@ -103,21 +103,30 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
+    // Safari / iOS PWA meta
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: siteName,
+    },
+    formatDetection: {
+      telephone: false,
+    },
   };
 }
 
 export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="fr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
-    <body className="min-h-screen min-h-[100dvh] w-full overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100">
-    <ThemeProvider>
-      <LanguageProvider>{children}</LanguageProvider>
-    </ThemeProvider>
-    </body>
+      <body className="min-h-screen min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100">
+        <ThemeProvider>
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
