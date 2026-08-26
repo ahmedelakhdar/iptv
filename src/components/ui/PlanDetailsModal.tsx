@@ -59,13 +59,14 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
 
   const formattedNum = formatWhatsAppNumber(whatsappNumber);
 
-  const whatsappOrderUrl = `https://wa.me/${formattedNum}?text=Bonjour%20IPTV%20Ahmed,%20je%20souhaite%20commander%20l%27offre%20IPTV%20${encodeURIComponent(
-    plan.name
-  )}%20(${encodeURIComponent(plan.price)})`;
+  const orderMsgTemplate = t("whatsapp.order_msg") || "Bonjour IPTV For Europe, je souhaite commander l'offre IPTV {plan} ({price}).";
+  const questionMsgTemplate = t("whatsapp.question_msg") || "Bonjour, j'ai une question sur l'offre IPTV {plan}.";
 
-  const whatsappQuestionUrl = `https://wa.me/${formattedNum}?text=Bonjour,%20j%27ai%20une%20question%20sur%20l%27offre%20IPTV%20${encodeURIComponent(
-    plan.name
-  )}`;
+  const orderMsg = orderMsgTemplate.replace("{plan}", plan.name).replace("{price}", plan.price);
+  const questionMsg = questionMsgTemplate.replace("{plan}", plan.name);
+
+  const whatsappOrderUrl = `https://wa.me/${formattedNum}?text=${encodeURIComponent(orderMsg)}`;
+  const whatsappQuestionUrl = `https://wa.me/${formattedNum}?text=${encodeURIComponent(questionMsg)}`;
 
   const cleanDuration = (plan.duration || plan.period || "12 mois").replace(/^\/\s*/, "");
   const hasBonusDays = typeof plan.bonusDays === "number" && plan.bonusDays > 0;

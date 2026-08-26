@@ -63,7 +63,10 @@
     "card3_text": "Codes + IBO Player gids. Begin direct met kijken."
   },
   "whatsapp": {
-    "trial": "24u Gratis Proef"
+    "trial": "24u Gratis Proefperiode",
+    "trial_msg": "Hallo IPTV For Europe, ik wil graag een gratis proefperiode van 24 uur aanvragen.",
+    "order_msg": "Hallo IPTV For Europe, ik wil graag het IPTV abonnement {plan} ({price}) bestellen.",
+    "question_msg": "Hallo, ik heb een vraag over het IPTV abonnement {plan}."
   },
   "modal": {
     "included": "Wat is inbegrepen",

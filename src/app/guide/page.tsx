@@ -221,7 +221,9 @@ export default function InstallationGuidePage() {
             </div>
 
             <a
-              href={`https://wa.me/${formatWhatsAppNumber(whatsappNum)}?text=Bonjour%20IPTV%20Ahmed,%20j%27ai%20besoin%20d%27aide%20pour%20l%27installation%20sur%20IBO%20Player`}
+              href={`https://wa.me/${formatWhatsAppNumber(whatsappNum)}?text=${encodeURIComponent(
+                t("whatsapp.trial_msg") || "Bonjour IPTV For Europe, je souhaite demander un essai gratuit 24h."
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-shrink-0 inline-flex items-center gap-2.5 rounded-full violet-cyan-gradient px-7 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-lg transition-all hover:scale-105 min-h-[44px]"

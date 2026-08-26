@@ -15,9 +15,14 @@ export default function TarifsPage() {
   const [selectedPlan, setSelectedPlan] = useState<PlanData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [plans, setPlans] = useState<PlanData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPlans().then((loadedPlans) => setPlans(sortPricingPlans(loadedPlans)));
+    setLoading(true);
+    getPlans().then((loadedPlans) => {
+      setPlans(sortPricingPlans(loadedPlans));
+      setLoading(false);
+    });
   }, []);
 
   const handleOpenModal = (plan: PlanData) => {
@@ -77,8 +82,31 @@ export default function TarifsPage() {
 
           </div>
 
-          {/* Responsive Pricing Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-12 relative z-10">
+          {/* Responsive Pricing Grid with Loading Skeleton */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-12 relative z-10">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="glass-bento rounded-3xl p-7 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-[#070714]/50 animate-pulse flex flex-col justify-between h-[480px]"
+                >
+                  <div>
+                    <div className="h-6 w-3/4 bg-slate-200 dark:bg-white/10 rounded-full mb-4" />
+                    <div className="h-10 w-1/2 bg-slate-200 dark:bg-white/10 rounded-2xl mb-6" />
+                    <div className="h-4 w-full bg-slate-200 dark:bg-white/10 rounded-full mb-6" />
+                    <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-white/5">
+                      <div className="h-4 w-5/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                      <div className="h-4 w-4/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                      <div className="h-4 w-full bg-slate-200 dark:bg-white/10 rounded-full" />
+                      <div className="h-4 w-3/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                    </div>
+                  </div>
+                  <div className="h-12 w-full bg-slate-200 dark:bg-white/10 rounded-full" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-12 relative z-10">
             {plans.map((plan) => {
               const numPrice = parseFloat(String(plan.price).replace(/[^0-9.]/g, "")) || 0;
               const origPrice = typeof plan.originalPrice === "number" ? plan.originalPrice : 0;
@@ -198,6 +226,7 @@ export default function TarifsPage() {
               );
             })}
           </div>
+        )}
 
         </div>
 

@@ -15,7 +15,9 @@ export function FloatingWhatsApp() {
     getWhatsappNumber().then((num) => setWhatsappNumber(num));
   }, []);
 
-  const whatsappUrl = `https://wa.me/${formatWhatsAppNumber(whatsappNumber)}?text=Bonjour%20IPTV%20Ahmed,%20je%20souhaite%20demander%20un%20essai%20gratuit%2024h.`;
+  const whatsappUrl = `https://wa.me/${formatWhatsAppNumber(whatsappNumber)}?text=${encodeURIComponent(
+    t("whatsapp.trial_msg") || "Bonjour IPTV For Europe, je souhaite demander un essai gratuit 24h."
+  )}`;
 
   return (
     <a

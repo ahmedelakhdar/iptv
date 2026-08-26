@@ -34,8 +34,9 @@ export default function ContactPage() {
     });
   }, []);
 
-  const formattedNum = formatWhatsAppNumber(settings.whatsappNumber);
-  const waLink = `https://wa.me/${formattedNum}?text=Bonjour%20${encodeURIComponent(settings.siteName)},%20j'ai%20une%20question%20sur%20vos%20forfaits%20IPTV`;
+  const waLink = `https://wa.me/${formatWhatsAppNumber(
+    settings.whatsappNumber || "212600000000"
+  )}?text=${encodeURIComponent(t("whatsapp.trial_msg") || "Bonjour IPTV For Europe, je souhaite demander un essai gratuit 24h.")}`;
 
   return (
     <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 transition-colors duration-300 selection:bg-cyan-500 selection:text-white">

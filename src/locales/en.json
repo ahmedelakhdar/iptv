@@ -63,7 +63,10 @@
     "card3_text": "Codes + IBO Player guide. Start watching instantly."
   },
   "whatsapp": {
-    "trial": "24h Free Trial"
+    "trial": "24h Free Trial",
+    "trial_msg": "Hello IPTV For Europe, I would like to request a 24h free trial.",
+    "order_msg": "Hello IPTV For Europe, I would like to order the IPTV plan {plan} ({price}).",
+    "question_msg": "Hello, I have a question about the IPTV plan {plan}."
   },
   "modal": {
     "included": "What's included",
