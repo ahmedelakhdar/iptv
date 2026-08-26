@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
 import { getGlobalSettings } from "@/app/actions/adminActions";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -121,11 +123,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
-      <body className="min-h-screen min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100">
-        <ThemeProvider>
-          <LanguageProvider>{children}</LanguageProvider>
-        </ThemeProvider>
+    // suppressHydrationWarning prevents Safari from crashing on class/dir attribute differences
+    // set by next-themes and LanguageProvider after client-side hydration
+    <html lang="fr" dir="ltr" className={`${inter.variable} scroll-smooth`} suppressHydrationWarning>
+      <body
+        className="min-h-screen min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100"
+        suppressHydrationWarning
+      >
+        <ErrorBoundary>
+          <ThemeProvider>
+            <LanguageProvider>{children}</LanguageProvider>
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

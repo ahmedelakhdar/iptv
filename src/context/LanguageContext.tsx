@@ -32,24 +32,27 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("fr");
+  const [mounted, setMounted] = useState(false);
 
+  // Restore saved locale after mount (safe for Safari Private Browsing)
   useEffect(() => {
+    setMounted(true);
     try {
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
         const saved = localStorage.getItem("iptv_locale") as Locale;
         if (saved && ["fr", "ar", "en", "nl", "pt", "es"].includes(saved)) {
           setLocaleState(saved);
         }
       }
     } catch (_err) {
-      // Safe fallback for Safari Private Browsing / Restricted Storage
+      // Safari Private Browsing may throw SecurityError on localStorage access
     }
   }, []);
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
     try {
-      if (typeof window !== "undefined") {
+      if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
         localStorage.setItem("iptv_locale", newLocale);
       }
     } catch (_err) {
@@ -59,10 +62,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const dir = locale === "ar" ? "rtl" : "ltr";
 
+  // Apply dir/lang to <html> element only after mount to avoid SSR mismatch
   useEffect(() => {
-    document.documentElement.dir = dir;
-    document.documentElement.lang = locale;
-  }, [dir, locale]);
+    if (!mounted) return;
+    try {
+      document.documentElement.dir = dir;
+      document.documentElement.lang = locale;
+    } catch (_err) {
+      // Guard against any WebKit restriction
+    }
+  }, [dir, locale, mounted]);
 
   // Translation helper supporting nested keys like "nav.home" or "howToOrder.title"
   const t = (keyPath: string): string => {
@@ -90,9 +99,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, dir, t }}>
-      <div dir={dir} className={dir === "rtl" ? "font-arabic" : ""}>
-        {children}
-      </div>
+      {children}
     </LanguageContext.Provider>
   );
 }
