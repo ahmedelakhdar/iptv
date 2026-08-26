@@ -48,10 +48,28 @@ export function PricingCards() {
           </p>
         </div>
 
-        {/* Pricing Cards Grid */}
+        {/* Pricing Cards Grid with Loading Skeleton */}
         {loading ? (
-          <div className="py-12 text-center text-sm font-semibold text-slate-400">
-            Chargement des forfaits IPTV...
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-4 relative z-10">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="glass-bento rounded-3xl p-7 border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-[#070714]/50 animate-pulse flex flex-col justify-between h-[480px]"
+              >
+                <div>
+                  <div className="h-6 w-3/4 bg-slate-200 dark:bg-white/10 rounded-full mb-4" />
+                  <div className="h-10 w-1/2 bg-slate-200 dark:bg-white/10 rounded-2xl mb-6" />
+                  <div className="h-4 w-full bg-slate-200 dark:bg-white/10 rounded-full mb-6" />
+                  <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-white/5">
+                    <div className="h-4 w-5/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                    <div className="h-4 w-4/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                    <div className="h-4 w-full bg-slate-200 dark:bg-white/10 rounded-full" />
+                    <div className="h-4 w-3/6 bg-slate-200 dark:bg-white/10 rounded-full" />
+                  </div>
+                </div>
+                <div className="h-12 w-full bg-slate-200 dark:bg-white/10 rounded-full" />
+              </div>
+            ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch pt-4 pb-4 relative z-10">
