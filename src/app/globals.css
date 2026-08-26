@@ -193,3 +193,22 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Navbar Mobile Dropdown Enter Animation ───────────────────────────────── */
+/* Replaces undefined tailwindcss-animate classes (animate-in, fade-in,       */
+/* slide-in-from-top-4) that caused Safari CSS parse failures.                 */
+@keyframes navbar-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.navbar-dropdown-enter {
+  animation: navbar-dropdown-enter 0.2s ease-out forwards;
+  transform-origin: top center;
+}

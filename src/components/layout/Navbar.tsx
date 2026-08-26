@@ -261,7 +261,7 @@ export function Navbar() {
 
           {/* Mobile Menu Dropdown Drawer */}
           {mobileMenuOpen && (
-            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] animate-in fade-in slide-in-from-top-4 duration-300 w-full max-w-full">
+            <div className="glass-pill mt-2 rounded-3xl p-5 md:hidden backdrop-blur-2xl border border-slate-200 dark:border-white/15 bg-white/95 dark:bg-[#070714]/95 shadow-2xl relative z-[9999] navbar-dropdown-enter w-full max-w-full">
 
               {/* Mobile Header Logo */}
               <div className="flex items-center gap-3 pb-3 mb-2 border-b border-slate-200 dark:border-white/10">
