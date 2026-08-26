@@ -26,11 +26,11 @@ export default function TarifsPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white transition-colors duration-300">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 selection:bg-cyan-500 selection:text-white transition-colors duration-300">
       {/* Floating Pill Navbar */}
       <Navbar />
 
-      <main className="relative pt-28 sm:pt-32 pb-20 overflow-hidden">
+      <main className="relative pt-28 sm:pt-32 pb-20 overflow-x-hidden w-full">
         
         {/* Pulsing Ambient Background Radial Gradient Orbs - strictly pointer-events-none z-0 */}
         <div className="pointer-events-none z-0 absolute top-24 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-gradient-to-r from-cyan-500/20 via-violet-600/20 to-fuchsia-600/20 blur-[160px] animate-ambient-orb-1" />

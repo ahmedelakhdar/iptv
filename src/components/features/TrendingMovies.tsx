@@ -180,7 +180,7 @@ export function TrendingMovies() {
   return (
     <section
       id="films-tendance"
-      className="relative py-16 sm:py-20 overflow-hidden bg-slate-50 dark:bg-[#030308]"
+      className="relative py-16 sm:py-20 overflow-hidden w-full max-w-full bg-slate-50 dark:bg-[#030308]"
     >
       {/* Ambient glow */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-gradient-to-r from-cyan-600/8 via-violet-600/10 to-pink-600/8 blur-[120px]" />

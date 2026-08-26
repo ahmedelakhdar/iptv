@@ -38,10 +38,10 @@ export default function ContactPage() {
   const waLink = `https://wa.me/${formattedNum}?text=Bonjour%20${encodeURIComponent(settings.siteName)},%20j'ai%20une%20question%20sur%20vos%20forfaits%20IPTV`;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 transition-colors duration-300 selection:bg-cyan-500 selection:text-white">
+    <div className="relative min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 transition-colors duration-300 selection:bg-cyan-500 selection:text-white">
       <Navbar />
 
-      <main className="pt-28 sm:pt-36 pb-16">
+      <main className="relative overflow-x-hidden w-full pt-28 sm:pt-36 pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
           
           {/* Header */}
