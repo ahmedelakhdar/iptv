@@ -25,7 +25,7 @@ export default function ContactPage() {
     supportNumber: "31600000000",
     siteName: "IPTV For Europe",
     logoUrl: "/logo.jpeg",
-    supportEmail: "contact@iptv-netherlands.com",
+    supportEmail: "contact@iptvforeurop.com",
   });
 
   useEffect(() => {
@@ -138,12 +138,12 @@ export default function ContactPage() {
                 </p>
 
                 <p className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 mb-6">
-                  {settings.supportEmail || "contact@iptv-netherlands.com"}
+                  {settings.supportEmail || "contact@iptvforeurop.com"}
                 </p>
               </div>
 
               <a
-                href={`mailto:${settings.supportEmail || "contact@iptv-netherlands.com"}`}
+                href={`mailto:${settings.supportEmail || "contact@iptvforeurop.com"}`}
                 className="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-white/20 bg-slate-100 dark:bg-white/5 py-4 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 hover:border-amber-500 hover:bg-slate-200 dark:hover:bg-white/10 transition-all hover:scale-[1.02]"
               >
                 <Mail className="h-4 w-4 text-amber-600 dark:text-amber-400" />

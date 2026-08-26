@@ -11,7 +11,7 @@ export default function AdminSettingsPage() {
   const [siteNameInput, setSiteNameInput] = useState("IPTV For Europe");
   const [logoUrlInput, setLogoUrlInput] = useState("/logo.jpeg");
   const [logoPreview, setLogoPreview] = useState("/logo.jpeg");
-  const [supportEmailInput, setSupportEmailInput] = useState("contact@iptv-netherlands.com");
+  const [supportEmailInput, setSupportEmailInput] = useState("contact@iptvforeurop.com");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -30,7 +30,7 @@ export default function AdminSettingsPage() {
       const settings = await getGlobalSettings();
       setWhatsappInput(settings.whatsappNumber || "31600000000");
       setSiteNameInput(settings.siteName || "IPTV For Europe");
-      setSupportEmailInput(settings.supportEmail || "contact@iptv-netherlands.com");
+      setSupportEmailInput(settings.supportEmail || "contact@iptvforeurop.com");
       const currentLogo = settings.logoUrl || "/logo.jpeg";
       setLogoUrlInput(currentLogo);
       setLogoPreview(currentLogo);
@@ -105,7 +105,7 @@ export default function AdminSettingsPage() {
       setSiteNameInput(res.settings.siteName);
       setLogoUrlInput(res.settings.logoUrl);
       setLogoPreview(res.settings.logoUrl);
-      setSupportEmailInput(res.settings.supportEmail || "contact@iptv-netherlands.com");
+      setSupportEmailInput(res.settings.supportEmail || "contact@iptvforeurop.com");
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 4000);
     }
@@ -271,7 +271,7 @@ export default function AdminSettingsPage() {
                   required
                   value={supportEmailInput}
                   onChange={(e) => setSupportEmailInput(e.target.value)}
-                  placeholder="contact@iptv-netherlands.com"
+                  placeholder="contact@iptvforeurop.com"
                   className="w-full rounded-2xl border border-slate-200 dark:border-white/15 bg-white dark:bg-white/5 px-4 py-3.5 text-sm font-semibold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:border-amber-500 focus:outline-none backdrop-blur-xl shadow-inner transition-colors duration-300"
                 />
 

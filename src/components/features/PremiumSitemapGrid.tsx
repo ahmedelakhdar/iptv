@@ -18,7 +18,7 @@ export function PremiumSitemapGrid() {
     { title: t("sitemap.m7_title"), sub: t("sitemap.m7_sub"), href: "/contact" },
   ];
 
-  const category2Netherlands = [
+  const category2Europe = [
     { title: "IPTV Lite", sub: t("sitemap.n1_sub"), href: "/tarifs" },
     { title: t("sitemap.n2_title"), sub: t("sitemap.n2_sub"), href: "/tarifs" },
     { title: t("sitemap.n3_title"), sub: t("sitemap.n3_sub"), href: "/tarifs" },
@@ -92,20 +92,20 @@ export function PremiumSitemapGrid() {
             </div>
           </div>
 
-          {/* CATEGORY 2 & 3: Forfaits Netherlands & Forfaits Europe (2 columns) */}
+          {/* CATEGORY 2 & 3: Forfaits Europe (2 columns) */}
           <div className="grid grid-cols-1 gap-6 lg:gap-8 lg:grid-cols-2">
             
-            {/* Category 2: FORFAITS NETHERLANDS */}
+            {/* Category 2: FORFAITS EUROPE */}
             <div className="glass-bento rounded-3xl p-5 sm:p-6 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#070714]/90 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 <h3 className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">
-                  FORFAITS NETHERLANDS
+                  FORFAITS EUROPE
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                {category2Netherlands.map((tile, idx) => (
+                {category2Europe.map((tile, idx) => (
                   <Link
                     key={idx}
                     href={tile.href}

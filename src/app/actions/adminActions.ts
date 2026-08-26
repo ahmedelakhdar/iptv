@@ -46,7 +46,7 @@ const DEFAULT_WHATSAPP_NUMBER = "212600000000";
 const DEFAULT_SUPPORT_NUMBER = "212600000000";
 const DEFAULT_SITE_NAME = "IPTV For Europe";
 const DEFAULT_LOGO_URL = "/logo.jpeg";
-const DEFAULT_SUPPORT_EMAIL = "contact@iptv-netherlands.com";
+const DEFAULT_SUPPORT_EMAIL = "contact@iptvforeurop.com";
 
 const DEFAULT_PLANS: PlanData[] = [
   {
@@ -69,7 +69,7 @@ const DEFAULT_PLANS: PlanData[] = [
     ],
     currency: "€",
     duration: "/ 12 mois",
-    subtitle: "8 000 chaînes — offre entrée de gamme Netherlands.",
+    subtitle: "8 000 chaînes — offre entrée de gamme Europe.",
     orderIndex: 0,
   },
   {
