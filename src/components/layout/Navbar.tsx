@@ -30,8 +30,10 @@ export function Navbar() {
     });
   }, []);
 
-  // Click outside detection for language dropdown (supports touch events for iOS Safari)
+  // Click outside detection for language dropdown (only bound when open to conserve iOS CPU/RAM)
   useEffect(() => {
+    if (!langDropdownOpen) return;
+
     function handleClickOutside(event: MouseEvent | TouchEvent) {
       const target = event.target as Node;
       if (
@@ -49,7 +51,7 @@ export function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("touchstart", handleClickOutside);
     };
-  }, []);
+  }, [langDropdownOpen]);
 
   const navLinks = [
     { name: t("nav.home"), href: "/" },

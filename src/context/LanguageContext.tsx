@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from "react";
 import frDict from "@/locales/fr.json";
 import enDict from "@/locales/en.json";
 import arDict from "@/locales/ar.json";
@@ -49,7 +49,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const setLocale = (newLocale: Locale) => {
+  const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale);
     try {
       if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
@@ -58,9 +58,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     } catch (_err) {
       // Safe fallback for Safari Private Browsing / Restricted Storage
     }
-  };
+  }, []);
 
-  const dir = locale === "ar" ? "rtl" : "ltr";
+  const dir: "ltr" | "rtl" = locale === "ar" ? "rtl" : "ltr";
 
   // Apply dir/lang to <html> element only after mount to avoid SSR mismatch
   useEffect(() => {
@@ -74,31 +74,39 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [dir, locale, mounted]);
 
   // Translation helper supporting nested keys like "nav.home" or "howToOrder.title"
-  const t = (keyPath: string): string => {
-    const keys = keyPath.split(".");
-    let current: any = dictionaries[locale] || dictionaries.fr;
+  const t = useCallback(
+    (keyPath: string): string => {
+      const keys = keyPath.split(".");
+      let current: any = dictionaries[locale] || dictionaries.fr;
 
-    for (const key of keys) {
-      if (current && typeof current === "object" && key in current) {
-        current = current[key];
-      } else {
-        // Fallback to FR
-        let fallback: any = dictionaries.fr;
-        for (const fk of keys) {
-          if (fallback && typeof fallback === "object" && fk in fallback) {
-            fallback = fallback[fk];
-          } else {
-            return keyPath;
+      for (const key of keys) {
+        if (current && typeof current === "object" && key in current) {
+          current = current[key];
+        } else {
+          // Fallback to FR
+          let fallback: any = dictionaries.fr;
+          for (const fk of keys) {
+            if (fallback && typeof fallback === "object" && fk in fallback) {
+              fallback = fallback[fk];
+            } else {
+              return keyPath;
+            }
           }
+          return typeof fallback === "string" ? fallback : keyPath;
         }
-        return typeof fallback === "string" ? fallback : keyPath;
       }
-    }
-    return typeof current === "string" ? current : keyPath;
-  };
+      return typeof current === "string" ? current : keyPath;
+    },
+    [locale]
+  );
+
+  const contextValue = useMemo(
+    () => ({ locale, setLocale, dir, t }),
+    [locale, setLocale, dir, t]
+  );
 
   return (
-    <LanguageContext.Provider value={{ locale, setLocale, dir, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

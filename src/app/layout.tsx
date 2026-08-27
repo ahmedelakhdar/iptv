@@ -5,7 +5,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ErrorBoundary } from "@/components/providers/ErrorBoundary";
-import { ServiceWorkerUnregister } from "@/components/providers/ServiceWorkerUnregister";
 import { getGlobalSettings } from "@/app/actions/adminActions";
 
 const inter = Inter({
@@ -130,7 +129,6 @@ export default function RootLayout({
         className="min-h-[100dvh] w-full max-w-[100vw] overflow-x-hidden bg-slate-50 text-slate-900 antialiased transition-colors duration-300 selection:bg-cyan-500 selection:text-white dark:bg-[#030308] dark:text-slate-100"
         suppressHydrationWarning
       >
-        <ServiceWorkerUnregister />
         <ErrorBoundary>
           <ThemeProvider>
             <LanguageProvider>{children}</LanguageProvider>
