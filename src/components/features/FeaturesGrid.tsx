@@ -22,13 +22,13 @@ export function FeaturesGrid() {
 
   return (
     <section id="tarifs" className="relative py-16 lg:py-24">
-      {/* Glow background accent */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[160px]" />
+      {/* Glow background accent - Desktop Only (<768px hidden) */}
+      <div className="hidden md:block pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[500px] rounded-full bg-cyan-500/5 blur-[160px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Title Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 lg:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-3.5 py-1 text-xs font-bold text-emerald-400 mb-4 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/90 px-3.5 py-1 text-xs font-bold text-emerald-400 mb-4 md:backdrop-blur-md shadow-sm">
             <Sparkles className="h-3.5 w-3.5" />
             <span>{t("featuresGrid.badge")}</span>
           </div>

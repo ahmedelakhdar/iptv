@@ -87,10 +87,10 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Interactive IPTV Player Mockup */}
-        <div className="mt-10 sm:mt-14 relative max-w-4xl mx-auto z-10 w-full max-w-full overflow-hidden">
+        {/* Interactive IPTV Player Mockup - Desktop Only (<768px hidden) */}
+        <div className="hidden md:block mt-10 sm:mt-14 relative max-w-4xl mx-auto z-10 w-full max-w-full overflow-hidden">
           {/* Glowing Backlight Frame - Desktop Only */}
-          <div className="hidden md:block pointer-events-none z-0 absolute inset-0 rounded-3xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/20 to-cyan-500/30 blur-2xl opacity-70 animate-pulse" />
+          <div className="pointer-events-none z-0 absolute inset-0 rounded-3xl bg-gradient-to-r from-violet-600/30 via-fuchsia-600/20 to-cyan-500/30 blur-2xl opacity-70 animate-pulse" />
 
           {/* Outer Frame Container */}
           <div className="relative z-10 glass-bento rounded-3xl p-1.5 sm:p-3 border border-slate-200 dark:border-white/15 shadow-xl overflow-hidden bg-slate-900/95 dark:bg-[#070714]/95 w-full max-w-full">

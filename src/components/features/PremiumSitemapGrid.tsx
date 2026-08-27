@@ -40,8 +40,8 @@ export function PremiumSitemapGrid() {
 
   return (
     <section className="relative py-12 sm:py-16 lg:py-24 border-t border-slate-200 dark:border-white/10">
-      {/* Glow Orbs - strictly pointer-events-none z-0 */}
-      <div className="pointer-events-none z-0 absolute top-1/3 right-10 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
+      {/* Glow Orbs - Desktop Only (<768px hidden) */}
+      <div className="hidden md:block pointer-events-none z-0 absolute top-1/3 right-10 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         

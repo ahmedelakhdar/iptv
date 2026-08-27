@@ -23,14 +23,14 @@ export function BentoGrid() {
 
   return (
     <section id="bento" className="relative py-20 lg:py-32">
-      {/* Background Glow Orbs */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-violet-600/10 blur-[180px]" />
+      {/* Background Glow Orbs - Desktop Only (<768px hidden) */}
+      <div className="hidden md:block pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-violet-600/10 blur-[180px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
         <div className="mx-auto max-w-3xl text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/20 dark:bg-violet-950/30 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-4 backdrop-blur-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/90 dark:bg-violet-950/90 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-4 md:backdrop-blur-xl shadow-sm">
             <Sparkles className="h-4 w-4" />
             <span>{t("bento.badge")}</span>
           </div>
@@ -49,7 +49,7 @@ export function BentoGrid() {
           <div className="glass-bento glass-bento-hover md:col-span-2 lg:col-span-2 rounded-3xl p-8 relative overflow-hidden flex flex-col justify-between group min-h-[320px]">
             {/* Abstract background grid pattern */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:24px_24px] opacity-40 group-hover:opacity-60 transition-opacity" />
-            <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-violet-600/20 blur-3xl" />
+            <div className="hidden md:block pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-violet-600/20 blur-3xl" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
@@ -87,7 +87,7 @@ export function BentoGrid() {
 
           {/* TILE 2: Tall Tile (Spans 2 Rows on Desktop) - Qualité 4K / 8K */}
           <div className="glass-bento glass-bento-hover md:col-span-1 lg:col-span-1 lg:row-span-2 rounded-3xl p-8 relative overflow-hidden flex flex-col justify-between group min-h-[380px]">
-            <div className="pointer-events-none absolute -bottom-10 -right-10 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
+            <div className="hidden md:block pointer-events-none absolute -bottom-10 -right-10 h-56 w-56 rounded-full bg-cyan-500/20 blur-3xl" />
 
             <div>
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/50 shadow-lg mb-6">

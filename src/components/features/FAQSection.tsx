@@ -18,12 +18,12 @@ export function FAQSection() {
 
   return (
     <section id="faq" className="relative py-16 sm:py-20 lg:py-28">
-      {/* Glow Orb - pointer-events-none z-0 */}
-      <div className="pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
+      {/* Glow Orb - Desktop Only (<768px hidden) */}
+      <div className="hidden md:block pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/20 dark:bg-violet-950/30 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 backdrop-blur-xl">
+          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/90 dark:bg-violet-950/90 px-4 py-1.5 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 md:backdrop-blur-xl shadow-sm">
             <HelpCircle className="h-4 w-4" />
             <span>{t("faq.badge")}</span>
           </div>

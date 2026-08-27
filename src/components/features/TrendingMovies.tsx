@@ -218,15 +218,15 @@ export function TrendingMovies() {
           The marquee always scrolls LTR regardless of locale so movie
           posters remain readable. We force dir="ltr" on the marquee
           wrapper to prevent RTL from reversing the scroll direction.  */}
-      <div className="relative marquee-track transform-gpu" dir="ltr">
+      <div className="relative marquee-track" dir="ltr">
         {/* Start-side fade (left in LTR, but marquee is always LTR here) */}
-        <div className="pointer-events-none absolute start-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-r from-slate-50 dark:from-[#030308] to-transparent" />
+        <div className="hidden md:block pointer-events-none absolute start-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-r from-slate-50 dark:from-[#030308] to-transparent" />
         {/* End-side fade */}
-        <div className="pointer-events-none absolute end-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-l from-slate-50 dark:from-[#030308] to-transparent" />
+        <div className="hidden md:block pointer-events-none absolute end-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-l from-slate-50 dark:from-[#030308] to-transparent" />
 
-        {/* Scrolling strip */}
-        <div className="overflow-hidden">
-          <div className="animate-marquee flex gap-4 px-4 w-max transform-gpu">
+        {/* Scrolling strip - Desktop marquee animation, static swipe scroll on mobile */}
+        <div className="overflow-x-auto md:overflow-hidden scrollbar-hide">
+          <div className="md:animate-marquee flex gap-4 px-4 w-max">
             {doubled.map((movie, idx) => (
               <MovieCard key={`${movie.id}-${idx}`} movie={movie} />
             ))}
