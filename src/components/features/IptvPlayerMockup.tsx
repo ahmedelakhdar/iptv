@@ -229,10 +229,10 @@ export function IptvPlayerMockup() {
   };
 
   return (
-    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10 transform-gpu">
-      {/* Ambient glows */}
-      <div className="pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-2xl transform-gpu" />
-      <div className="pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-2xl transform-gpu" />
+    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10">
+      {/* Ambient glows - Desktop Only */}
+      <div className="hidden md:block pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-2xl" />
+      <div className="hidden md:block pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-2xl" />
 
       {/*
         flex-row respects direction:
@@ -242,7 +242,7 @@ export function IptvPlayerMockup() {
       <div className="relative flex h-full w-full min-w-0 flex-row">
 
         {/* ── Sidebar (start side — left in LTR, right in RTL) ── */}
-        <aside className="flex w-20 min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-black/30 py-3 backdrop-blur-md transform-gpu">
+        <aside className="flex w-20 min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-[#0e0e17] md:bg-black/40 py-3 md:backdrop-blur-md">
           {/* Mini logo */}
           <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-cyan-500/20">
             <Wifi className="h-3.5 w-3.5 text-white" />
@@ -304,7 +304,7 @@ export function IptvPlayerMockup() {
         {/* ── Main Content (flex-1 — fills remaining space regardless of dir) ── */}
         <main className="flex flex-1 w-full min-w-0 flex-col overflow-hidden">
           {/* Header — justify-between already handles RTL flip */}
-          <header className="flex shrink-0 items-center justify-between border-b border-white/5 bg-black/20 px-4 py-2.5 backdrop-blur-sm">
+          <header className="flex shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a12] md:bg-black/30 px-4 py-2.5 md:backdrop-blur-sm">
             <div className="flex flex-col">
               <h2 className="text-[11px] font-black uppercase tracking-[0.12em] text-white">
                 {t(activeConfig.headerKey)}

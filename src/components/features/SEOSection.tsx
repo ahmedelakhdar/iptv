@@ -18,8 +18,8 @@ export function SEOSection() {
 
   return (
     <section className="relative py-12 lg:py-16">
-      {/* Background Glow - strictly pointer-events-none z-0 */}
-      <div className="pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-[600px] rounded-full bg-cyan-500/10 blur-[140px]" />
+      {/* Background Glow - Desktop Only */}
+      <div className="hidden md:block pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-80 w-[600px] rounded-full bg-cyan-500/10 blur-[140px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Wide Glassmorphism Container */}
@@ -29,8 +29,8 @@ export function SEOSection() {
             {/* Left Content */}
             <div className="max-w-3xl">
               {/* Subtitle Badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-950/20 dark:bg-cyan-950/50 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 mb-4 backdrop-blur-xl">
-                <Sparkles className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400 animate-pulse" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-950/90 dark:bg-cyan-950/90 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-300 mb-4 md:backdrop-blur-xl">
+                <Sparkles className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400" />
                 <span>{t("seo.badge")}</span>
               </div>
 
@@ -46,7 +46,7 @@ export function SEOSection() {
 
             {/* Right Icon Accent */}
             <div className="hidden lg:flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/40 shadow-xl flex-shrink-0">
-              <Compass className="h-8 w-8 text-cyan-500 dark:text-cyan-400 animate-spin-slow" />
+              <Compass className="h-8 w-8 text-cyan-500 dark:text-cyan-400" />
             </div>
 
           </div>
@@ -62,7 +62,7 @@ export function SEOSection() {
                 <Link
                   key={idx}
                   href={link.href}
-                  className="group relative z-20 inline-flex items-center rounded-full border border-slate-300 dark:border-white/15 bg-white/80 dark:bg-white/5 px-4 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm min-h-[38px]"
+                  className="group relative z-20 inline-flex items-center rounded-full border border-slate-300 dark:border-white/15 bg-white/95 dark:bg-white/10 px-4 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 md:backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm min-h-[38px]"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 mr-2 group-hover:animate-ping" />
                   {link.name}

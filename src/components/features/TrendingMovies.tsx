@@ -138,7 +138,7 @@ function MovieCard({ movie }: { movie: Movie }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
       {/* Genre pill — logical 'end' side so it stays top-right in LTR, top-left in RTL */}
-      <div className="absolute top-2.5 end-2.5 rounded-full bg-black/50 border border-white/10 px-2 py-0.5 backdrop-blur-sm">
+      <div className="absolute top-2.5 end-2.5 rounded-full bg-black/80 border border-white/10 px-2 py-0.5 md:backdrop-blur-sm">
         <span className="text-[9px] font-bold uppercase tracking-widest text-white/70">{movie.genre}</span>
       </div>
 
@@ -182,13 +182,13 @@ export function TrendingMovies() {
       id="films-tendance"
       className="relative py-16 sm:py-20 overflow-hidden w-full max-w-full bg-slate-50 dark:bg-[#030308]"
     >
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[500px] sm:h-[500px] sm:w-[800px] rounded-full bg-gradient-to-r from-cyan-600/8 via-violet-600/10 to-pink-600/8 blur-2xl sm:blur-3xl transform-gpu" />
+      {/* Ambient glow - Desktop Only */}
+      <div className="hidden md:block pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[500px] w-[800px] rounded-full bg-gradient-to-r from-cyan-600/8 via-violet-600/10 to-pink-600/8 blur-3xl" />
 
       {/* ── Section Header ── */}
       <div className="relative z-10 text-center px-4 mb-10 sm:mb-12">
         {/* VOD badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/80 dark:bg-black/60 px-3.5 py-1 mb-4 backdrop-blur-sm shadow-sm transform-gpu">
+        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-slate-900/95 dark:bg-black/95 px-3.5 py-1 mb-4 md:backdrop-blur-sm shadow-sm">
           <Film className="h-3 w-3 text-cyan-400" />
           <span className="text-[10px] font-black uppercase tracking-[0.18em] text-cyan-400">
             {t("vod.badge")}

@@ -37,7 +37,7 @@ export function HowToOrderGrid() {
         
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-4 py-1.5 text-xs font-bold text-cyan-300 mb-3 backdrop-blur-xl shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/90 px-4 py-1.5 text-xs font-bold text-cyan-300 mb-3 md:backdrop-blur-xl shadow-sm">
             <Sparkles className="h-4 w-4 text-cyan-400" />
             <span>{t("howToOrder.badge") || "SIMPLE"}</span>
           </div>
@@ -54,7 +54,7 @@ export function HowToOrderGrid() {
             return (
               <div
                 key={idx}
-                className="glass-bento rounded-3xl p-6 sm:p-10 border border-black/10 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-2xl transition-all duration-300 relative z-10 overflow-hidden group hover:scale-[1.02] shadow-lg flex flex-col justify-between items-start text-start"
+                className="glass-bento rounded-3xl p-6 sm:p-10 border border-black/10 dark:border-white/10 bg-white/95 dark:bg-black/95 md:backdrop-blur-2xl transition-all duration-300 relative z-10 overflow-hidden group hover:scale-[1.02] shadow-lg flex flex-col justify-between items-start text-start"
               >
                 <div className="w-full text-start">
                   <div className="flex items-center justify-between mb-6 w-full">

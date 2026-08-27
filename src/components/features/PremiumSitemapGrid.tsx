@@ -47,9 +47,9 @@ export function PremiumSitemapGrid() {
         
         {/* Section Header */}
         <div className="mb-10 sm:mb-14 max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 dark:bg-violet-950/30 px-3.5 py-1 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 backdrop-blur-xl">
-            <Compass className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400" />
-            <span>{t("sitemap.badge")}</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 dark:bg-violet-950/90 px-3.5 py-1 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 md:backdrop-blur-xl">
+            <Sparkles className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400" />
+            <span>EXPLORATEUR IP</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             {t("sitemap.title")} <span className="animated-gradient-text">IPTV For Europe</span>

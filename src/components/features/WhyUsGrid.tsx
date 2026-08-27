@@ -48,14 +48,14 @@ export function WhyUsGrid() {
 
   return (
     <section className="relative py-16 sm:py-20 lg:py-28 border-t border-slate-200 dark:border-white/10">
-      {/* Background glow orb - strictly pointer-events-none z-0 */}
-      <div className="pointer-events-none z-0 absolute top-1/2 left-1/3 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
+      {/* Background glow orb - Desktop Only */}
+      <div className="hidden md:block pointer-events-none z-0 absolute top-1/2 left-1/3 h-96 w-96 rounded-full bg-violet-600/10 blur-[160px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/40 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-3 backdrop-blur-xl shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/90 dark:bg-cyan-950/90 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-3 md:backdrop-blur-xl shadow-sm">
             <Sparkles className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
             <span>{t("whyUs.badge")}</span>
           </div>

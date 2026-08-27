@@ -72,7 +72,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
   const hasBonusDays = typeof plan.bonusDays === "number" && plan.bonusDays > 0;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/60 dark:bg-[#030308]/85 backdrop-blur-2xl transition-all duration-300">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/95 dark:bg-[#030308]/98 md:backdrop-blur-2xl transition-all duration-300">
       
       {/* Backdrop Click to Close */}
       <div className="absolute inset-0" onClick={onClose} />
@@ -140,7 +140,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
 
               <div className="grid grid-cols-1 gap-3">
                 {/* Info Card 1: Dynamic Guarantee */}
-                <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 backdrop-blur-xl">
+                <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 md:backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
                     <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                     <h5 className="text-xs font-bold text-slate-900 dark:text-white">
@@ -153,7 +153,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
                 </div>
 
                 {/* Info Card 2 */}
-                <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 backdrop-blur-xl">
+                <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 md:backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
                     <MessageCircle className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
                     <h5 className="text-xs font-bold text-slate-900 dark:text-white">{t("modal.support_title")}</h5>
@@ -201,7 +201,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
               href={whatsappQuestionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 w-full flex items-center justify-center gap-2 rounded-full border border-slate-300 dark:border-white/20 bg-white/80 dark:bg-white/5 py-3.5 text-center text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm"
+              className="flex-1 w-full flex items-center justify-center gap-2 rounded-full border border-slate-300 dark:border-white/20 bg-white/95 dark:bg-white/10 py-3.5 text-center text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200 md:backdrop-blur-xl transition-all duration-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm"
             >
               <HelpCircle className="h-4 w-4 text-slate-500 dark:text-slate-400" />
               <span>{t("modal.question_btn")}</span>

@@ -26,14 +26,14 @@ export function PricingCards() {
 
   return (
     <section className="relative py-16 sm:py-24 overflow-hidden">
-      {/* Ambient Radial Background Glow */}
-      <div className="pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-gradient-to-r from-cyan-500/15 via-violet-600/15 to-fuchsia-600/15 blur-[170px]" />
+      {/* Ambient Radial Background Glow - Desktop Only */}
+      <div className="hidden md:block pointer-events-none z-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[550px] w-[550px] rounded-full bg-gradient-to-r from-cyan-500/15 via-violet-600/15 to-fuchsia-600/15 blur-[170px]" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/20 dark:bg-cyan-950/40 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-4 backdrop-blur-xl shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/90 dark:bg-cyan-950/90 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-4 md:backdrop-blur-xl shadow-sm">
             <Sparkles className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
             <span>{t("pricing.badge")}</span>
           </div>
@@ -180,7 +180,7 @@ export function PricingCards() {
                   ) : (
                     <button
                       onClick={() => setSelectedPlan(plan)}
-                      className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-slate-300 dark:border-white/20 bg-white/80 dark:bg-white/5 py-3.5 text-center text-xs font-bold text-slate-800 dark:text-slate-200 backdrop-blur-xl transition-all duration-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm hover:scale-[1.02] min-h-[44px]"
+                      className="group/btn relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-full border border-slate-300 dark:border-white/20 bg-white/95 dark:bg-white/10 py-3.5 text-center text-xs font-bold text-slate-800 dark:text-slate-200 md:backdrop-blur-xl transition-all duration-300 hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-300 shadow-sm hover:scale-[1.02] min-h-[44px]"
                     >
                       <span>{t("pricing.view_offer")}</span>
                       <ArrowRight className="h-3.5 w-3.5 text-slate-500 group-hover/btn:text-cyan-600 dark:group-hover/btn:text-cyan-300 transition-all group-hover/btn:translate-x-1 rtl:rotate-180" />
