@@ -37,8 +37,7 @@ interface TabConfig {
   channels: Channel[];
 }
 
-// ─── Static channel data (labels stay in French/universal since they are
-//     proper channel brand names, not UI strings) ───────────────────────────
+// ─── Static channel data (Universal brand names) ─────────────────────────────
 
 const TABS: TabConfig[] = [
   {
@@ -137,27 +136,23 @@ function QualityBadge({ quality }: { quality: Channel["quality"] }) {
   );
 }
 
-function ChannelRow({ ch, index }: { ch: Channel; index: number }) {
+function ChannelRow({ ch }: { ch: Channel }) {
   return (
-    // RTL-safe: w-full ensures flex container takes full width in both directions
-    <div
-      className="group flex w-full items-center gap-3 rounded-xl border border-white/5 bg-white/[0.03] px-3 py-2.5 transition-all duration-200 hover:border-cyan-500/20 hover:bg-white/[0.07] cursor-pointer"
-      style={{ animationDelay: `${index * 60}ms` }}
-    >
+    <div className="group flex w-full items-center gap-2 sm:gap-3 rounded-xl border border-white/5 bg-white/[0.03] px-2.5 sm:px-3 py-2 sm:py-2.5 transition-colors duration-200 hover:border-cyan-500/20 hover:bg-white/[0.07] cursor-pointer">
       {/* Channel Number */}
-      <span className="w-7 shrink-0 text-center text-[10px] font-mono font-semibold text-slate-500">
+      <span className="w-6 sm:w-7 shrink-0 text-center text-[10px] font-mono font-semibold text-slate-500">
         {ch.number}
       </span>
 
       {/* Logo Square */}
       <div
-        className={`${ch.color} flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-[9px] font-black tracking-tight text-white shadow-lg`}
+        className={`${ch.color} flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-md text-[9px] font-black tracking-tight text-white shadow-sm`}
       >
         {ch.logoText}
       </div>
 
-      {/* Channel Info — min-w-0 + flex-1 lets it truncate in both LTR and RTL */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      {/* Channel Info — min-w-0 + flex-1 truncates cleanly in LTR and RTL */}
+      <div className="flex min-w-0 flex-1 flex-col text-start">
         <span className="truncate text-xs font-bold text-white group-hover:text-cyan-200 transition-colors">
           {ch.name}
         </span>
@@ -167,10 +162,10 @@ function ChannelRow({ ch, index }: { ch: Channel; index: number }) {
       </div>
 
       {/* Badges */}
-      <div className="flex shrink-0 items-center gap-1.5">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
         {ch.isLive && (
-          <span className="inline-flex items-center gap-1 rounded-md bg-red-600/90 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white shadow">
-            <span className="h-1 w-1 rounded-full bg-white/80 animate-pulse" />
+          <span className="inline-flex items-center gap-1 rounded-md bg-red-600/90 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-white">
+            <span className="h-1 w-1 rounded-full bg-white/90 animate-pulse" />
             LIVE
           </span>
         )}
@@ -185,13 +180,12 @@ function ChannelRow({ ch, index }: { ch: Channel; index: number }) {
 export function IptvPlayerMockup() {
   const { t, dir } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabKey>("sport");
-  // Track whether user manually selected a tab to pause auto-cycle
   const [userPaused, setUserPaused] = useState(false);
   const pauseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const activeConfig = TABS.find((tab) => tab.key === activeTab)!;
 
-  // ── Auto-cycle every 5 s, pauses when user clicks a tab ──────────────────
+  // Auto-cycle every 5 s, pauses when user clicks a tab
   useEffect(() => {
     if (userPaused) return;
 
@@ -205,7 +199,6 @@ export function IptvPlayerMockup() {
     return () => clearInterval(timer);
   }, [userPaused]);
 
-  // Clean up pauseTimeout on unmount
   useEffect(() => {
     return () => {
       if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
@@ -214,7 +207,6 @@ export function IptvPlayerMockup() {
 
   const handleTabClick = useCallback((key: TabKey) => {
     setActiveTab(key);
-    // Pause auto-cycle for 15 s after manual interaction, then resume
     setUserPaused(true);
     if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
     pauseTimeoutRef.current = setTimeout(() => setUserPaused(false), 15000);
@@ -229,23 +221,26 @@ export function IptvPlayerMockup() {
   };
 
   return (
-    <div className="relative h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-2xl bg-[#0a0a0f] shadow-2xl ring-1 ring-white/10">
-      {/* Ambient glows - Desktop Only */}
+    <div
+      dir={dir}
+      className="relative h-[380px] sm:h-[430px] w-full max-w-5xl mx-auto overflow-hidden rounded-xl sm:rounded-2xl bg-[#0a0a0f] shadow-md md:shadow-2xl border border-white/10"
+    >
+      {/* Ambient glows - Strictly Desktop Only */}
       <div className="hidden md:block pointer-events-none absolute -bottom-16 -start-16 h-60 w-60 rounded-full bg-cyan-600/10 blur-2xl" />
       <div className="hidden md:block pointer-events-none absolute -top-10 -end-10 h-48 w-48 rounded-full bg-violet-600/10 blur-2xl" />
 
       {/*
         flex-row respects direction:
-        in RTL the sidebar naturally renders on the RIGHT side.
-        w-full min-w-0 prevents flex-shrink collapsing in RTL mode.
+        In LTR mode: Sidebar renders on the LEFT side.
+        In RTL mode (Arabic): Sidebar automatically flips to the RIGHT side.
       */}
       <div className="relative flex h-full w-full min-w-0 flex-row">
 
         {/* ── Sidebar (start side — left in LTR, right in RTL) ── */}
-        <aside className="flex w-20 min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-[#0e0e17] md:bg-black/40 py-3 md:backdrop-blur-md">
+        <aside className="flex w-14 sm:w-20 min-w-[56px] sm:min-w-[80px] shrink-0 flex-col items-center gap-1 border-e border-white/5 bg-[#0e0e17] md:bg-black/40 py-2.5 sm:py-3 md:backdrop-blur-md">
           {/* Mini logo */}
-          <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-cyan-500/20">
-            <Wifi className="h-3.5 w-3.5 text-white" />
+          <div className="mb-2 flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-sm">
+            <Wifi className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
           </div>
 
           {/* Nav items */}
@@ -259,19 +254,19 @@ export function IptvPlayerMockup() {
                   onClick={() => handleTabClick(key)}
                   aria-label={t(labelKey)}
                   aria-pressed={isActive}
-                  className={`group flex w-[56px] flex-col items-center gap-1 rounded-xl px-1 py-2 transition-all duration-200 ${
+                  className={`group flex w-[44px] sm:w-[56px] flex-col items-center gap-1 rounded-xl px-1 py-1.5 sm:py-2 transition-colors duration-200 ${
                     isActive
-                      ? "bg-gradient-to-br from-cyan-400 to-blue-600 shadow-lg shadow-cyan-500/30"
+                      ? "bg-gradient-to-br from-cyan-400 to-blue-600 shadow-sm text-white"
                       : "text-slate-500 hover:bg-white/5 hover:text-slate-300"
                   }`}
                 >
                   <Icon
-                    className={`h-4 w-4 transition-colors ${
+                    className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-colors ${
                       isActive ? "text-white" : "text-slate-500 group-hover:text-slate-300"
                     }`}
                   />
                   <span
-                    className={`text-center text-[8.5px] font-semibold leading-none transition-colors ${
+                    className={`text-center text-[7.5px] sm:text-[8.5px] font-semibold leading-none transition-colors ${
                       isActive ? "text-white" : "text-slate-600 group-hover:text-slate-400"
                     }`}
                   >
@@ -288,66 +283,67 @@ export function IptvPlayerMockup() {
               <div
                 key={key}
                 className={`h-0.5 rounded-full transition-all duration-300 ${
-                  activeTab === key ? "w-3 bg-cyan-400" : "w-1 bg-white/15"
+                  activeTab === key ? "w-2.5 sm:w-3 bg-cyan-400" : "w-1 bg-white/15"
                 }`}
               />
             ))}
           </div>
 
           {/* Signal indicator */}
-          <div className="mt-1.5 flex flex-col items-center gap-0.5">
-            <Signal className="h-3.5 w-3.5 text-emerald-400" />
-            <span className="text-[7px] font-bold text-emerald-400/80 tracking-wider">LIVE</span>
+          <div className="mt-1 flex flex-col items-center gap-0.5">
+            <Signal className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-emerald-400" />
+            <span className="text-[6.5px] sm:text-[7px] font-bold text-emerald-400/80 tracking-wider">LIVE</span>
           </div>
         </aside>
 
-        {/* ── Main Content (flex-1 — fills remaining space regardless of dir) ── */}
+        {/* ── Main Content Area ── */}
         <main className="flex flex-1 w-full min-w-0 flex-col overflow-hidden">
-          {/* Header — justify-between already handles RTL flip */}
-          <header className="flex shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a12] md:bg-black/30 px-4 py-2.5 md:backdrop-blur-sm">
-            <div className="flex flex-col">
-              <h2 className="text-[11px] font-black uppercase tracking-[0.12em] text-white">
+          {/* Header */}
+          <header className="flex shrink-0 items-center justify-between border-b border-white/5 bg-[#0a0a12] md:bg-black/30 px-3 sm:px-4 py-2 sm:py-2.5 md:backdrop-blur-sm">
+            <div className="flex flex-col text-start">
+              <h2 className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.12em] text-white">
                 {t(activeConfig.headerKey)}
               </h2>
-              <p className="mt-0.5 text-[9px] font-medium text-slate-500 tracking-wide">
+              <p className="mt-0.5 text-[8.5px] sm:text-[9px] font-medium text-slate-500 tracking-wide">
                 {t(activeConfig.subHeaderKey)}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2 py-0.5 text-[9px] font-bold text-cyan-400 tracking-widest">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-1.5 sm:px-2 py-0.5 text-[8.5px] sm:text-[9px] font-bold text-cyan-400 tracking-widest">
                 4K · FHD
               </span>
               <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </div>
           </header>
 
-          {/* Channel List */}
-          <div className="flex-1 overflow-y-auto px-3 py-2 scrollbar-hide">
+          {/* Channel List Container */}
+          <div className="flex-1 overflow-y-auto overflow-x-hidden px-2 sm:px-3 py-2 scrollbar-hide">
             {/* Divider label */}
             <div className="mb-2 flex items-center gap-2 px-1">
               <div className="h-px flex-1 bg-white/5" />
-              <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-slate-600">
+              <span className="text-[8.5px] sm:text-[9px] font-bold uppercase tracking-[0.15em] text-slate-600">
                 {t("iptv.channels_available")}
               </span>
               <div className="h-px flex-1 bg-white/5" />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              {activeConfig.channels.map((ch, i) => (
-                <ChannelRow key={ch.number} ch={ch} index={i} />
+              {activeConfig.channels.map((ch) => (
+                <ChannelRow key={ch.number} ch={ch} />
               ))}
             </div>
 
             {/* Footer */}
             <div className="mt-3 flex items-center justify-center gap-2 pb-1">
-              <div className="h-px w-12 bg-white/5" />
-              <span className="text-[9px] text-slate-700">
+              <div className="h-px w-8 sm:w-12 bg-white/5" />
+              <span className="text-[8.5px] sm:text-[9px] text-slate-700">
                 +{extraCounts[activeTab]} {t("iptv.more_channels")}
               </span>
-              <div className="h-px w-12 bg-white/5" />
+              <div className="h-px w-8 sm:w-12 bg-white/5" />
             </div>
           </div>
         </main>
+
       </div>
     </div>
   );

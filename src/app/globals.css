@@ -30,7 +30,6 @@ body {
   /* iOS Safari 100vh fix — use dvh */
   min-height: 100dvh;
   transition: background-color 0.3s ease, color 0.3s ease;
-  /* Improve tap/click reliability on iOS */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -196,19 +195,31 @@ body {
   background: #8b5cf6;
 }
 
-/* ── Infinite Marquee - Desktop Only ── */
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+/* ── RTL-Aware Infinite Marquee Keyframes ──────────────────────────────── */
+@keyframes marquee-ltr {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
-@media (min-width: 768px) {
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
-  }
-  .marquee-track:hover .animate-marquee {
-    animation-play-state: paused;
-  }
+@keyframes marquee-rtl {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(50%, 0, 0); }
+}
+
+.animate-marquee {
+  animation: marquee-ltr 45s linear infinite;
+  will-change: transform;
+}
+
+/* RTL Mode Marquee Animation Overrides */
+[dir="rtl"] .animate-marquee,
+html[dir="rtl"] .animate-marquee,
+.rtl .animate-marquee {
+  animation: marquee-rtl 45s linear infinite;
+}
+
+.marquee-track:hover .animate-marquee {
+  animation-play-state: paused;
 }
 
 /* Hide horizontal scrollbar inside marquee wrapper */
@@ -239,16 +250,25 @@ body {
   }
 }
 
-/* ── EMERGENCY MOBILE DISABLER (<768px): ZERO GPU ACCELERATION & ZERO ANIMATIONS ── */
+/* ── MOBILE OVERRIDE (<768px): DISABLE BACKDROP FILTERS & COMPOSITING ── */
 @media (max-width: 767px) {
   *, ::before, ::after {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
-    animation: none !important;
-    transition: none !important;
-    will-change: auto !important;
     mix-blend-mode: normal !important;
     filter: none !important;
+  }
+
+  /* Explicitly allow lightweight parent marquee track animation while keeping children flat */
+  .animate-marquee {
+    animation: marquee-ltr 45s linear infinite !important;
+    will-change: transform !important;
+  }
+
+  [dir="rtl"] .animate-marquee,
+  html[dir="rtl"] .animate-marquee,
+  .rtl .animate-marquee {
+    animation: marquee-rtl 45s linear infinite !important;
   }
 
   html, body {

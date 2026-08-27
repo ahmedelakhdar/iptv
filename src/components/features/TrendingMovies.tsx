@@ -214,19 +214,16 @@ export function TrendingMovies() {
         </div>
       </div>
 
-      {/* ── Marquee Track ──
-          The marquee always scrolls LTR regardless of locale so movie
-          posters remain readable. We force dir="ltr" on the marquee
-          wrapper to prevent RTL from reversing the scroll direction.  */}
-      <div className="relative marquee-track" dir="ltr">
-        {/* Start-side fade (left in LTR, but marquee is always LTR here) */}
-        <div className="hidden md:block pointer-events-none absolute start-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-r from-slate-50 dark:from-[#030308] to-transparent" />
-        {/* End-side fade */}
-        <div className="hidden md:block pointer-events-none absolute end-0 top-0 bottom-0 w-28 sm:w-40 z-10 bg-gradient-to-l from-slate-50 dark:from-[#030308] to-transparent" />
+      {/* ── Marquee Track (RTL-aware) ── */}
+      <div className="relative marquee-track" dir={dir}>
+        {/* Start-side fade mask */}
+        <div className="pointer-events-none absolute start-0 top-0 bottom-0 w-20 sm:w-40 z-10 bg-gradient-to-r from-slate-50 dark:from-[#030308] to-transparent rtl:bg-gradient-to-l" />
+        {/* End-side fade mask */}
+        <div className="pointer-events-none absolute end-0 top-0 bottom-0 w-20 sm:w-40 z-10 bg-gradient-to-l from-slate-50 dark:from-[#030308] to-transparent rtl:bg-gradient-to-r" />
 
-        {/* Scrolling strip - Desktop marquee animation, static swipe scroll on mobile */}
-        <div className="overflow-x-auto md:overflow-hidden scrollbar-hide">
-          <div className="md:animate-marquee flex gap-4 px-4 w-max">
+        {/* Scrolling strip - Single parent .animate-marquee track with flat static children */}
+        <div className="overflow-hidden scrollbar-hide">
+          <div className="animate-marquee flex gap-4 px-4 w-max">
             {doubled.map((movie, idx) => (
               <MovieCard key={`${movie.id}-${idx}`} movie={movie} />
             ))}
