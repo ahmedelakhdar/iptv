@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { X, Check, ShieldCheck, MessageCircle, ArrowRight, HelpCircle, Sparkles } from "lucide-react";
+import { X, Check, ShieldCheck, MessageCircle, ArrowRight, Sparkles, HelpCircle } from "lucide-react";
 import { getWhatsappNumber } from "@/app/actions/adminActions";
-import { formatWhatsAppNumber, getConnectionsText, formatEuroPrice } from "@/lib/utils";
+import { formatWhatsAppNumber, formatEuroPrice } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
 
 export interface PlanData {
@@ -13,9 +13,12 @@ export interface PlanData {
   liveChannels: string;
   quality: string;
   isPopular: boolean;
+  isVip?: boolean;
   features: string[];
   bonusDays?: number;
-  description?: string;
+  extraDays?: number;
+  durationMonths?: number;
+  description?: string | null;
   originalPrice?: number | null;
   discountBadge?: string | null;
   period?: string;
@@ -69,7 +72,21 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
   const whatsappQuestionUrl = `https://wa.me/${formattedNum}?text=${encodeURIComponent(questionMsg)}`;
 
   const cleanDuration = (plan.duration || plan.period || "12 mois").replace(/^\/\s*/, "");
-  const hasBonusDays = typeof plan.bonusDays === "number" && plan.bonusDays > 0;
+
+  // Dynamic Guarantee Calculation
+  const durationMonths =
+    typeof plan.durationMonths === "number" && !isNaN(plan.durationMonths) && plan.durationMonths > 0
+      ? plan.durationMonths
+      : parseInt((plan.duration || plan.period || plan.name || "").replace(/\D+/g, "")) || 12;
+
+  const extraDays =
+    typeof plan.extraDays === "number" && !isNaN(plan.extraDays)
+      ? plan.extraDays
+      : typeof plan.bonusDays === "number" && !isNaN(plan.bonusDays)
+      ? plan.bonusDays
+      : 0;
+
+  const guaranteeTitle = `Garantie ${durationMonths} mois${extraDays > 0 ? ` + ${extraDays} jours` : ""}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/95 dark:bg-[#030308]/98 md:backdrop-blur-2xl transition-all duration-300">
@@ -139,12 +156,12 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
               </h4>
 
               <div className="grid grid-cols-1 gap-3">
-                {/* Info Card 1: Dynamic Guarantee */}
+                {/* Info Card 1: Dynamic Guarantee Title */}
                 <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 md:backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                     <h5 className="text-xs font-bold text-slate-900 dark:text-white">
-                      {t("modal.guarantee_title")}
+                      {guaranteeTitle}
                     </h5>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light leading-relaxed">
@@ -152,10 +169,10 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
                   </p>
                 </div>
 
-                {/* Info Card 2 */}
+                {/* Info Card 2: Support */}
                 <div className="glass-bento rounded-2xl p-4 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 md:backdrop-blur-xl">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <MessageCircle className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+                    <MessageCircle className="h-4 w-4 text-cyan-600 dark:text-cyan-400 flex-shrink-0" />
                     <h5 className="text-xs font-bold text-slate-900 dark:text-white">{t("modal.support_title")}</h5>
                   </div>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light leading-relaxed">
@@ -167,7 +184,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
 
           </div>
 
-          {/* Bottom Description: Détail de l'offre */}
+          {/* Bottom Description: Dynamic plan.description from DB */}
           <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 p-4 sm:p-5 text-xs text-slate-600 dark:text-slate-300 font-light leading-relaxed">
             <h5 className="text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Détail de l&apos;offre {plan.name}
@@ -175,7 +192,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
             <p>
               {plan.description && plan.description.trim() !== ""
                 ? plan.description
-                : `Le forfait ${plan.name} est conçu pour un usage personnel sur 1 appareil à la fois. Qualité d'image haute fidélité, accès instantané à la playlist IPTV For Europe avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.`}
+                : `Le forfait ${plan.name} est conçu pour un usage personnel. Qualité d'image haute fidélité, accès instantané à la playlist IPTV For Europe avec IBO Player. Activation rapide après confirmation de paiement via WhatsApp.`}
             </p>
           </div>
 
@@ -193,7 +210,7 @@ export function PlanDetailsModal({ isOpen, onClose, plan }: PlanDetailsModalProp
             >
               <MessageCircle className="h-4 w-4 text-white" />
               <span>{t("modal.order_btn")}</span>
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" />
             </a>
 
             {/* Secondary Button */}
