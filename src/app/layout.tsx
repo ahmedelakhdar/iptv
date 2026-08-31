@@ -61,12 +61,12 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     icons: {
       icon: [
-        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+        { url: "/slide1.png", sizes: "512x512", type: "image/png" },
         { url: logoUrl },
       ],
-      shortcut: "/icon.png",
+      shortcut: "/slide1.png",
       apple: [
-        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+        { url: "/slide1.png", sizes: "180x180", type: "image/png" },
         { url: logoUrl },
       ],
     },
@@ -83,7 +83,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "fr_FR",
       images: [
         {
-          url: "/opengraph-image.png",
+          url: "/slide1.png",
           width: 1200,
           height: 630,
           alt: `${siteName} — Streaming IPTV 4K & VOD`,
@@ -101,7 +101,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${siteName} | Streaming IPTV 4K Premium`,
       description:
         "Abonnement IPTV haut de gamme en 4K/8K sans buffering avec activation IBO Player offerte.",
-      images: ["/opengraph-image.png", logoUrl],
+      images: ["/slide1.png", logoUrl],
     },
     robots: {
       index: true,
