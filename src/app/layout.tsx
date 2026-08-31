@@ -60,21 +60,34 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: logoUrl,
-      shortcut: logoUrl,
-      apple: logoUrl,
+      icon: [
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+        { url: logoUrl },
+      ],
+      shortcut: "/icon.png",
+      apple: [
+        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+        { url: logoUrl },
+      ],
     },
     verification: {
       google: "ovPZcOFou2AOtK_RhTFuX6uumaFngJMlg5ncZwj4oew",
     },
     openGraph: {
+      type: "website",
+      url: "https://www.iptvforeurop.com",
       title: `${siteName} | L'Expérience IPTV Ultime 4K/8K`,
       description:
         "Abonnement IPTV Premium 4K/8K avec activation rapide en 15 minutes et support VIP WhatsApp 24/7.",
       siteName: siteName,
       locale: "fr_FR",
-      type: "website",
       images: [
+        {
+          url: "/opengraph-image.png",
+          width: 1200,
+          height: 630,
+          alt: `${siteName} — Streaming IPTV 4K & VOD`,
+        },
         {
           url: logoUrl,
           width: 1200,
@@ -88,7 +101,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${siteName} | Streaming IPTV 4K Premium`,
       description:
         "Abonnement IPTV haut de gamme en 4K/8K sans buffering avec activation IBO Player offerte.",
-      images: [logoUrl],
+      images: ["/opengraph-image.png", logoUrl],
     },
     robots: {
       index: true,
@@ -101,7 +114,6 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    // Safari / iOS PWA meta
     appleWebApp: {
       capable: true,
       statusBarStyle: "black-translucent",

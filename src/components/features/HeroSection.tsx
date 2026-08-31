@@ -67,7 +67,7 @@ export function HeroSection() {
 
           {/* Minimal Outline Button */}
           <Link
-            href="/#bento"
+            href="/fonctionnalites"
             className="group relative z-50 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full border border-slate-300 dark:border-white/15 bg-white/95 dark:bg-[#0f0f1c]/95 md:backdrop-blur-md px-6 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 transition-all duration-300 hover:border-violet-500/50 hover:bg-white dark:hover:bg-white/15 hover:text-slate-900 dark:hover:text-white hover:scale-105 min-h-[48px] pointer-events-auto max-w-full text-center"
           >
             <Tv className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-600 dark:text-cyan-400 shrink-0" />
