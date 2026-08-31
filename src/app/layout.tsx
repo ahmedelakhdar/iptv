@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   const siteName = settings?.siteName || "IPTV For Europe";
-  const logoUrl = settings?.logoUrl || "/logo.jpeg";
+  const logoUrl = settings?.logoUrl || "/slide1.png";
 
   return {
     title: `${siteName} | L'Expérience IPTV Ultime & Streaming 4K`,
@@ -59,15 +59,16 @@ export async function generateMetadata(): Promise<Metadata> {
         pt: "https://www.iptvforeurop.com?lang=pt",
       },
     },
+    // Google-Compliant Favicon Specification
     icons: {
       icon: [
         { url: "/slide1.png", sizes: "512x512", type: "image/png" },
-        { url: logoUrl },
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
       ],
-      shortcut: "/slide1.png",
+      shortcut: [{ url: "/slide1.png", type: "image/png" }],
       apple: [
         { url: "/slide1.png", sizes: "180x180", type: "image/png" },
-        { url: logoUrl },
+        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
       ],
     },
     verification: {
