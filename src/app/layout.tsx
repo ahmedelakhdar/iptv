@@ -49,15 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: siteName }],
     metadataBase: new URL("https://www.iptvforeurop.com"),
     alternates: {
-      canonical: "https://www.iptvforeurop.com",
-      languages: {
-        fr: "https://www.iptvforeurop.com",
-        nl: "https://www.iptvforeurop.com?lang=nl",
-        ar: "https://www.iptvforeurop.com?lang=ar",
-        en: "https://www.iptvforeurop.com?lang=en",
-        es: "https://www.iptvforeurop.com?lang=es",
-        pt: "https://www.iptvforeurop.com?lang=pt",
-      },
+      canonical: "./",
     },
     // Google-Compliant Favicon Specification
     icons: {
