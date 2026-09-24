@@ -4,6 +4,7 @@
     "pricing": "Tarifs",
     "features": "Fonctionnalités",
     "guide": "Guide",
+    "blog": "Blog",
     "faq": "FAQ",
     "bento": "Bento",
     "commander": "Commander",
@@ -11,19 +12,20 @@
     "admin": "Admin"
   },
   "hero": {
-    "badge": "Plateforme IPTV Nouvelle Génération • 2026",
-    "title_part1": "L'Univers du Divertissement.",
-    "title_part2": "Réinventé.",
-    "subtitle": "Diffusion Instantanée • Qualité 4K/8K • Curatée par IPTV For Europe",
+    "badge": "N°1 Abonnement IPTV 4K Europe • 2026",
+    "title_part1": "Meilleur Abonnement IPTV 4K en Europe.",
+    "title_part2": "Sans Coupure & Ultra Stable (2026).",
+    "subtitle": "Diffusion Instantanée • Qualité 4K/8K • +35 000 Chaînes & 80 000 VOD avec IBO Player",
     "cta_primary": "Démarrer l'Expérience",
     "cta_secondary": "Découvrir les Fonctionnalités"
   },
   "pricing": {
     "badge": "NOS OFFRES & TARIFS",
-    "title_part1": "Choisissez le forfait",
-    "title_part2": "IPTV For Europe parfait",
-    "subtitle": "Abonnements IPTV haute stabilité en 4K & Full HD. Activation IBO Player offerte et support VIP WhatsApp 24/7.",
+    "title_part1": "Meilleurs Tarifs Abonnement",
+    "title_part2": "IPTV Premium 4K Sans Coupure",
+    "subtitle": "Abonnements IPTV haute stabilité en 4K & Full HD sans buffering. Activation IBO Player offerte et support VIP WhatsApp 24/7.",
     "popular": "POPULAIRE",
+    "free_trial": "Essai Gratuit 24H",
     "view_offer": "Voir l'offre",
     "channels_live": "chaînes TV",
     "image_quality": "Qualité"
@@ -130,6 +132,10 @@
     "compatibility": "Compatibilité",
     "offers_title": "Formules & Contenu",
     "support_title": "Support & Contact",
+    "whatsapp_support": "Support WhatsApp VIP",
+    "refund_policy": "Politique de Remboursement 45j",
+    "designed_with": "Conçu avec",
+    "for_ultimate": "pour l'expérience de divertissement ultime.",
     "rights": "Tous droits réservés."
   },
   "iptv": {
@@ -160,8 +166,8 @@
   },
   "whyUs": {
     "badge": "POURQUOI NOUS",
-    "title": "Un IPTV For Europe",
-    "title_highlight": "pensé pour chez vous",
+    "title": "Un Service IPTV 4K Premium",
+    "title_highlight": "pensé pour votre télévision",
     "c1_title": "Catalogue utile",
     "c1_text": "Jusqu'à 35 000 chaînes + VOD. Sport, cinéma, arabes et internationales — ce que vous regardez vraiment.",
     "c2_title": "Sans matériel imposé",
@@ -244,10 +250,10 @@
     "learn_more": "En Savoir Plus"
   },
   "seo": {
-    "badge": "LE CHOIX N°1",
-    "title": "Pourquoi choisir",
-    "title_highlight": "IPTV For Europe",
-    "desc": "Commencez sur la page d'accueil IPTV For Europe — forfaits Lite à VIP, abonnement IPTV 4K, essai 24h et garantie 45 jours. Installation : guide IBO Player.",
+    "badge": "FOURNISSEUR IPTV N°1",
+    "title": "Pourquoi Choisir le Meilleur",
+    "title_highlight": "Fournisseur IPTV Premium 4K",
+    "desc": "Profitez du meilleur abonnement IPTV 4K en Europe — forfaits Lite à VIP, diffusion 4K sans coupure, activation IBO Player en < 15 min et support VIP 24/7.",
     "keywords_title": "Mots-Clés Populaires & Accès Rapide :",
     "link_pricing": "Abonnement IPTV For Europe",
     "link_guide": "Installation IBO Player",
@@ -257,6 +263,9 @@
     "badge": "SITEMAP & EXPLORATEUR PREMIUM",
     "title": "Explorer",
     "desc": "Le service IPTV For Europe — forfaits, IPTV 4K, installation IBO Player et couverture villes.",
+    "cat1_header": "Navigation Principale & Services",
+    "cat2_header": "FORFAITS EUROPE",
+    "cat3_header": "GUIDES & INFORMATIONS PRATIQUES",
     "m1_sub": "Plateforme n°1",
     "m2_title": "Abonnement IPTV For Europe",
     "m2_sub": "Formules annuelles & tests",

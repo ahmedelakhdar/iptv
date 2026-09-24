@@ -115,14 +115,14 @@ export function Footer() {
             <ul className="space-y-2.5 text-xs font-light text-slate-600 dark:text-slate-400">
               <li className="flex items-center gap-2 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">
                 <MessageCircle className="h-3.5 w-3.5 text-emerald-500 dark:text-emerald-400" />
-                <Link href="/contact">Support WhatsApp VIP</Link>
+                <Link href="/contact">{t("footer.whatsapp_support")}</Link>
               </li>
               <li className="flex items-center gap-2 hover:text-violet-600 dark:hover:text-violet-300 transition-colors">
                 <Mail className="h-3.5 w-3.5 text-cyan-500 dark:text-cyan-400" />
                 <Link href="/contact">{t("nav.contact")}</Link>
               </li>
               <li className="hover:text-violet-600 dark:hover:text-violet-300 transition-colors">
-                <Link href="/faq">Politique de Remboursement 45j</Link>
+                <Link href="/faq">{t("footer.refund_policy")}</Link>
               </li>
             </ul>
           </div>
@@ -133,9 +133,9 @@ export function Footer() {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 text-center sm:flex-row text-xs text-slate-500 dark:text-slate-400 font-light">
           <p>© 2022 - 2026 {settings.siteName || "IPTV For Europe"}.</p>
           <div className="flex items-center gap-1">
-            <span>Conçu avec</span>
+            <span>{t("footer.designed_with")}</span>
             <Heart className="h-3.5 w-3.5 text-pink-500 fill-pink-500" />
-            <span>pour l&apos;expérience de divertissement ultime.</span>
+            <span>{t("footer.for_ultimate")}</span>
           </div>
         </div>
       </div>

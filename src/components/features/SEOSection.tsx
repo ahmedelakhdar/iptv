@@ -9,9 +9,9 @@ export function SEOSection() {
   const { t } = useLanguage();
 
   const quickLinks = [
-    { name: "IPTV For Europe", href: "#bento" },
-    { name: t("seo.link_pricing"), href: "#tarifs" },
-    { name: "IPTV 4K", href: "#bento" },
+    { name: "IPTV For Europe", href: "/#bento" },
+    { name: t("seo.link_pricing"), href: "/tarifs" },
+    { name: "IPTV 4K", href: "/fonctionnalites" },
     { name: t("seo.link_guide"), href: "/guide" },
     { name: t("seo.link_faq"), href: "/faq" },
   ];

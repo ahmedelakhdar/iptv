@@ -35,16 +35,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const logoUrl = settings?.logoUrl || "/slide1.png";
 
   return {
-    title: `${siteName} | L'Expérience IPTV Ultime & Streaming 4K`,
-    description: `Diffusion Instantanée, Qualité Impeccable. Découvrez ${siteName} avec +35,000 chaînes en direct et 80,000 VOD en 4K/8K. Activation < 15 min.`,
+    title: `${siteName} | Meilleur Abonnement IPTV 4K Europe (2026) — Sans Coupure & IBO Player`,
+    description: `Profitez du meilleur abonnement IPTV Premium en Europe. Flux 4K/8K sans coupure, +35 000 chaînes live, 80 000 VOD, IBO Player inclus & activation en < 15 min.`,
     keywords: [
       siteName,
-      "IPTV Premium",
-      "Abonnement IPTV 4K",
-      "Chaînes Sport Live",
-      "IPTV Europe",
-      "IPTV For Europe",
-      "IBO Player",
+      "Meilleur abonnement IPTV Europe 2026",
+      "IPTV 4K sans coupure",
+      "Fournisseur IPTV premium avec IBO Player",
+      "Abonnement IPTV Smart TV Firestick",
+      "IPTV Smarters Pro 4K",
+      "Abonnement IPTV pas cher Europe",
     ],
     authors: [{ name: siteName }],
     metadataBase: new URL("https://www.iptvforeurop.com"),
@@ -69,9 +69,9 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       url: "https://www.iptvforeurop.com",
-      title: `${siteName} | L'Expérience IPTV Ultime 4K/8K`,
+      title: `${siteName} | Meilleur Abonnement IPTV 4K Europe (2026) — Streaming Stable`,
       description:
-        "Abonnement IPTV Premium 4K/8K avec activation rapide en 15 minutes et support VIP WhatsApp 24/7.",
+        "Abonnement IPTV Premium 4K/8K sans coupure avec activation rapide en 15 minutes, IBO Player inclus et support VIP WhatsApp 24/7.",
       siteName: siteName,
       locale: "fr_FR",
       images: [
@@ -91,9 +91,9 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${siteName} | Streaming IPTV 4K Premium`,
+      title: `${siteName} | IPTV 4K Sans Coupure — Fournisseur Premium Europe`,
       description:
-        "Abonnement IPTV haut de gamme en 4K/8K sans buffering avec activation IBO Player offerte.",
+        "Abonnement IPTV haut de gamme en 4K/8K sans buffering avec activation IBO Player offerte et support WhatsApp 24/7.",
       images: ["/slide1.png", logoUrl],
     },
     robots: {

@@ -45,9 +45,16 @@ export function PricingCards() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/90 dark:bg-cyan-950/90 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 mb-4 md:backdrop-blur-xl shadow-sm">
-            <Sparkles className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
-            <span>{t("pricing.badge")}</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/90 dark:bg-cyan-950/90 px-4 py-1.5 text-xs font-bold text-cyan-700 dark:text-cyan-300 md:backdrop-blur-xl shadow-sm">
+              <Sparkles className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
+              <span>{t("pricing.badge")}</span>
+            </div>
+
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/60 bg-emerald-500 text-white px-4 py-1.5 text-xs font-black shadow-lg shadow-emerald-500/30 animate-pulse">
+              <span className="h-2 w-2 rounded-full bg-white animate-ping shrink-0" />
+              <span>{t("pricing.free_trial") || "Essai Gratuit 24H"}</span>
+            </div>
           </div>
 
           <h2 className="text-3xl font-black text-slate-900 dark:text-white sm:text-5xl lg:text-6xl tracking-tight leading-tight">

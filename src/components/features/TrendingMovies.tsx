@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Star, Film } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -121,14 +122,13 @@ function MovieCard({ movie }: { movie: Movie }) {
         boxShadow: `0 8px 32px ${movie.accent}20, 0 2px 8px rgba(0,0,0,0.5)`,
       }}
     >
-      {/* Poster image */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      {/* Poster image optimized with Next.js Image */}
+      <Image
         src={movie.image}
         alt={movie.title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        loading="lazy"
-        decoding="async"
+        fill
+        sizes="(max-width: 640px) 176px, 192px"
+        className="object-cover transition-transform duration-500 group-hover:scale-110"
       />
 
       {/* Dark tint overlay */}

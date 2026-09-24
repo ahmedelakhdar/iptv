@@ -4,6 +4,7 @@
     "pricing": "Tarieven",
     "features": "Functies",
     "guide": "Handleiding",
+    "blog": "Blog",
     "faq": "FAQ",
     "bento": "Bento",
     "commander": "Bestellen",
@@ -24,6 +25,7 @@
     "title_part2": "IPTV For Europe Pakket",
     "subtitle": "IPTV-abonnementen met hoge stabiliteit in 4K & Full HD. Gratis IBO Player-activering en 24/7 VIP WhatsApp-ondersteuning.",
     "popular": "POPULAIR",
+    "free_trial": "Gratis Proefperiode 24 Uur",
     "view_offer": "Bekijk Aanbod",
     "channels_live": "live TV-zenders",
     "image_quality": "Kwaliteit"
@@ -130,6 +132,10 @@
     "compatibility": "Compatibiliteit",
     "offers_title": "Pakketten & Inhoud",
     "support_title": "Support & Contact",
+    "whatsapp_support": "VIP WhatsApp Support",
+    "refund_policy": "45 Dagen Geld-Terug-Garantie",
+    "designed_with": "Ontworpen met",
+    "for_ultimate": "voor de ultieme entertainmentervaring.",
     "rights": "Alle rechten voorbehouden."
   },
   "iptv": {
@@ -257,6 +263,9 @@
     "badge": "PREMIUM SITEMAP & VERKENNER",
     "title": "Verkennen",
     "desc": "De IPTV For Europe dienst — pakketten, 4K IPTV, IBO Player installatie en steden dekking.",
+    "cat1_header": "Hoofdnavigatie & Diensten",
+    "cat2_header": "EUROPA PAKKETTEN",
+    "cat3_header": "PRAKTISCHE GIDSEN & INFO",
     "m1_sub": "#1 Platform",
     "m2_title": "IPTV For Europe Abonnement",
     "m2_sub": "Jaarlijkse formules & tests",

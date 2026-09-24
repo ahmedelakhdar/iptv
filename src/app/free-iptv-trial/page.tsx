@@ -1,0 +1,117 @@
+import type { Metadata } from "next";
+import React from "react";
+import Link from "next/link";
+import { Navbar } from "@/components/layout/Navbar";
+import { PricingCards } from "@/components/features/PricingCards";
+import { HowToOrderGrid } from "@/components/features/HowToOrderGrid";
+import { SEOSection } from "@/components/features/SEOSection";
+import { PremiumSitemapGrid } from "@/components/features/PremiumSitemapGrid";
+import { Footer } from "@/components/layout/Footer";
+import { FloatingWhatsApp } from "@/components/features/FloatingWhatsApp";
+import { IptvPlayerMockup } from "@/components/features/IptvPlayerMockup";
+import { Sparkles, MessageCircle, ShieldCheck, Zap, Tv, CheckCircle2 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Free IPTV Trial 24H (2026) — Test IPTV For Free Without Buffering",
+  description: "Claim your Free IPTV Trial 24H without commitment. Access +35 000 4K/8K live channels and 80 000 VOD with instant activation and IBO Player setup.",
+  keywords: [
+    "Free IPTV Trial 24H",
+    "Test IPTV for free",
+    "IPTV trial without buffering Europe 2026",
+    "Essai gratuit IPTV 24h",
+    "Gratis IPTV proefperiode",
+    "IPTV free test 24h",
+    "IBO Player free trial",
+  ],
+  alternates: {
+    canonical: "./",
+  },
+  openGraph: {
+    title: "Free IPTV Trial 24H — Instant Activation & 4K Streaming",
+    description: "Get immediate access to a 24-hour free IPTV test. Enjoy 4K/8K live sports and movies on Smart TV, Android, or Firestick.",
+  },
+};
+
+export default function FreeIptvTrialPage() {
+  const whatsappUrl = "https://wa.me/212600000000?text=Bonjour%20IPTV%20For%20Europe%2C%20je%20souhaite%20demander%20un%20essai%20gratuit%2024h.";
+
+  return (
+    <div className="relative min-h-[100dvh] bg-slate-50 dark:bg-[#030308] text-slate-900 dark:text-slate-100 selection:bg-cyan-500 selection:text-white transition-colors duration-300">
+      <Navbar />
+
+      <main className="relative overflow-x-hidden w-full">
+        {/* Free Trial Dedicated Hero Section */}
+        <section className="relative min-h-[90dvh] pt-28 sm:pt-36 pb-16 overflow-hidden flex flex-col justify-center w-full max-w-full">
+          <div className="hidden md:block pointer-events-none z-0 absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-emerald-600/20 via-cyan-500/15 to-violet-600/15 blur-3xl animate-ambient-orb-1" />
+
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full max-w-full">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-1.5 mb-6 sm:mb-8 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+              <Sparkles className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+              <span className="text-[11px] sm:text-xs font-black text-emerald-400 tracking-wide uppercase">
+                Essai Gratuit 24H Sans Engagement • 2026
+              </span>
+            </div>
+
+            <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white sm:text-6xl lg:text-7xl leading-[1.1] max-w-5xl mx-auto break-words px-1">
+              Testez notre Abonnement IPTV <span className="animated-gradient-text">Gratuitement pendant 24H</span>
+            </h1>
+
+            <p className="mt-6 sm:mt-8 text-sm sm:text-xl lg:text-2xl font-light text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed px-1">
+              Accédez immédiatement à +35 000 chaînes TV en direct et +80 000 VOD en 4K/8K sans aucune coupure. Test 100% gratuit sans carte bancaire requis.
+            </p>
+
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 relative z-50 pointer-events-auto">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative z-50 w-full sm:w-auto inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-emerald-600 hover:bg-emerald-500 px-6 sm:px-8 py-3.5 text-sm sm:text-base font-extrabold text-white shadow-lg transition-all duration-300 hover:scale-105 min-h-[48px]"
+              >
+                <MessageCircle className="h-5 w-5 fill-white text-emerald-600 shrink-0" />
+                <span>Demander mon Essai 24H sur WhatsApp</span>
+              </a>
+
+              <Link
+                href="/tarifs"
+                className="group relative z-50 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full border border-slate-300 dark:border-white/15 bg-white/95 dark:bg-[#0f0f1c]/95 md:backdrop-blur-md px-6 sm:px-8 py-3.5 text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 transition-all duration-300 hover:border-emerald-500/50 hover:bg-white dark:hover:bg-white/15 hover:scale-105 min-h-[48px]"
+              >
+                <Tv className="h-5 w-5 text-cyan-400 shrink-0" />
+                <span>Voir nos Forfaits 12 Mois</span>
+              </Link>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>Sans carte bancaire</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-cyan-400 shrink-0" />
+                <span>Activation en &lt; 15 min</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-violet-400 shrink-0" />
+                <span>Serveurs 99.9% Uptime 4K</span>
+              </div>
+            </div>
+
+            <div className="mt-8 sm:mt-14 relative max-w-4xl mx-auto z-10 w-full overflow-hidden">
+              <div className="relative z-10 glass-bento rounded-2xl sm:rounded-3xl p-1 sm:p-3 border border-slate-200 dark:border-white/15 shadow-md md:shadow-xl overflow-hidden bg-slate-900/98 dark:bg-[#070714]/98">
+                <IptvPlayerMockup />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <PricingCards />
+        <HowToOrderGrid />
+        <SEOSection />
+        <PremiumSitemapGrid />
+      </main>
+
+      <Footer />
+      <FloatingWhatsApp />
+    </div>
+  );
+}

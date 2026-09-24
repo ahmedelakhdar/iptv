@@ -49,7 +49,7 @@ export function PremiumSitemapGrid() {
         <div className="mb-10 sm:mb-14 max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 dark:bg-violet-950/90 px-3.5 py-1 text-xs font-bold text-violet-700 dark:text-violet-300 mb-3 md:backdrop-blur-xl">
             <Sparkles className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400" />
-            <span>EXPLORATEUR IP</span>
+            <span>{t("sitemap.badge")}</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             {t("sitemap.title")} <span className="animated-gradient-text">IPTV For Europe</span>
@@ -67,7 +67,7 @@ export function PremiumSitemapGrid() {
             <div className="flex items-center gap-2 mb-6">
               <Sparkles className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
               <h3 className="text-xs font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-widest">
-                Navigation Principale &amp; Services
+                {t("sitemap.cat1_header")}
               </h3>
             </div>
             
@@ -100,7 +100,7 @@ export function PremiumSitemapGrid() {
               <div className="flex items-center gap-2 mb-4">
                 <Shield className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 <h3 className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">
-                  FORFAITS EUROPE
+                  {t("sitemap.cat2_header")}
                 </h3>
               </div>
 
@@ -130,7 +130,7 @@ export function PremiumSitemapGrid() {
               <div className="flex items-center gap-2 mb-4">
                 <Sparkles className="h-4 w-4 text-violet-600 dark:text-violet-400" />
                 <h3 className="text-xs font-bold text-violet-700 dark:text-violet-400 uppercase tracking-widest">
-                  FORFAITS EUROPE
+                  {t("sitemap.cat2_header")}
                 </h3>
               </div>
 
@@ -162,7 +162,7 @@ export function PremiumSitemapGrid() {
             <div className="flex items-center gap-2 mb-6">
               <CheckCircle2 className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
               <h3 className="text-xs font-bold text-cyan-700 dark:text-cyan-400 uppercase tracking-widest">
-                GUIDES &amp; INFORMATIONS PRATIQUES
+                {t("sitemap.cat3_header")}
               </h3>
             </div>
 

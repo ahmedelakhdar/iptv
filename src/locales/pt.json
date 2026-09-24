@@ -4,6 +4,7 @@
     "pricing": "Preços",
     "features": "Recursos",
     "guide": "Guia",
+    "blog": "Blog",
     "faq": "FAQ",
     "bento": "Bento",
     "commander": "Encomendar",
@@ -24,6 +25,7 @@
     "title_part2": "IPTV For Europe",
     "subtitle": "Subscrições IPTV de alta estabilidade em 4K e Full HD. Ativação grátis do IBO Player e suporte VIP WhatsApp 24/7.",
     "popular": "POPULAR",
+    "free_trial": "Teste Grátis 24H",
     "view_offer": "Ver Oferta",
     "channels_live": "canais de TV em direto",
     "image_quality": "Qualidade"
@@ -130,6 +132,10 @@
     "compatibility": "Compatibilidade",
     "offers_title": "Planos e Conteúdo",
     "support_title": "Suporte e Contacto",
+    "whatsapp_support": "Suporte WhatsApp VIP",
+    "refund_policy": "Política de Reembolso de 45 Dias",
+    "designed_with": "Concebido com",
+    "for_ultimate": "para a experiência de entretenimento definitiva.",
     "rights": "Todos os direitos reservados."
   },
   "iptv": {
@@ -257,6 +263,9 @@
     "badge": "SITEMAP & EXPLORADOR PREMIUM",
     "title": "Explorar",
     "desc": "O serviço IPTV For Europe — planos, IPTV 4K, instalação IBO Player e cobertura de cidades.",
+    "cat1_header": "Navegação Principal & Serviços",
+    "cat2_header": "PACOTES EUROPA",
+    "cat3_header": "GUIAS PRÁTICOS & INFORMAÇÕES",
     "m1_sub": "Plataforma n°1",
     "m2_title": "Subscrição IPTV For Europe",
     "m2_sub": "Fórmulas anuais & testes",

@@ -4,6 +4,7 @@
     "pricing": "الأسعار",
     "features": "المميزات",
     "guide": "دليل التثبيت",
+    "blog": "مدونة",
     "faq": "الأسئلة الشائعة",
     "bento": "المميزات",
     "commander": "اطلب الآن",
@@ -24,6 +25,7 @@
     "title_part2": "⁨IPTV For Europe⁩ المثالية",
     "subtitle": "اشتراكات IPTV عالية الثبات بجودة 4K و Full HD. تفعيل ⁨IBO Player⁩ مجاناً ودعم VIP عبر الواتساب 24/7.",
     "popular": "الأكثر طلباً",
+    "free_trial": "تجربة مجانية 24 ساعة",
     "view_offer": "عرض الباقة",
     "channels_live": "قناة مباشرة",
     "image_quality": "الجودة"
@@ -130,6 +132,10 @@
     "compatibility": "التوافق مع الأجهزة",
     "offers_title": "الباقات والمحتوى",
     "support_title": "الدعم والاتصال",
+    "whatsapp_support": "دعم واتساب VIP",
+    "refund_policy": "سياسة الاسترجاع 45 يوماً",
+    "designed_with": "تم التصميم بـ",
+    "for_ultimate": "لتقديم أفضل تجربة ترفيهية.",
     "rights": "جميع الحقوق محفوظة."
   },
   "iptv": {
@@ -257,6 +263,9 @@
     "badge": "خريطة الموقع والمستكشف الممتاز",
     "title": "استكشف",
     "desc": "خدمة ⁨IPTV For Europe⁩ — الباقات، IPTV 4K، تثبيت ⁨IBO Player⁩ والتغطية.",
+    "cat1_header": "التصفح الرئيسي والخدمات",
+    "cat2_header": "باقات أوروبا",
+    "cat3_header": "أدلة ومعلومات عملية",
     "m1_sub": "المنصة رقم 1",
     "m2_title": "اشتراك ⁨IPTV For Europe⁩",
     "m2_sub": "الباقات السنوية والتجارب",

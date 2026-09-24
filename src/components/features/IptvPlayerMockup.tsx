@@ -185,7 +185,7 @@ export function IptvPlayerMockup() {
 
   const activeConfig = TABS.find((tab) => tab.key === activeTab)!;
 
-  // Auto-cycle every 5 s, pauses when user clicks a tab
+  // Auto-cycle every 3 s, pauses when user clicks a tab
   useEffect(() => {
     if (userPaused) return;
 
@@ -194,7 +194,7 @@ export function IptvPlayerMockup() {
         const currentIdx = TAB_KEYS.indexOf(current);
         return TAB_KEYS[(currentIdx + 1) % TAB_KEYS.length];
       });
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(timer);
   }, [userPaused]);

@@ -58,6 +58,7 @@ export function Navbar() {
     { name: t("nav.pricing"), href: "/tarifs" },
     { name: t("nav.features"), href: "/fonctionnalites" },
     { name: t("nav.guide"), href: "/guide" },
+    { name: t("nav.blog") || "Blog", href: "/blog" },
     { name: t("nav.faq"), href: "/faq" },
     { name: t("nav.contact"), href: "/contact" },
   ];

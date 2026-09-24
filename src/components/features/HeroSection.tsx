@@ -32,10 +32,10 @@ export function HeroSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full max-w-full">
         
         {/* Top Floating Badge */}
-        <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-950/90 dark:bg-violet-950/90 md:backdrop-blur-md px-3.5 sm:px-4 py-1.5 mb-6 sm:mb-8 shadow-sm max-w-full">
+        <div className="inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-100 dark:bg-violet-950/90 md:backdrop-blur-md px-3.5 sm:px-4 py-1.5 mb-6 sm:mb-8 shadow-sm max-w-full">
           <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
-          <Sparkles className="h-3.5 w-3.5 text-violet-500 dark:text-violet-400 shrink-0" />
-          <span className="text-[11px] sm:text-xs font-semibold text-violet-900 dark:text-violet-200 tracking-wide truncate">
+          <Sparkles className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400 shrink-0" />
+          <span className="text-[11px] sm:text-xs font-semibold text-violet-800 dark:text-violet-200 tracking-wide truncate">
             {t("hero.badge") || "Plateforme IPTV Nouvelle Génération • 2026"}
           </span>
         </div>
@@ -79,11 +79,11 @@ export function HeroSection() {
         <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-slate-600 dark:text-slate-400 w-full max-w-full px-2">
           <div className="flex items-center gap-2 shrink-0">
             <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>99.9% Uptime Serveurs</span>
+            <span>{t("bento.t6_title") || "Serveurs Ultra-Stables 99.9%"}</span>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <Zap className="h-4 w-4 text-violet-600 dark:text-violet-400 shrink-0" />
-            <span>Activation &lt; 15 min</span>
+            <span>{t("featuresPage.f5_title") || "Activation immédiate"}</span>
           </div>
         </div>
 
